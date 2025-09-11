@@ -1,0 +1,799 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+
+
+class FilterCategoties {
+  final String name;
+  final String imageUrl;
+
+  FilterCategoties({required this.name, required this.imageUrl});
+}
+
+List<FilterCategoties> filtercategories = [
+  FilterCategoties(name: 'Junk Food', imageUrl: 'https://asset.kompas.com/crops/_Lt4XBy-jwzJ2wtdA7qo2EtY1uc=/0x0:1000x667/1200x800/data/photo/2021/10/21/617111bf79ded.jpg'),
+  FilterCategoties(name: 'Healty Food', imageUrl: 'assets/healthy.jpg'),
+  FilterCategoties(name: 'Whole Food', imageUrl: 'assets/whole.jpg'),
+];
+
+class Home extends StatefulWidget {
+  Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  @override
+  final TextEditingController searchController = TextEditingController();
+
+List<FilterCategoties> filteredCategories = [];
+
+@override
+void initState() {
+  super.initState();
+  filteredCategories = filtercategories; // Default tampilkan semua
+}
+
+void filterCategories(String query) {
+  setState(() {
+    filteredCategories = filtercategories
+        .where((category) =>
+            category.name.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+  });
+}
+
+
+@override
+void dispose() {
+  searchController.dispose();
+  super.dispose();
+}
+
+
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color(0xFFFF714B),
+          title: Center(
+            child: Text(
+              "Food Mood",
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.menu, color: Colors.white),
+            ),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(padding: EdgeInsets.only(top: 15)),
+              SizedBox(
+                width: 450,
+                height: 40,
+                child: SearchBar(
+                  controller: searchController,
+                  textInputAction: TextInputAction.search,
+                  leading: Icon(Icons.search),
+                  hintText: "Cari di sini...",
+                  onChanged: (value) {
+                     filterCategories(value);
+                  },
+                  shape: WidgetStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+              ),
+
+              Padding(padding: EdgeInsets.only(top: 15)),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  "Mood Kamu Lagi Kaya Gimana Nih..",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+              ),
+              Padding(padding: EdgeInsets.only(top: 15)),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 85,
+                      height: 100,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          shadowColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadiusGeometry.circular(10),
+                          ),
+                        ),
+                        child: Card(
+                          elevation: 4,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            width: 200,
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  Text("😁", style: TextStyle(fontSize: 37)),
+                                  Text(
+                                    "Senang",
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: 85,
+                      height: 100,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          shadowColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadiusGeometry.circular(10),
+                          ),
+                        ),
+                        child: Card(
+                          elevation: 4,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            width: 200,
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  Text("😭", style: TextStyle(fontSize: 37)),
+                                  Text(
+                                    "Sedih",
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: 85,
+                      height: 100,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          shadowColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadiusGeometry.circular(10),
+                          ),
+                        ),
+                        child: Card(
+                          elevation: 4,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            width: 200,
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  Text("😡", style: TextStyle(fontSize: 37)),
+                                  Text(
+                                    "Marah",
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: 85,
+                      height: 100,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          shadowColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadiusGeometry.circular(10),
+                          ),
+                        ),
+                        child: Card(
+                          elevation: 4,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            width: 200,
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  Text("😕", style: TextStyle(fontSize: 37)),
+                                  Text(
+                                    "Lelah",
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: 85,
+                      height: 100,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          shadowColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadiusGeometry.circular(10),
+                          ),
+                        ),
+                        child: Card(
+                          elevation: 4,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            width: 200,
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  Text("😩", style: TextStyle(fontSize: 37)),
+                                  Text(
+                                    "Bosan",
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              Padding(padding: EdgeInsets.only(top: 40)),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  "Atau Mau Cari Resep Makanan Nih..",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+              ),
+
+              SizedBox(
+                width: 470,
+                height: 160,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadiusGeometry.circular(15),
+                        child: Opacity(
+                          opacity: 0.5,
+                          child: Image.network(
+                            "https://asset.kompas.com/crops/_Lt4XBy-jwzJ2wtdA7qo2EtY1uc=/0x0:1000x667/1200x800/data/photo/2021/10/21/617111bf79ded.jpg",
+                            width: double.infinity,
+                            height: 160,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5, left: 10),
+                        child: Text(
+                          "Junk Food",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 360),
+                        child: TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "see details",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              Padding(padding: EdgeInsets.only(top: 15)),
+              SizedBox(
+                width: 470,
+                height: 160,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadiusGeometry.circular(15),
+                        child: Opacity(
+                          opacity: 0.5,
+                          child: Image.network(
+                            "https://media.istockphoto.com/id/1457433817/id/foto/kelompok-makanan-sehat-untuk-diet-flexitarian.jpg?s=612x612&w=0&k=20&c=SY6W5rBi002F4PpV_5bk16mkT3poTttodXlMSwe8jzo=",
+                            width: double.infinity,
+                            height: 160,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5, left: 10),
+                        child: Text(
+                          "Healty Food",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 360),
+                        child: TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "see details",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              Padding(padding: EdgeInsets.only(top: 15)),
+              SizedBox(
+                width: 470,
+                height: 160,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadiusGeometry.circular(15),
+                        child: Opacity(
+                          opacity: 0.5,
+                          child: Image.network(
+                            "https://images.everydayhealth.com/images/diet-nutrition/whole-foods-diet-101-1440x810.jpg?w=508",
+                            width: double.infinity,
+                            height: 160,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5, left: 10),
+                        child: Text(
+                          "Whole Food",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 360),
+                        child: TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "see details",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              Padding(padding: EdgeInsets.only(top: 15)),
+              SizedBox(
+                width: 470,
+                height: 160,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadiusGeometry.circular(15),
+                        child: Opacity(
+                          opacity: 0.5,
+                          child: Image.network(
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8QnScreyARKxWFg6F_y39mqcoS9SBiyREWq7Kk-o2yHCBZd8H7BGVHCHtfpEg7SA8sQA&usqp=CAU",
+                            width: double.infinity,
+                            height: 160,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5, left: 10),
+                        child: Text(
+                          "Processed Food",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 360),
+                        child: TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "see details",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              Padding(padding: EdgeInsets.only(top: 15)),
+              SizedBox(
+                width: 470,
+                height: 160,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadiusGeometry.circular(15),
+                        child: Opacity(
+                          opacity: 0.5,
+                          child: Image.network(
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYeyk_3vrZOy3bJPR3WsF-a1fw5JUfaAyKqcluaxO2XjlP9DuQjPSg6TudctklcWXcdAs&usqp=CAU",
+                            width: double.infinity,
+                            height: 160,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5, left: 10),
+                        child: Text(
+                          "Organic Food",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 360),
+                        child: TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "see details",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              Padding(padding: EdgeInsets.only(top: 15)),
+              SizedBox(
+                width: 470,
+                height: 160,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadiusGeometry.circular(15),
+                        child: Opacity(
+                          opacity: 0.5,
+                          child: Image.network(
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTauJdUOYvZSWcbfN-4a4duLV3VyeTFbeIc9rWWZFD_67u2f7b6AuAs08gArKr3fkxFqlQ&usqp=CAU",
+                            width: double.infinity,
+                            height: 160,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5, left: 10),
+                        child: Text(
+                          "Comfort Food",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 360),
+                        child: TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "see details",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              Padding(padding: EdgeInsets.only(top: 15)),
+              SizedBox(
+                width: 470,
+                height: 160,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadiusGeometry.circular(15),
+                        child: Opacity(
+                          opacity: 0.5,
+                          child: Image.network(
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkLxH6D5V8Cn9C5rzga92CnKmfVG0I9Ly_Qg&s",
+                            width: double.infinity,
+                            height: 160,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5, left: 10),
+                        child: Text(
+                          "Diet Food",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 360),
+                        child: TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "see details",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              Padding(padding: EdgeInsets.only(top: 15)),
+              SizedBox(
+                width: 470,
+                height: 160,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadiusGeometry.circular(15),
+                        child: Opacity(
+                          opacity: 0.5,
+                          child: Image.network(
+                            "https://static.promediateknologi.id/crop/0x0:0x0/0x0/webp/photo/esensi/2023/11/croissant.jpg",
+                            width: double.infinity,
+                            height: 160,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5, left: 10),
+                        child: Text(
+                          "Pastry Food",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 360),
+                        child: TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "see details",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              Padding(padding: EdgeInsets.only(top: 15)),
+              SizedBox(
+                width: 470,
+                height: 160,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadiusGeometry.circular(15),
+                        child: Opacity(
+                          opacity: 0.5,
+                          child: Image.network(
+                            "https://cdn.hswstatic.com/gif/desserts-update.jpg",
+                            width: double.infinity,
+                            height: 160,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5, left: 10),
+                        child: Text(
+                          "Sweets Food",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 360),
+                        child: TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "see details",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

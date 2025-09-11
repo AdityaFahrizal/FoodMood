@@ -1,0 +1,180 @@
+import 'package:flutter/material.dart';
+
+
+class FoodListPage extends StatelessWidget {
+  const FoodListPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+        title: const Text("Food Mood"),
+        backgroundColor: Colors.orange,
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 10),
+            child: Icon(Icons.settings, color: Colors.white),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          // Tombol kategori
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
+                      side: const BorderSide(color: Colors.grey)),
+                  child: const Text("Makanan"),
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
+                      side: const BorderSide(color: Colors.grey)),
+                  child: const Text("Minuman"),
+                ),
+              ],
+            ),
+          ),
+
+          // Search box
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: "Cari di sini...",
+                prefixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                contentPadding: const EdgeInsets.all(8),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 8),
+          const Text(
+            "Ini Ada Beberapa Rekomendasi Makanan..\nSemoga Kamu Suka Yaa..",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontStyle: FontStyle.italic),
+          ),
+          const SizedBox(height: 8),
+
+          // Daftar makanan
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.all(8),
+              children: const [
+                FoodItem(
+                  image: "assets/burger.jpg",
+                  title: "Burger",
+                  desc: "Daging sapi, keju leleh, saus, sayuran dalam roti burger.",
+                ),
+                FoodItem(
+                  image: "assets/sandwich.jpg",
+                  title: "Sandwich",
+                  desc: "Roti lapis isi daging, keju, saus, dan sayuran.",
+                ),
+                FoodItem(
+                  image: "assets/hotdog.jpg",
+                  title: "Hot Dog",
+                  desc: "Roti panjang berisi sosis dengan tambahan bermacam saus.",
+                ),
+                FoodItem(
+                  image: "assets/chicken_wings.jpg",
+                  title: "Chicken Wings",
+                  desc: "Sayap ayam berbumbu khas, digoreng atau dipanggang hingga renyah.",
+                ),
+                FoodItem(
+                  image: "assets/pizza.jpg",
+                  title: "Pizza",
+                  desc: "Adonan roti tipis dengan topping saus tomat, keju, dan daging.",
+                ),
+                FoodItem(
+                  image: "assets/fries.jpg",
+                  title: "Kentang Goreng",
+                  desc: "Kentang yang dipotong dan digoreng renyah, pas untuk dijadikan camilan.",
+                ),
+                FoodItem(
+                  image: "assets/onion_rings.jpg",
+                  title: "Onion Rings",
+                  desc: "Irisan bawang bombai dibalur tepung dan digoreng hingga garing.",
+                ),
+                FoodItem(
+                  image: "assets/nugget.jpg",
+                  title: "Nugget",
+                  desc: "Potongan ayam olahan yang dibalut tepung roti lalu digoreng.",
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FoodItem extends StatelessWidget {
+  final String image;
+  final String title;
+  final String desc;
+
+  const FoodItem({
+    super.key,
+    required this.image,
+    required this.title,
+    required this.desc,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(8),
+              bottomLeft: Radius.circular(8),
+            ),
+            child: Image.asset(
+              image,
+              width: 70,
+              height: 70,
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 16)),
+                  const SizedBox(height: 4),
+                  Text(desc, style: const TextStyle(fontSize: 13)),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+      ),
+    );
+  }
+}
