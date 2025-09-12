@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:food_mood_2/screen/sng_page.dart';
+import 'package:food_mood_2/screen/sedih/sdh_page.dart';
+import 'package:food_mood_2/screen/senang/sng_page.dart';
 
 class Home extends StatefulWidget {
-  Home({super.key});
+  const Home({super.key});
 
   @override
   State<Home> createState() => _HomeState();
@@ -96,7 +97,7 @@ class _HomeState extends State<Home> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Container(
+                          child: SizedBox(
                             width: 200,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -124,6 +125,7 @@ class _HomeState extends State<Home> {
                       height: 100,
                       child: ElevatedButton(
                         onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => SedihPage()));
                           },
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.zero,
@@ -137,7 +139,7 @@ class _HomeState extends State<Home> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Container(
+                          child: SizedBox(
                             width: 200,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -178,7 +180,7 @@ class _HomeState extends State<Home> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Container(
+                          child: SizedBox(
                             width: 200,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -219,7 +221,7 @@ class _HomeState extends State<Home> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Container(
+                          child: SizedBox(
                             width: 200,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -260,7 +262,7 @@ class _HomeState extends State<Home> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Container(
+                          child: SizedBox(
                             width: 200,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -304,20 +306,6 @@ class _HomeState extends State<Home> {
                   ),
                   child: Stack(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 270),
-                        child: TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            "see details",
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ),
                       ClipRRect(
                         borderRadius: BorderRadiusGeometry.circular(15),
                         child: Opacity(
@@ -338,6 +326,20 @@ class _HomeState extends State<Home> {
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 270),
+                        child: TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "see details",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                       ),

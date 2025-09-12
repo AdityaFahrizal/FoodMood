@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:food_mood_2/screen/burger.dart';
-import 'package:food_mood_2/screen/sng_page.dart';
+import 'package:food_mood_2/screen/resep_minuman/freakshake.dart';
+import 'package:food_mood_2/screen/resep_minuman/milkshake.dart';
+import 'package:food_mood_2/screen/resep_minuman/milkshake2.dart';
+import 'package:food_mood_2/screen/senang/sng_page.dart';
 
-class MakananSenang extends StatelessWidget {
-  const MakananSenang({super.key});
+class MinumanSenang extends StatelessWidget {
+  const MinumanSenang({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +42,14 @@ class MakananSenang extends StatelessWidget {
           ),
         ),
 
-        body: Column(
+        body: SingleChildScrollView(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(padding: EdgeInsets.only(top: 10)),
             SizedBox(
-              width: 380,
+              width: 350,
               height: 40,
               child: SearchBar(
                 textInputAction: TextInputAction.search,
@@ -148,76 +153,78 @@ class MakananSenang extends StatelessWidget {
             // ),
 
 
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ResepBurger()));
-                  },
-                  child: Container(
-                    width: 380,
-                    height: 100,
-                
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: const Color(0xFFA6B28B),
-                    ),
-                    child: Row(
-                      children: [
-                        Padding(padding: EdgeInsets.only(left: 8)),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(
-                            "assets/images/makanan/b.jpg",
-                            fit: BoxFit.cover, 
-                            width: 85,
-                            height: 85,
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ResepFreakshake()));
+                    },
+                    child: Container(
+                      width: 380,
+                      height: 100,
+                  
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color(0xFF8BA3B2),
+                      ),
+                      child: Row(
+                        children: [
+                          Padding(padding: EdgeInsets.only(left: 8)),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.asset(
+                              "assets/images/minuman/fs.jpg",
+                              fit: BoxFit.cover, 
+                              width: 85,
+                              height: 85,
+                            ),
                           ),
-                        ),
-                        Padding(padding: EdgeInsets.only(top: 2, left: 10)),
-                
-                        Container(
-                          width: 250,
-                          height: 120,
-                          child: Column(
-                            children: [
-                              Padding(padding: EdgeInsets.only(top: 10)),
-                              Text(
-                                "Burger",
-                                style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 30),
-                                child: Text(
-                                  "Daging sapi, keju leleh, saus, sayuran dalam roti burger",
+                          Padding(padding: EdgeInsets.only(top: 2, left: 10)),
+                  
+                          SizedBox(
+                            width: 250,
+                            height: 120,
+                            child: Column(
+                              children: [
+                                Padding(padding: EdgeInsets.only(top: 10)),
+                                Text(
+                                  "Freakshake",
                                   style: TextStyle(
-                                    fontSize: 15,
+                                    fontSize: 25,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.black,
+                                    color: Colors.white,
                                   ),
                                 ),
-                              ),
-                            ],
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 30),
+                                  child: Text(
+                                    "Freakshake adalah minuman dengan topping yang berlimpah.",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Padding(padding: EdgeInsets.only(top: 2, left: 10)),
-                      ],
+                          Padding(padding: EdgeInsets.only(top: 2, left: 10)),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
 
-            //========== sandwich ==========/
+            //========== milkshake ==========/
             Padding(padding: EdgeInsets.only(top: 10)),
             GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SenangFood()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ResepMilkshake2()));
               },
               child: Container(
                 width: 380,
@@ -233,7 +240,7 @@ class MakananSenang extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.asset(
-                        "assets/images/makanan/s.jpg",
+                        "assets/images/minuman/ms.jpg",
                         fit: BoxFit.cover,
                         width: 85,
                         height: 85,
@@ -241,14 +248,14 @@ class MakananSenang extends StatelessWidget {
                     ),
                     Padding(padding: EdgeInsets.only(top: 2, left: 10)),
 
-                    Container(
+                    SizedBox(
                       width: 250,
                       height: 120,
                       child: Column(
                         children: [
                           Padding(padding: EdgeInsets.only(top: 10)),
                           Text(
-                            "Sandwich",
+                            "Milkshake",
                             style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
@@ -258,7 +265,7 @@ class MakananSenang extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 30),
                             child: Text(
-                              "Sandwich adalah roti isi daging, sayur, dan keju yang simpel.",
+                              "Milkshake adalah minuman segar berbahan susu dan es krim.",
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -277,6 +284,8 @@ class MakananSenang extends StatelessWidget {
 
           ],
         ),
+          )
+        )
       ),
     );
   }

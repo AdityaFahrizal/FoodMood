@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:food_mood_2/screen/burger.dart';
-import 'package:food_mood_2/screen/dashboard.dart';
-import 'package:food_mood_2/screen/milkshake.dart';
-import 'package:food_mood_2/screen/mkn_sng.dart';
+import 'package:food_mood_2/screen/resep_makanan/burger.dart';
+import 'package:food_mood_2/screen/resep_makanan/burger2.dart';
+import 'package:food_mood_2/screen/resep_makanan/sandwich.dart';
+import 'package:food_mood_2/screen/senang/sng_page.dart';
 
-class SenangFood extends StatefulWidget {
-  const SenangFood({super.key});
+class MakananSenang extends StatelessWidget {
+  const MakananSenang({super.key});
 
-  @override
-  State<SenangFood> createState() => _SenangFoodState();
-}
-
-class _SenangFoodState extends State<SenangFood> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -40,98 +35,21 @@ class _SenangFoodState extends State<SenangFood> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Home()),
+                MaterialPageRoute(builder: (context) => SenangFood()),
               );
             },
             icon: Icon(Icons.arrow_back_ios, color: Colors.white),
           ),
         ),
 
-        body: Column(
+        body: SingleChildScrollView(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(padding: EdgeInsets.only(top: 100)),
-                  SizedBox(
-                    width: 180,
-                    height: 50,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        shadowColor: Colors.transparent,
-                        backgroundColor: const Color(0xFFA6B28B),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadiusGeometry.circular(12),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => MakananSenang()));
-                      },
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsGeometry.symmetric(
-                              horizontal: 18,
-                            ),
-                          ),
-                          Icon(Icons.fastfood, color: Colors.white, size: 25),
-                          Padding(padding: EdgeInsets.only(left: 10)),
-                          Text(
-                            "Makanan",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    //============================================================ Minuman ============================================================//
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 100, left: 12)),
-                  SizedBox(
-                    width: 180,
-                    height: 50,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        shadowColor: Colors.transparent,
-                        backgroundColor: const Color(0xFF8BA3B2),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadiusGeometry.circular(12),
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsGeometry.symmetric(
-                              horizontal: 18,
-                            ),
-                          ),
-                          Icon(Icons.local_cafe, color: Colors.white, size: 25),
-                          Padding(padding: EdgeInsets.only(left: 10)),
-                          Text(
-                            "Minuman",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
             Padding(padding: EdgeInsets.only(top: 10)),
             SizedBox(
-              width:380,
+              width: 350,
               height: 40,
               child: SearchBar(
                 textInputAction: TextInputAction.search,
@@ -235,9 +153,78 @@ class _SenangFoodState extends State<SenangFood> {
             // ),
 
 
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ResepBurger2()));
+                    },
+                    child: Container(
+                      width: 380,
+                      height: 100,
+                  
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color(0xFFA6B28B),
+                      ),
+                      child: Row(
+                        children: [
+                          Padding(padding: EdgeInsets.only(left: 8)),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.asset(
+                              "assets/images/makanan/b.jpg",
+                              fit: BoxFit.cover, 
+                              width: 85,
+                              height: 85,
+                            ),
+                          ),
+                          Padding(padding: EdgeInsets.only(top: 2, left: 10)),
+                  
+                          SizedBox(
+                            width: 250,
+                            height: 120,
+                            child: Column(
+                              children: [
+                                Padding(padding: EdgeInsets.only(top: 10)),
+                                Text(
+                                  "Burger",
+                                  style: TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 30),
+                                  child: Text(
+                                    "Daging sapi, keju leleh, saus, sayuran dalam roti burger",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(padding: EdgeInsets.only(top: 2, left: 10)),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            //========== sandwich ==========/
+            Padding(padding: EdgeInsets.only(top: 10)),
             GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ResepBurger()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ResepSandwich()));
               },
               child: Container(
                 width: 380,
@@ -253,7 +240,7 @@ class _SenangFoodState extends State<SenangFood> {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.asset(
-                        "assets/images/makanan/b.jpg",
+                        "assets/images/makanan/s.jpg",
                         fit: BoxFit.cover,
                         width: 85,
                         height: 85,
@@ -261,14 +248,14 @@ class _SenangFoodState extends State<SenangFood> {
                     ),
                     Padding(padding: EdgeInsets.only(top: 2, left: 10)),
 
-                    Container(
+                    SizedBox(
                       width: 250,
                       height: 120,
                       child: Column(
                         children: [
                           Padding(padding: EdgeInsets.only(top: 10)),
                           Text(
-                            "Burger",
+                            "Sandwich",
                             style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
@@ -278,69 +265,7 @@ class _SenangFoodState extends State<SenangFood> {
                           Padding(
                             padding: const EdgeInsets.only(left: 30),
                             child: Text(
-                              "Daging sapi, keju leleh, saus, sayuran dalam roti burger",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(padding: EdgeInsets.only(top: 2, left: 10)),
-                  ],
-                ),
-              ),
-            ),
-
-            //========== milkshake ==========/
-            Padding(padding: EdgeInsets.only(top: 10)),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ResepMilkshake()));
-              },
-              child: Container(
-                width: 380,
-                height: 100,
-
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color(0xFF8BA3B2),
-                ),
-                child: Row(
-                  children: [
-                    Padding(padding: EdgeInsets.only(left: 8)),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.asset(
-                        "assets/images/minuman/ms.jpg",
-                        fit: BoxFit.cover,
-                        width: 85,
-                        height: 85,
-                      ),
-                    ),
-                    Padding(padding: EdgeInsets.only(top: 2, left: 10)),
-
-                    Container(
-                      width: 250,
-                      height: 120,
-                      child: Column(
-                        children: [
-                          Padding(padding: EdgeInsets.only(top: 10)),
-                          Text(
-                            "Milkshake",
-                            style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 30),
-                            child: Text(
-                              "Milkshake adalah minuman segar berbahan susu dan es krim.",
+                              "Sandwich adalah roti isi daging, sayur, dan keju yang simpel.",
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -359,6 +284,8 @@ class _SenangFoodState extends State<SenangFood> {
 
           ],
         ),
+          )
+        )
       ),
     );
   }

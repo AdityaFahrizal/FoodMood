@@ -67,6 +67,8 @@ flutter:
     - assets/images/kategori_makanan/
     - assets/images/makanan/
     - assets/images/minuman/
+    - assets/images/sandwich/
+    - assets/images/freakshake/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

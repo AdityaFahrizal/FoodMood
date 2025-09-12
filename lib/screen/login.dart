@@ -16,9 +16,10 @@ class _LoginState extends State<Login> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Column(
+        body: SingleChildScrollView(
+          child: Column(
           children: [
-            Padding(padding: EdgeInsets.only(top: 12)),
+            Padding(padding: EdgeInsets.only(top: 50)),
             Image.asset("assets/images/background.png"),
             Padding(padding: EdgeInsets.only(top: 100)),
             Center(
@@ -123,6 +124,7 @@ class _LoginState extends State<Login> {
             ),
           ],
         ),
+        )
       ),
     );
   }

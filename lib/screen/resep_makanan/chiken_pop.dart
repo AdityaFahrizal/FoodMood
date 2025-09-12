@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food_mood_2/screen/sng_page.dart';
-class ResepMilkshake extends StatelessWidget {
-  const ResepMilkshake({super.key});
+import 'package:food_mood_2/screen/sedih/sdh_page.dart';
+
+class ResepChickenPopcorn extends StatelessWidget {
+  const ResepChickenPopcorn({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class ResepMilkshake extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SenangFood()),
+                MaterialPageRoute(builder: (context) => SedihPage()),
               );
             },
             icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -50,7 +51,7 @@ class ResepMilkshake extends StatelessWidget {
 
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: const Color(0xFF8BA3B2),
+                    color: const Color(0xFFA6B28B),
                   ),
                   child: Column(
                     children: [
@@ -58,7 +59,7 @@ class ResepMilkshake extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.asset(
-                          "assets/images/minuman/ms.jpg",
+                          "assets/images/makanan/b.jpg",
                           fit: BoxFit.cover,
                           width: 350,
                           height: 200,
@@ -70,7 +71,7 @@ class ResepMilkshake extends StatelessWidget {
                         child: Column(
                           children: [
                             Text(
-                              "Milkshake",
+                              "Chicken Popcorn",
                               style: TextStyle(
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold,
@@ -81,7 +82,7 @@ class ResepMilkshake extends StatelessWidget {
                             Container(
                               padding: EdgeInsets.all(10.0),
                               child: Text(
-                                "Milkshake adalah minuman segar berbahan susu dan es krim.",
+                                "Chicken Popcorn adalah ayam kecil renyah berbumbu gurih.",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 15,
@@ -104,7 +105,7 @@ class ResepMilkshake extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    "10 Menit",
+                                    "35 Menit",
                                     style: TextStyle(
                                       fontSize: 15,
                                       color: const Color.fromARGB(
@@ -134,11 +135,16 @@ class ResepMilkshake extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 5),
                 child: Text(
-                  "1. 200 ml susu dingin \n"
-                  "2. 2 scoop es krim (rasa sesuai selera, misalnya vanila/cokelat/stroberi) \n"
-                  "3. 2 sdm gula atau sirup (opsional) \n"
-                  "4. Es batu secukupnya \n"
-                  "5. Topping: whipped cream, choco chips, atau buah (opsional)",
+                  "1. 300 gram dada ayam fillet → potong kecil-kecil dadu\n"
+                  "2. 2 siung bawang putih → haluskan\n"
+                  "3. 1 sdt garam\n"
+                  "4. 1/2 sdt merica bubuk\n"
+                  "5. 1/2 sdt kaldu bubuk (opsional)\n"
+                  "6. 1 butir telur (untuk celupan)\n"
+                  "7. 5 sdm tepung terigu\n"
+                  "8. 3 sdm tepung maizena (atau tepung tapioka)\n"
+                  "1 sdt baking powder (opsional, biar lebih renyah)\n"
+                  "10. Minyak goreng secukupnya\n",
                 ),
               ),
 
@@ -159,34 +165,14 @@ class ResepMilkshake extends StatelessWidget {
                   SizedBox(
                     width: 85,
                     height: 85,
-                    child: Image.asset("assets/images/milkshake/ms1.jpg"),
+                    child: Image.asset("assets/images/chicken_popcorn/cp1.jpg"),
                   ),
                   Padding(padding: EdgeInsets.only(left: 5)),
                   Expanded(
                     child: Text(
-                      "1. Masukkan susu, es krim, gula/sirup, dan es batu ke dalam blender.",
+                      "1. Potong Ayam → Dada ayam fillet dipotong kecil berbentuk dadu.",
                     ),
                   ),
-                ],
-              ),
-
-              SizedBox(height: 10),
-
-              Row(
-                
-                children: [
-                  SizedBox(
-                    width: 80,
-                    height: 80,
-                    child: Image.asset("assets/images/milkshake/ms2.jpg"),
-                  ),
-                  Padding(padding: EdgeInsets.only(left: 5)),
-                  Expanded(
-                    child: Text(
-                      "2. Blender hingga semua bahan halus dan berbusa.",
-                    ),
-                  ),
-                  
                 ],
               ),
 
@@ -197,15 +183,14 @@ class ResepMilkshake extends StatelessWidget {
                   SizedBox(
                     width: 80,
                     height: 80,
-                    child: Image.asset("assets/images/milkshake/ms3.jpg"),
+                    child: Image.asset("assets/images/chicken_popcorn/cp2.jpg"),
                   ),
                   Padding(padding: EdgeInsets.only(left: 5)),
                   Expanded(
                     child: Text(
-                      "3. Tuang ke dalam gelas tinggi.",
+                      "2. Bumbui → Campur dengan bawang putih, garam, merica, dan kaldu bubuk, lalu diamkan sebentar.",
                     ),
                   ),
-                  
                 ],
               ),
 
@@ -216,15 +201,14 @@ class ResepMilkshake extends StatelessWidget {
                   SizedBox(
                     width: 80,
                     height: 80,
-                    child: Image.asset("assets/images/milkshake/ms4.jpg"),
+                    child: Image.asset("assets/images/chicken_popcorn/cp3.jpg"),
                   ),
                   Padding(padding: EdgeInsets.only(left: 5)),
                   Expanded(
                     child: Text(
-                      "4. Tambahkan topping sesuai selera seperti whipped cream, cokelat parut, atau potongan buah.",
+                      "3. Siapkan Tepung → Campur tepung terigu, tepung maizena, dan baking powder.",
                     ),
                   ),
-                  
                 ],
               ),
 
@@ -235,19 +219,92 @@ class ResepMilkshake extends StatelessWidget {
                   SizedBox(
                     width: 80,
                     height: 80,
-                    child: Image.asset("assets/images/milkshake/ms5.jpg"),
+                    child: Image.asset("assets/images/chicken_popcorn/cp4.jpg"),
                   ),
                   Padding(padding: EdgeInsets.only(left: 5)),
                   Expanded(
                     child: Text(
-                      "5. Sajikan segera dalam keadaan dingin.",
+                      "4. Celupkan → Gulingkan ayam ke telur kocok, lalu balur dengan campuran tepung.",
                     ),
                   ),
-                  
                 ],
               ),
 
               SizedBox(height: 10),
+
+              Row(
+                children: [
+                  SizedBox(
+                    width: 80,
+                    height: 80,
+                    child: Image.asset("assets/images/chicken_popcorn/cp5.jpg"),
+                  ),
+                  Padding(padding: EdgeInsets.only(left: 5)),
+                  Expanded(
+                    child: Text(
+                      "5. Panaskan minyak, goreng ayam hingga kuning keemasan, lalu tiriskan.",
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(height: 10),
+
+              Row(
+                children: [
+                  SizedBox(
+                    width: 80,
+                    height: 80,
+                    child: Image.asset("assets/images/chicken_popcorn/cp6.jpg"),
+                  ),
+                  Padding(padding: EdgeInsets.only(left: 5)),
+                  Expanded(child: Text("6. Sajikan chicken popcorn (tambahkan saus jika suka).")),
+                ],
+              ),
+
+              Padding(padding: EdgeInsets.only(top: 25)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 350,
+                    height: 120,
+                    child: Stack(
+                      children: [
+                        Card(
+                          color: const Color.fromARGB(255, 185, 185, 185),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(padding: EdgeInsets.only(top: 10)),
+                              Icon(
+                                Icons.warning,
+                                color: Colors.amberAccent,
+                                size: 50,
+                              ),
+                              Padding(padding: EdgeInsets.only(left: 10)),
+                              Text(
+                                "\n"
+                                "Tidak Disarankan Bagi Yang Memiliki\n"
+                                "- Kolestrol \n"
+                                "- Hipertensi \n"
+                                "- Diabetes\n",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              
+                  Padding(padding: EdgeInsets.only(top: 30))
             ],
           ),
         ),

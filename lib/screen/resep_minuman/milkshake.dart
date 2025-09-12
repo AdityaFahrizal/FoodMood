@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:food_mood_2/screen/sng_page.dart';
-
-class ResepBurger extends StatelessWidget {
-  const ResepBurger({super.key});
+import 'package:food_mood_2/screen/senang/sng_page.dart';
+class ResepMilkshake extends StatelessWidget {
+  const ResepMilkshake({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +50,7 @@ class ResepBurger extends StatelessWidget {
 
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: const Color(0xFFA6B28B),
+                    color: const Color(0xFF8BA3B2),
                   ),
                   child: Column(
                     children: [
@@ -59,7 +58,7 @@ class ResepBurger extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.asset(
-                          "assets/images/makanan/b.jpg",
+                          "assets/images/minuman/ms.jpg",
                           fit: BoxFit.cover,
                           width: 350,
                           height: 200,
@@ -71,7 +70,7 @@ class ResepBurger extends StatelessWidget {
                         child: Column(
                           children: [
                             Text(
-                              "Burger",
+                              "Milkshake",
                               style: TextStyle(
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold,
@@ -82,7 +81,7 @@ class ResepBurger extends StatelessWidget {
                             Container(
                               padding: EdgeInsets.all(10.0),
                               child: Text(
-                                "Burger dengan isi-an Daging Sapi, Sayuran Segar, Dan Keju Mozarella Yang Meleleh",
+                                "Milkshake adalah minuman segar berbahan susu dan es krim.",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 15,
@@ -105,7 +104,7 @@ class ResepBurger extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    "20 Menit",
+                                    "10 Menit",
                                     style: TextStyle(
                                       fontSize: 15,
                                       color: const Color.fromARGB(
@@ -135,18 +134,11 @@ class ResepBurger extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 5),
                 child: Text(
-                  "1. Daging sapi giling 150 gram\n"
-                  "2. Bawang putih 2 siung (cincang halus)\n"
-                  "3. Bawang bombay 2 butir (cincang halus)\n"
-                  "4. Tepung roti 2 sdm\n"
-                  "5. Telur 1 butir\n"
-                  "6. Garam 1 sdt\n"
-                  "7. Merica bubuk ½ sdt\n"
-                  "8. Mentega Secukupnya\n"
-                  "9. Keju slice\n"
-                  "10. Roti burger 2 buah\n"
-                  "11. Selada, tomat, timun\n"
-                  "12. Tomat 1 buah iris tipis",
+                  "1. 200 ml susu dingin \n"
+                  "2. 2 scoop es krim (rasa sesuai selera, misalnya vanila/cokelat/stroberi) \n"
+                  "3. 2 sdm gula atau sirup (opsional) \n"
+                  "4. Es batu secukupnya \n"
+                  "5. Topping: whipped cream, choco chips, atau buah (opsional)",
                 ),
               ),
 
@@ -167,16 +159,12 @@ class ResepBurger extends StatelessWidget {
                   SizedBox(
                     width: 85,
                     height: 85,
-                    child: Image.asset("assets/images/burger/b7.jpg"),
+                    child: Image.asset("assets/images/milkshake/ms1.jpg"),
                   ),
                   Padding(padding: EdgeInsets.only(left: 5)),
                   Expanded(
                     child: Text(
-                      "1. Membuat Patty Daging"
-                      "Campur daging sapi giling dengan"
-                      "bawang putih, bawang bombay, garam,"
-                      "lada, dan tepung roti."
-                      "Bentuk adonan bulat pipih.",
+                      "1. Masukkan susu, es krim, gula/sirup, dan es batu ke dalam blender.",
                     ),
                   ),
                 ],
@@ -190,14 +178,12 @@ class ResepBurger extends StatelessWidget {
                   SizedBox(
                     width: 80,
                     height: 80,
-                    child: Image.asset("assets/images/burger/b3.jpg"),
+                    child: Image.asset("assets/images/milkshake/ms2.jpg"),
                   ),
                   Padding(padding: EdgeInsets.only(left: 5)),
                   Expanded(
                     child: Text(
-                      "2. Memasak Patty"
-                      "Panaskan sedikit minyak di wajan, masak patty"
-                      "hingga matang kecoklatan.",
+                      "2. Blender hingga semua bahan halus dan berbusa.",
                     ),
                   ),
                   
@@ -211,14 +197,12 @@ class ResepBurger extends StatelessWidget {
                   SizedBox(
                     width: 80,
                     height: 80,
-                    child: Image.asset("assets/images/burger/b8.jpg"),
+                    child: Image.asset("assets/images/milkshake/ms3.jpg"),
                   ),
                   Padding(padding: EdgeInsets.only(left: 5)),
                   Expanded(
                     child: Text(
-                      "3. Menyiapkan Saus"
-                      "Campurkan mayones, saus tomat,"
-                      "dan saus sambal. Aduk rata.",
+                      "3. Tuang ke dalam gelas tinggi.",
                     ),
                   ),
                   
@@ -232,14 +216,12 @@ class ResepBurger extends StatelessWidget {
                   SizedBox(
                     width: 80,
                     height: 80,
-                    child: Image.asset("assets/images/burger/b9.jpg"),
+                    child: Image.asset("assets/images/milkshake/ms4.jpg"),
                   ),
                   Padding(padding: EdgeInsets.only(left: 5)),
                   Expanded(
                     child: Text(
-                      "4. Menyiapkan Roti Burger"
-                      "Belah roti, oleskan mentega,"
-                      "lalu panggang sebentar.",
+                      "4. Tambahkan topping sesuai selera seperti whipped cream, cokelat parut, atau potongan buah.",
                     ),
                   ),
                   
@@ -253,34 +235,60 @@ class ResepBurger extends StatelessWidget {
                   SizedBox(
                     width: 80,
                     height: 80,
-                    child: Image.asset("assets/images/burger/b5.jpg"),
+                    child: Image.asset("assets/images/milkshake/ms5.jpg"),
                   ),
                   Padding(padding: EdgeInsets.only(left: 5)),
                   Expanded(
                     child: Text(
-                      "5. Merakit Burger"
-                      "Susun roti, saus, sayuran, patty, keju,"
-                      "dan tutup dengan roti.",
+                      "5. Sajikan segera dalam keadaan dingin.",
                     ),
                   ),
                   
                 ],
               ),
-
-              SizedBox(height: 10),
-
+Padding(padding: EdgeInsets.only(top: 25)),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: 80,
-                    height: 80,
-                    child: Image.asset("assets/images/burger/b6.jpg"),
+                    width: 350,
+                    height: 120,
+                    child: Stack(
+                      children: [
+                        Card(
+                          color: const Color.fromARGB(255, 185, 185, 185),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(padding: EdgeInsets.only(top: 10)),
+                              Icon(
+                                Icons.warning,
+                                color: Colors.amberAccent,
+                                size: 50,
+                              ),
+                              Padding(padding: EdgeInsets.only(left: 10)),
+                              Text(
+                                "\n"
+                                "Tidak Disarankan Bagi Yang Memiliki\n"
+                                "- Diabetes \n"
+                                "- Penyakit Jantung\n"
+                                "- Obesitas\n",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  Padding(padding: EdgeInsets.only(left: 5)),
-                  Expanded(child: Text("6. Sajikan")),
-                  
                 ],
               ),
+              
+                  Padding(padding: EdgeInsets.only(top: 30))
             ],
           ),
         ),
