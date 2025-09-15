@@ -23,12 +23,6 @@ class ResepBurger2 extends StatelessWidget {
               ),
             ),
           ),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.menu, color: Colors.white),
-            ),
-          ],
           leading: IconButton(
             onPressed: () {
               Navigator.push(

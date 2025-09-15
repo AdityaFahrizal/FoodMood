@@ -22,12 +22,6 @@ class ResepChickenPopcorn extends StatelessWidget {
               ),
             ),
           ),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.menu, color: Colors.white),
-            ),
-          ],
           leading: IconButton(
             onPressed: () {
               Navigator.push(
@@ -59,7 +53,7 @@ class ResepChickenPopcorn extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.asset(
-                          "assets/images/makanan/b.jpg",
+                          "assets/images/makanan/ap.jpg",
                           fit: BoxFit.cover,
                           width: 350,
                           height: 200,

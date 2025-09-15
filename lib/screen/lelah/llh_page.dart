@@ -5,14 +5,14 @@ import 'package:food_mood_2/screen/resep_minuman/milkshake.dart';
 import 'package:food_mood_2/screen/senang/mkn_sng.dart';
 import 'package:food_mood_2/screen/senang/mnm_sng.dart';
 
-class SenangFood extends StatefulWidget {
-  const SenangFood({super.key});
+class LelahFood extends StatefulWidget {
+  const LelahFood({super.key});
 
   @override
-  State<SenangFood> createState() => _SenangFoodState();
+  State<LelahFood> createState() => _LelahFoodState();
 }
 
-class _SenangFoodState extends State<SenangFood> {
+class _LelahFoodState extends State<LelahFood> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

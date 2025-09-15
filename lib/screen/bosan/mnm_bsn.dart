@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:food_mood_2/screen/resep_minuman/freakshake.dart';
-import 'package:food_mood_2/screen/resep_minuman/milkshake.dart';
 import 'package:food_mood_2/screen/resep_minuman/milkshake2.dart';
 import 'package:food_mood_2/screen/senang/sng_page.dart';
 

@@ -22,12 +22,6 @@ class ResepMac extends StatelessWidget {
               ),
             ),
           ),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.menu, color: Colors.white),
-            ),
-          ],
           leading: IconButton(
             onPressed: () {
               Navigator.push(
@@ -59,7 +53,7 @@ class ResepMac extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.asset(
-                          "assets/images/makanan/b.jpg",
+                          "assets/images/makanan/mac.jpg",
                           fit: BoxFit.cover,
                           width: 350,
                           height: 200,
@@ -137,7 +131,7 @@ class ResepMac extends StatelessWidget {
                 child: Text(
                   "1. 200 g makaroni\n"
                   "2. 2 sdm mentega\n"
-                  "3. 2 sdm mentega\n"
+                  "3. 2 sdm tepung terigu\n"
                   "4. 400 ml susu cair\n"
                   "5. 100 g keju cheddar parut\n"
                   "6. 50 g keju mozzarella parut (opsional)\n"
@@ -162,7 +156,7 @@ class ResepMac extends StatelessWidget {
                   SizedBox(
                     width: 85,
                     height: 85,
-                    child: Image.asset("assets/images/chicken_popcorn/cp1.jpg"),
+                    child: Image.asset("assets/images/mc/mac1.jpg"),
                   ),
                   Padding(padding: EdgeInsets.only(left: 5)),
                   Expanded(
@@ -180,7 +174,7 @@ class ResepMac extends StatelessWidget {
                   SizedBox(
                     width: 80,
                     height: 80,
-                    child: Image.asset("assets/images/chicken_popcorn/cp2.jpg"),
+                    child: Image.asset("assets/images/mc/mac2.jpg"),
                   ),
                   Padding(padding: EdgeInsets.only(left: 5)),
                   Expanded(
@@ -198,7 +192,7 @@ class ResepMac extends StatelessWidget {
                   SizedBox(
                     width: 80,
                     height: 80,
-                    child: Image.asset("assets/images/chicken_popcorn/cp3.jpg"),
+                    child: Image.asset("assets/images/mc/mac3.jpg"),
                   ),
                   Padding(padding: EdgeInsets.only(left: 5)),
                   Expanded(
@@ -216,7 +210,7 @@ class ResepMac extends StatelessWidget {
                   SizedBox(
                     width: 80,
                     height: 80,
-                    child: Image.asset("assets/images/chicken_popcorn/cp4.jpg"),
+                    child: Image.asset("assets/images/mc/mac4.jpg"),
                   ),
                   Padding(padding: EdgeInsets.only(left: 5)),
                   Expanded(
@@ -234,7 +228,7 @@ class ResepMac extends StatelessWidget {
                   SizedBox(
                     width: 80,
                     height: 80,
-                    child: Image.asset("assets/images/chicken_popcorn/cp5.jpg"),
+                    child: Image.asset("assets/images/mc/mac5.jpg"),
                   ),
                   Padding(padding: EdgeInsets.only(left: 5)),
                   Expanded(
@@ -252,10 +246,10 @@ class ResepMac extends StatelessWidget {
                   SizedBox(
                     width: 80,
                     height: 80,
-                    child: Image.asset("assets/images/chicken_popcorn/cp6.jpg"),
+                    child: Image.asset("assets/images/mc/mac6.jpg"),
                   ),
                   Padding(padding: EdgeInsets.only(left: 5)),
-                  Expanded(child: Text("6. Campur makaroni dengan saus keju, aduk rata, lalu sajikan hangat.")),
+                  Expanded(child: Text("6. Campur makaroni dengan saus keju, aduk rata.")),
                 ],
               ),
 
@@ -264,7 +258,7 @@ class ResepMac extends StatelessWidget {
                   SizedBox(
                     width: 80,
                     height: 80,
-                    child: Image.asset("assets/images/chicken_popcorn/cp6.jpg"),
+                    child: Image.asset("assets/images/mc/mac7.jpg"),
                   ),
                   Padding(padding: EdgeInsets.only(left: 5)),
                   Expanded(child: Text("7. Sajikan")),

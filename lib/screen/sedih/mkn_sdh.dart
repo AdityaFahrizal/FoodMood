@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_mood_2/screen/resep_makanan/chiken_pop.dart';
+import 'package:food_mood_2/screen/resep_makanan/mac.dart';
 import 'package:food_mood_2/screen/sedih/sdh_page.dart';
 
 class MakananSedih extends StatelessWidget {
@@ -23,12 +24,6 @@ class MakananSedih extends StatelessWidget {
               ),
             ),
           ),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.menu, color: Colors.white),
-            ),
-          ],
           leading: IconButton(
             onPressed: () {
               Navigator.push(
@@ -173,7 +168,7 @@ class MakananSedih extends StatelessWidget {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Image.asset(
-                              "assets/images/makanan/b.jpg",
+                              "assets/images/makanan/ap.jpg",
                               fit: BoxFit.cover, 
                               width: 85,
                               height: 85,
@@ -188,7 +183,7 @@ class MakananSedih extends StatelessWidget {
                               children: [
                                 Padding(padding: EdgeInsets.only(top: 10)),
                                 Text(
-                                  "Burger",
+                                  "Chicken Popcorn",
                                   style: TextStyle(
                                     fontSize: 25,
                                     fontWeight: FontWeight.bold,
@@ -198,7 +193,7 @@ class MakananSedih extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 30),
                                   child: Text(
-                                    "Daging sapi, keju leleh, saus, sayuran dalam roti burger",
+                                    "Chicken Popcorn adalah ayam kecil renyah berbumbu gurih.",
                                     style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
@@ -218,11 +213,11 @@ class MakananSedih extends StatelessWidget {
               ),
             ),
 
-            //========== sandwich ==========/
+            //========== mac and chese ==========/
             Padding(padding: EdgeInsets.only(top: 10)),
             GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ResepChickenPopcorn()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ResepMac()));
               },
               child: Container(
                 width: 380,
@@ -238,7 +233,7 @@ class MakananSedih extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.asset(
-                        "assets/images/makanan/s.jpg",
+                        "assets/images/makanan/mac.jpg",
                         fit: BoxFit.cover,
                         width: 85,
                         height: 85,
@@ -253,7 +248,7 @@ class MakananSedih extends StatelessWidget {
                         children: [
                           Padding(padding: EdgeInsets.only(top: 10)),
                           Text(
-                            "Sandwich",
+                            "Mac And Chese",
                             style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
@@ -263,7 +258,7 @@ class MakananSedih extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 30),
                             child: Text(
-                              "Sandwich adalah roti isi daging, sayur, dan keju yang simpel.",
+                              "Mac and cheese adalah makaroni dengan saus keju creamy dan gurih.",
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,

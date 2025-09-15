@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:food_mood_2/screen/resep_makanan/burger.dart';
 import 'package:food_mood_2/screen/dashboard.dart';
-import 'package:food_mood_2/screen/resep_minuman/milkshake.dart';
-import 'package:food_mood_2/screen/senang/mkn_sng.dart';
-import 'package:food_mood_2/screen/senang/mnm_sng.dart';
+import 'package:food_mood_2/screen/resep_makanan/burger.dart';
+import 'package:food_mood_2/screen/resep_minuman/milkshake2.dart';
 
-class SenangFood extends StatefulWidget {
-  const SenangFood({super.key});
+class Organicfood extends StatelessWidget {
+  const Organicfood({super.key});
 
-  @override
-  State<SenangFood> createState() => _SenangFoodState();
-}
-
-class _SenangFoodState extends State<SenangFood> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -40,7 +33,7 @@ class _SenangFoodState extends State<SenangFood> {
                     Scaffold.of(context).openDrawer();
                   },
                 );
-              },
+              }
             ),
           ],
           leading: IconButton(
@@ -98,102 +91,6 @@ class _SenangFoodState extends State<SenangFood> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(padding: EdgeInsets.only(top: 100)),
-                    SizedBox(
-                      width: 180,
-                      height: 50,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.zero,
-                          shadowColor: Colors.transparent,
-                          backgroundColor: const Color(0xFFA6B28B),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadiusGeometry.circular(12),
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MakananSenang(),
-                            ),
-                          );
-                        },
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsetsGeometry.symmetric(
-                                horizontal: 18,
-                              ),
-                            ),
-                            Icon(Icons.fastfood, color: Colors.white, size: 25),
-                            Padding(padding: EdgeInsets.only(left: 10)),
-                            Text(
-                              "Makanan",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      //============================================================ Minuman ============================================================//
-                    ),
-                    Padding(padding: EdgeInsets.only(top: 100, left: 12)),
-                    SizedBox(
-                      width: 180,
-                      height: 50,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.zero,
-                          shadowColor: Colors.transparent,
-                          backgroundColor: const Color(0xFF8BA3B2),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadiusGeometry.circular(12),
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MinumanSenang(),
-                            ),
-                          );
-                        },
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsetsGeometry.symmetric(
-                                horizontal: 18,
-                              ),
-                            ),
-                            Icon(
-                              Icons.local_cafe,
-                              color: Colors.white,
-                              size: 25,
-                            ),
-                            Padding(padding: EdgeInsets.only(left: 10)),
-                            Text(
-                              "Minuman",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               Padding(padding: EdgeInsets.only(top: 10)),
               SizedBox(
                 width: 350,
@@ -366,7 +263,7 @@ class _SenangFoodState extends State<SenangFood> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ResepMilkshake()),
+                    MaterialPageRoute(builder: (context) => ResepMilkshake2()),
                   );
                 },
                 child: Container(

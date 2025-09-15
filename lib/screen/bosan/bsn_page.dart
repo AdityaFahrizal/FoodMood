@@ -5,14 +5,14 @@ import 'package:food_mood_2/screen/resep_minuman/milkshake.dart';
 import 'package:food_mood_2/screen/senang/mkn_sng.dart';
 import 'package:food_mood_2/screen/senang/mnm_sng.dart';
 
-class SenangFood extends StatefulWidget {
-  const SenangFood({super.key});
+class BosanFood extends StatefulWidget {
+  const BosanFood({super.key});
 
   @override
-  State<SenangFood> createState() => _SenangFoodState();
+  State<BosanFood> createState() => _BosanFoodState();
 }
 
-class _SenangFoodState extends State<SenangFood> {
+class _BosanFoodState extends State<BosanFood> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -40,7 +40,7 @@ class _SenangFoodState extends State<SenangFood> {
                     Scaffold.of(context).openDrawer();
                   },
                 );
-              },
+              }
             ),
           ],
           leading: IconButton(
@@ -83,16 +83,13 @@ class _SenangFoodState extends State<SenangFood> {
                     leading: Icon(Icons.home),
                     title: Text("Home"),
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Home()),
-                      );
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
                     },
                   ),
                 ],
               ),
             );
-          },
+          }
         ),
 
         body: SingleChildScrollView(

@@ -1,5 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:food_mood_2/screen/bosan/bsn_page.dart';
+import 'package:food_mood_2/screen/kategori%20makanan/comfortfood.dart';
+import 'package:food_mood_2/screen/kategori%20makanan/dietfood.dart';
+import 'package:food_mood_2/screen/kategori%20makanan/healtyfood.dart';
+import 'package:food_mood_2/screen/kategori%20makanan/junkfood.dart';
+import 'package:food_mood_2/screen/kategori%20makanan/organicfood.dart';
+import 'package:food_mood_2/screen/kategori%20makanan/pastryfood.dart';
+import 'package:food_mood_2/screen/kategori%20makanan/processedfppd.dart';
+import 'package:food_mood_2/screen/kategori%20makanan/sweetsfood.dart';
+import 'package:food_mood_2/screen/kategori%20makanan/wholefood.dart';
+import 'package:food_mood_2/screen/lelah/llh_page.dart';
+import 'package:food_mood_2/screen/marah/mrh_page.dart';
+import 'package:food_mood_2/screen/profile.dart';
 import 'package:food_mood_2/screen/sedih/sdh_page.dart';
 import 'package:food_mood_2/screen/senang/sng_page.dart';
 
@@ -24,17 +36,76 @@ class _HomeState extends State<Home> {
             style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
-              
+
               color: Colors.white,
               fontStyle: FontStyle.italic,
             ),
           ),
+          automaticallyImplyLeading: false,
           actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.menu, color: Colors.white),
+            Builder(
+              builder: (context) {
+                return IconButton(
+                  icon: Icon(Icons.menu, color: Colors.white),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                );
+              },
             ),
           ],
+        ),
+
+        drawer: Builder(
+          builder: (context) {
+            return Drawer(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  DrawerHeader(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFF714B),
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(20),
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Food Mood",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.home),
+                    title: Text("Home"),
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                    },
+                  ),  
+                  ListTile(
+                    leading: Icon(Icons.settings),
+                    title: Text("Profile"),
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.favorite),
+                    title: Text("Favorit"),
+                    onTap: () {
+                      // Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
+                    },
+                  ),
+                ],
+              ),
+            );
+          }
         ),
 
         body: SingleChildScrollView(
@@ -70,9 +141,7 @@ class _HomeState extends State<Home> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-
                     //=================== SENANG ===================//
-
                     SizedBox(
                       width: 65,
                       height: 100,
@@ -119,14 +188,18 @@ class _HomeState extends State<Home> {
                     ),
 
                     //=================== SEDIH ===================//
-
                     SizedBox(
                       width: 65,
                       height: 100,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => SedihPage()));
-                          },
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SedihPage(),
+                            ),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.zero,
                           shadowColor: Colors.transparent,
@@ -161,13 +234,18 @@ class _HomeState extends State<Home> {
                     ),
 
                     //=================== MARAH ===================//
-
                     SizedBox(
                       width: 65,
                       height: 100,
                       child: ElevatedButton(
                         onPressed: () {
-                          },
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MarahFood(),
+                            ),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.zero,
                           shadowColor: Colors.transparent,
@@ -202,13 +280,18 @@ class _HomeState extends State<Home> {
                     ),
 
                     //=================== LELAH ===================//
-
                     SizedBox(
                       width: 65,
                       height: 100,
                       child: ElevatedButton(
                         onPressed: () {
-                          },
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LelahFood(),
+                            ),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.zero,
                           shadowColor: Colors.transparent,
@@ -243,13 +326,18 @@ class _HomeState extends State<Home> {
                     ),
 
                     //=================== BOSAN ===================//
-
                     SizedBox(
                       width: 65,
                       height: 100,
                       child: ElevatedButton(
                         onPressed: () {
-                          },
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BosanFood(),
+                            ),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.zero,
                           shadowColor: Colors.transparent,
@@ -296,7 +384,6 @@ class _HomeState extends State<Home> {
               ),
 
               //=================== Junk Food ====================//
-
               SizedBox(
                 width: 380,
                 height: 160,
@@ -332,7 +419,14 @@ class _HomeState extends State<Home> {
                       Padding(
                         padding: const EdgeInsets.only(left: 270),
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Junkfood(),
+                              ),
+                            );
+                          },
                           child: Text(
                             "see details",
                             style: TextStyle(
@@ -349,7 +443,6 @@ class _HomeState extends State<Home> {
               ),
 
               //=================== Healty Food ====================//
-
               Padding(padding: EdgeInsets.only(top: 15)),
               SizedBox(
                 width: 380,
@@ -386,7 +479,14 @@ class _HomeState extends State<Home> {
                       Padding(
                         padding: const EdgeInsets.only(left: 270),
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Healtyfood(),
+                              ),
+                            );
+                          },
                           child: Text(
                             "see details",
                             style: TextStyle(
@@ -403,7 +503,6 @@ class _HomeState extends State<Home> {
               ),
 
               //=================== Whole Food ====================//
-
               Padding(padding: EdgeInsets.only(top: 15)),
               SizedBox(
                 width: 380,
@@ -440,7 +539,14 @@ class _HomeState extends State<Home> {
                       Padding(
                         padding: const EdgeInsets.only(left: 270),
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Wholefood(),
+                              ),
+                            );
+                          },
                           child: Text(
                             "see details",
                             style: TextStyle(
@@ -456,8 +562,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
 
-            //=================== Proses Food ====================//
-
+              //=================== Proses Food ====================//
               Padding(padding: EdgeInsets.only(top: 15)),
               SizedBox(
                 width: 380,
@@ -494,7 +599,14 @@ class _HomeState extends State<Home> {
                       Padding(
                         padding: const EdgeInsets.only(left: 270),
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Processedfood(),
+                              ),
+                            );
+                          },
                           child: Text(
                             "see details",
                             style: TextStyle(
@@ -510,8 +622,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
 
-            //=================== Organic Food ====================//
-
+              //=================== Organic Food ====================//
               Padding(padding: EdgeInsets.only(top: 15)),
               SizedBox(
                 width: 380,
@@ -548,7 +659,14 @@ class _HomeState extends State<Home> {
                       Padding(
                         padding: const EdgeInsets.only(left: 270),
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Organicfood(),
+                              ),
+                            );
+                          },
                           child: Text(
                             "see details",
                             style: TextStyle(
@@ -564,8 +682,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
 
-            //=================== Confort Food ====================//
-
+              //=================== Confort Food ====================//
               Padding(padding: EdgeInsets.only(top: 15)),
               SizedBox(
                 width: 380,
@@ -602,7 +719,14 @@ class _HomeState extends State<Home> {
                       Padding(
                         padding: const EdgeInsets.only(left: 270),
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Comfortfood(),
+                              ),
+                            );
+                          },
                           child: Text(
                             "see details",
                             style: TextStyle(
@@ -618,8 +742,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
 
-            //=================== Diet Food ====================//
-
+              //=================== Diet Food ====================//
               Padding(padding: EdgeInsets.only(top: 15)),
               SizedBox(
                 width: 380,
@@ -656,7 +779,14 @@ class _HomeState extends State<Home> {
                       Padding(
                         padding: const EdgeInsets.only(left: 270),
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Dietfood(),
+                              ),
+                            );
+                          },
                           child: Text(
                             "see details",
                             style: TextStyle(
@@ -672,8 +802,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
 
-            //=================== Diet Food ====================//
-
+              //=================== Diet Food ====================//
               Padding(padding: EdgeInsets.only(top: 15)),
               SizedBox(
                 width: 380,
@@ -710,7 +839,14 @@ class _HomeState extends State<Home> {
                       Padding(
                         padding: const EdgeInsets.only(left: 270),
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Pastryfood(),
+                              ),
+                            );
+                          },
                           child: Text(
                             "see details",
                             style: TextStyle(
@@ -726,8 +862,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
 
-            //=================== Sweets Food ====================//
-
+              //=================== Sweets Food ====================//
               Padding(padding: EdgeInsets.only(top: 15)),
               SizedBox(
                 width: 380,
@@ -764,7 +899,14 @@ class _HomeState extends State<Home> {
                       Padding(
                         padding: const EdgeInsets.only(left: 270),
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Sweetsfood(),
+                              ),
+                            );
+                          },
                           child: Text(
                             "see details",
                             style: TextStyle(

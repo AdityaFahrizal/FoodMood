@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:food_mood_2/screen/resep_minuman/freakshake.dart';
-import 'package:food_mood_2/screen/resep_minuman/milkshake.dart';
+import 'package:food_mood_2/screen/dashboard.dart';
+import 'package:food_mood_2/screen/resep_makanan/burger.dart';
 import 'package:food_mood_2/screen/resep_minuman/milkshake2.dart';
-import 'package:food_mood_2/screen/senang/sng_page.dart';
 
-class MinumanSenang extends StatelessWidget {
-  const MinumanSenang({super.key});
+class Comfortfood extends StatelessWidget {
+  const Comfortfood({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +24,24 @@ class MinumanSenang extends StatelessWidget {
               ),
             ),
           ),
+          actions: [
+            Builder(
+              builder: (context) {
+                return IconButton(
+                  icon: Icon(Icons.menu, color: Colors.white),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  
+                );
+              }
+            ),
+          ],
           leading: IconButton(
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SenangFood()),
+                MaterialPageRoute(builder: (context) => Home()),
               );
             },
             icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -37,13 +49,11 @@ class MinumanSenang extends StatelessWidget {
         ),
 
         body: SingleChildScrollView(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+          child: Column(
           children: [
             Padding(padding: EdgeInsets.only(top: 10)),
             SizedBox(
-              width: 350,
+              width:350,
               height: 40,
               child: SearchBar(
                 textInputAction: TextInputAction.search,
@@ -147,70 +157,63 @@ class MinumanSenang extends StatelessWidget {
             // ),
 
 
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ResepFreakshake()));
-                    },
-                    child: Container(
-                      width: 380,
-                      height: 100,
-                  
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: const Color(0xFF8BA3B2),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ResepBurger()));
+              },
+              child: Container(
+                width: 380,
+                height: 100,
+
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: const Color(0xFFA6B28B),
+                ),
+                child: Row(
+                  children: [
+                    Padding(padding: EdgeInsets.only(left: 8)),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        "assets/images/makanan/b.jpg",
+                        fit: BoxFit.cover,
+                        width: 85,
+                        height: 85,
                       ),
-                      child: Row(
+                    ),
+                    Padding(padding: EdgeInsets.only(top: 2, left: 10)),
+
+                    SizedBox(
+                      width: 250,
+                      height: 120,
+                      child: Column(
                         children: [
-                          Padding(padding: EdgeInsets.only(left: 8)),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.asset(
-                              "assets/images/minuman/fs.jpg",
-                              fit: BoxFit.cover, 
-                              width: 85,
-                              height: 85,
+                          Padding(padding: EdgeInsets.only(top: 10)),
+                          Text(
+                            "Burger",
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
                             ),
                           ),
-                          Padding(padding: EdgeInsets.only(top: 2, left: 10)),
-                  
-                          SizedBox(
-                            width: 250,
-                            height: 120,
-                            child: Column(
-                              children: [
-                                Padding(padding: EdgeInsets.only(top: 10)),
-                                Text(
-                                  "Freakshake",
-                                  style: TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 30),
-                                  child: Text(
-                                    "Freakshake adalah minuman dengan topping yang berlimpah.",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                          Padding(
+                            padding: const EdgeInsets.only(left: 30),
+                            child: Text(
+                              "Daging sapi, keju leleh, saus, sayuran dalam roti burger",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
                             ),
                           ),
-                          Padding(padding: EdgeInsets.only(top: 2, left: 10)),
                         ],
                       ),
                     ),
-                  ),
-                ],
+                    Padding(padding: EdgeInsets.only(top: 2, left: 10)),
+                  ],
+                ),
               ),
             ),
 
@@ -278,7 +281,6 @@ class MinumanSenang extends StatelessWidget {
 
           ],
         ),
-          )
         )
       ),
     );
