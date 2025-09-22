@@ -19,7 +19,7 @@ class _LoginState extends State<Login> {
         body: SingleChildScrollView(
           child: Column(
           children: [
-            Padding(padding: EdgeInsets.only(top: 50)),
+            Padding(padding: EdgeInsets.only(top: 45)),
             Image.asset("assets/images/background.png"),
             Padding(padding: EdgeInsets.only(top: 100)),
             Center(

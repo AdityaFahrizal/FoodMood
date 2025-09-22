@@ -16,13 +16,35 @@ import 'package:food_mood_2/screen/sedih/sdh_page.dart';
 import 'package:food_mood_2/screen/senang/sng_page.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
-
   @override
-  State<Home> createState() => _HomeState();
+  _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+  final Map<String, Widget> pages = {
+    "Junk Food": Junkfood(),
+    "Whole Food": Wholefood(),
+    "Healty Food": Healtyfood(),
+  };
+
+  List<String> filteredData = [];
+  String query = "";
+
+  @override
+  void initState() {
+    super.initState();
+    filteredData = pages.keys.toList();
+  }
+
+  void _filterData(String input) {
+    setState(() {
+      query = input;
+      filteredData = pages.keys
+          .where((item) => item.toLowerCase().contains(input.toLowerCase()))
+          .toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -85,27 +107,31 @@ class _HomeState extends State<Home> {
                     leading: Icon(Icons.home),
                     title: Text("Home"),
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Home()),
+                      );
                     },
-                  ),  
+                  ),
                   ListTile(
-                    leading: Icon(Icons.settings),
+                    leading: Icon(Icons.person),
                     title: Text("Profile"),
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Profile()),
+                      );
                     },
                   ),
                   ListTile(
                     leading: Icon(Icons.favorite),
                     title: Text("Favorit"),
-                    onTap: () {
-                      // Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
-                    },
+                    onTap: () {},
                   ),
                 ],
               ),
             );
-          }
+          },
         ),
 
         body: SingleChildScrollView(
@@ -118,6 +144,7 @@ class _HomeState extends State<Home> {
                 child: SearchBar(
                   textInputAction: TextInputAction.search,
                   leading: Icon(Icons.search),
+                  onChanged: _filterData,
                   hintText: "Cari di sini...",
                   shape: WidgetStateProperty.all(
                     RoundedRectangleBorder(
@@ -922,6 +949,24 @@ class _HomeState extends State<Home> {
                 ),
               ),
               Padding(padding: EdgeInsets.only(top: 15)),
+              Expanded(
+            child: ListView.builder(
+              itemCount: filteredData.length,
+              itemBuilder: (context, index) {
+                final keyword = filteredData[index];
+                return ListTile(
+                  title: Text(keyword),
+                  onTap: () {
+                    // Navigate ke page sesuai keyword
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => pages[keyword]!),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
             ],
           ),
         ),
