@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -28,7 +29,7 @@ class _AuthScreenState extends State<AuthScreen> {
     }
   }
 
-  void _login() async {
+  void _login() async { 
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailcotroler.text,

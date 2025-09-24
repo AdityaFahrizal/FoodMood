@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "581358665843",
-    "project_id": "food-mood-396fa",
-    "storage_bucket": "food-mood-396fa.firebasestorage.app"
+    "project_number": "431633220666",
+    "project_id": "food-mood-168ed",
+    "storage_bucket": "food-mood-168ed.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:581358665843:android:47a45282087f87c4c82a06",
+        "mobilesdk_app_id": "1:431633220666:android:bb640907564bc2914c6103",
         "android_client_info": {
-          "package_name": "com.example.food_mood_2"
+          "package_name": "com.example.food_mood"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDlxcX2bwrS4A1aW3e5Kui7r9M83cxnrXQ"
+          "current_key": "AIzaSyAqHtcBJRd2wOVU8NZMiI1wp4J0YYofmQk"
         }
       ],
       "services": {

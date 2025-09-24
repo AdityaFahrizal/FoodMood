@@ -1,5 +1,9 @@
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:food_mood_2/screen/login.dart';
+import 'package:food_mood_2/screen/login..dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -9,31 +13,127 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  String _message = "";
   bool _obscureText = true;
+  bool _isLoading = false;
+
+  void _register() async {
+    if (!mounted) return;
+
+    setState(() {
+      _isLoading = true;
+      _message = "";
+    });
+
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+
+      User? user = userCredential.user;
+
+      if (user != null) {
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+          'username': _usernameController.text.trim(),
+        });
+
+        if (!mounted) return;
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text("Registrasi Berhasil! Silakan Login."),
+              backgroundColor: Colors.green),
+        );
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const Login()),
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      String errorMessage = "Terjadi kesalahan";
+      if (e.code == 'email-already-in-use') {
+        errorMessage = "Email sudah digunakan!";
+      } else if (e.code == 'invalid-email') {
+        errorMessage = "Format email tidak valid!";
+      } else if (e.code == 'weak-password') {
+        errorMessage = "Password terlalu lemah! (minimal 6 karakter)";
+      }
+
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text("Registrasi Gagal"),
+          content: Text(errorMessage),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text("Error"),
+          content: Text("Terjadi kesalahan yang tidak diketahui: $e"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
           children: [
-            Padding(padding: EdgeInsets.only(top: 45)),
+            const Padding(padding: EdgeInsets.only(top: 45)),
             Image.asset("assets/images/background.png"),
-            Padding(padding: EdgeInsets.only(top: 100)),
+            const Padding(padding: EdgeInsets.only(top: 25)),
             Center(
-              child: SizedBox(
-                width: 350,
-                height: 420,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  color: const Color.fromARGB(255, 231, 231, 231),
+              child: Card(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                color: const Color.fromARGB(255, 231, 231, 231),
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Padding(padding: EdgeInsets.only(top: 20)),
-                      Text(
+                      const Text(
                         "Register",
                         style: TextStyle(
                           fontSize: 25,
@@ -41,90 +141,94 @@ class _RegisterState extends State<Register> {
                           fontStyle: FontStyle.italic,
                         ),
                       ),
+                      const SizedBox(height: 20),
 
-                      //usn
-                      Padding(padding: EdgeInsets.only(top: 15)),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            label: Text("Username"),
-                            prefixIcon: Icon(Icons.person),
-                            hintText: "Masukan Username Kalian",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
+                      TextField(
+                        controller: _usernameController,
+                        decoration: InputDecoration(
+                          label: const Text("Username"),
+                          prefixIcon: const Icon(Icons.person),
+                          hintText: "Masukan Username Kalian",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                       ),
-                      
-                      //email
-                      Padding(padding: EdgeInsets.only(top: 15)),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            label: Text("Email"),
-                            prefixIcon: Icon(Icons.mail),
-                            hintText: "Masukan Email Kalian",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                      const SizedBox(height: 15),
+
+                      // Email
+                      TextField(
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          label: const Text("Email"),
+                          prefixIcon: const Icon(Icons.mail),
+                          hintText: "Masukan Email Kalian",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                      const SizedBox(height: 15),
+
+                      // Password
+                      TextField(
+                        controller: _passwordController,
+                        obscureText: _obscureText,
+                        decoration: InputDecoration(
+                          label: const Text("Password"),
+                          prefixIcon: const Icon(Icons.lock),
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
+                            icon: Icon(
+                              _obscureText
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
                             ),
+                          ),
+                          hintText: "Masukan Password Kalian",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                       ),
+                      const SizedBox(height: 25),
 
-                      //password
-                      Padding(padding: EdgeInsets.only(top: 10)),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: TextField(
-                          obscureText: _obscureText,
-                          decoration: InputDecoration(
-                            label: Text("Password"),
-                            prefixIcon: Icon(Icons.lock),
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  _obscureText = !_obscureText;
-                                });
-                              },
-                              icon: Icon(
-                                _obscureText
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
+                      _isLoading
+                          ? const CircularProgressIndicator()
+                          : SizedBox(
+                              width: double.infinity,
+                              height: 50,
+                              child: ElevatedButton(
+                                onPressed: _register,
+                                child: const Text(
+                                  "Register",
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                ),
                               ),
                             ),
-                            hintText: "Masukan Password Kalian",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        ),
-                      ),
 
-                      //button
-                      Padding(padding: EdgeInsets.only(top: 20)),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Register",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Padding(padding: EdgeInsets.only(top: 15)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             "Sudah Punya Akun?",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           TextButton(
                             onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Login(),
+                                ),
+                              );
                             },
-                            child: Text(
+                            child: const Text(
                               "Login",
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
@@ -138,7 +242,6 @@ class _RegisterState extends State<Register> {
             ),
           ],
         ),
-        )
       ),
     );
   }
