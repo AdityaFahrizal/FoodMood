@@ -1,9 +1,7 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:food_mood_2/screen/login..dart';
+import 'package:food_mood_2/screen/auth/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -13,11 +11,10 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _namecontroler = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  String _message = "";
   bool _obscureText = true;
   bool _isLoading = false;
 
@@ -26,7 +23,6 @@ class _RegisterState extends State<Register> {
 
     setState(() {
       _isLoading = true;
-      _message = "";
     });
 
     try {
@@ -39,16 +35,27 @@ class _RegisterState extends State<Register> {
       User? user = userCredential.user;
 
       if (user != null) {
+        final name = _namecontroler.text.trim();
+
         await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-          'username': _usernameController.text.trim(),
+          "uid": user.uid,
+          "Nama": name,
+          "Email": user.email,  
+          "Waktu  Register": FieldValue.serverTimestamp(),
         });
+
+        _namecontroler.clear();
+
+        await user.updateDisplayName(name);
+        await user.reload();
 
         if (!mounted) return;
 
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-              content: Text("Registrasi Berhasil! Silakan Login."),
-              backgroundColor: Colors.green),
+            content: Text("Registrasi Berhasil! Silakan Login."),
+            backgroundColor: Colors.green,
+          ),
         );
 
         Navigator.pushReplacement(
@@ -106,7 +113,7 @@ class _RegisterState extends State<Register> {
 
   @override
   void dispose() {
-    _usernameController.dispose();
+    _namecontroler.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -143,12 +150,13 @@ class _RegisterState extends State<Register> {
                       ),
                       const SizedBox(height: 20),
 
+                      // Input Nama
                       TextField(
-                        controller: _usernameController,
+                        controller: _namecontroler,
                         decoration: InputDecoration(
-                          label: const Text("Username"),
+                          label: const Text("Nama"),
                           prefixIcon: const Icon(Icons.person),
-                          hintText: "Masukan Username Kalian",
+                          hintText: "Masukan Nama Kalian",
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -156,7 +164,7 @@ class _RegisterState extends State<Register> {
                       ),
                       const SizedBox(height: 15),
 
-                      // Email
+                      // Input Email
                       TextField(
                         controller: _emailController,
                         decoration: InputDecoration(
@@ -171,7 +179,7 @@ class _RegisterState extends State<Register> {
                       ),
                       const SizedBox(height: 15),
 
-                      // Password
+                      // Input Password
                       TextField(
                         controller: _passwordController,
                         obscureText: _obscureText,
@@ -207,7 +215,9 @@ class _RegisterState extends State<Register> {
                                 onPressed: _register,
                                 child: const Text(
                                   "Register",
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
                                 ),
                               ),
                             ),

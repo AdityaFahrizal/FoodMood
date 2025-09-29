@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:food_mood_2/admin/dashboard_admin.dart';
 import 'package:food_mood_2/screen/dashboard.dart';
-import 'package:food_mood_2/screen/register.dart';
+import 'package:food_mood_2/screen/auth/register.dart';
+import 'package:cloud_firestore/cloud_firestore.dart'; 
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -25,33 +27,61 @@ class _LoginState extends State<Login> {
     });
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailcotroler.text,
         password: _passwordcotroler.text,
       );
+      String uid = userCredential.user!.uid;
+
+      String role = 'user';
+      if (_emailcotroler.text.toLowerCase().endsWith('@admin.com')) {
+        role = 'admin';
+      } else {
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .get();
+
+        if (userDoc.exists && userDoc.data() != null) {
+          final data = userDoc.data() as Map<String, dynamic>;
+          
+          if (data.containsKey('role') && data['role'] is String) {
+            role = data['role'];
+          }
+        }
+      }
+      
+
+      if (role == 'admin') {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Home_Admin()),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Home()),
+        );
+      }
 
       setState(() {
         _isLoading = false;
         _message = "Login Berhasil!";
       });
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Home()),
-      );
     } on FirebaseAuthException catch (e) {
       setState(() {
         _isLoading = false;
       });
 
-      String errorMessage = "Terjadi kesalahan";
+      String errorMessage = "Terjadi kesalahan. Silakan cek email dan password Anda.";
 
-      if (e.code == 'email-already-in-use') {
-        errorMessage = "Email sudah digunakan!";
+      if (e.code == 'user-not-found') {
+        errorMessage = "Pengguna dengan email ini tidak ditemukan!";
+      } else if (e.code == 'wrong-password') {
+        errorMessage = "Password salah!";
       } else if (e.code == 'invalid-email') {
         errorMessage = "Format email tidak valid!";
-      } else if (e.code == 'weak-password') {
-        errorMessage = "Password terlalu lemah!";
       }
 
       showDialog(
@@ -70,7 +100,24 @@ class _LoginState extends State<Login> {
     } catch (e) {
       setState(() {
         _isLoading = false;
-        _message = "Login gagal: $e";
+        String errorMessage = e.toString().contains("tidak ditemukan") 
+                              ? "Login berhasil, namun data peran tidak lengkap. Masuk sebagai User biasa."
+                              : "Login gagal: ${e.toString()}";
+        
+        showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: const Text("Login Gagal Total"),
+            content: Text(errorMessage),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(),
+                child: const Text("OK"),
+              ),
+            ],
+          ),
+        );
+        _message = "Terjadi kesalahan serius.";
       });
     }
   }
@@ -107,7 +154,6 @@ class _LoginState extends State<Login> {
                           ),
                         ),
 
-                        // email
                         const Padding(padding: EdgeInsets.only(top: 15)),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -124,7 +170,6 @@ class _LoginState extends State<Login> {
                           ),
                         ),
 
-                        // password
                         const Padding(padding: EdgeInsets.only(top: 10)),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -154,7 +199,12 @@ class _LoginState extends State<Login> {
                           ),
                         ),
 
-                        const SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10 ,left: 220),
+                          child: TextButton(onPressed: () {}, child: Text("Forgot Password", style: TextStyle(fontSize: 12),)),
+                        ),
+
+                        const SizedBox(height: 10),
                         _isLoading
                             ? const CircularProgressIndicator()
                             : ElevatedButton(

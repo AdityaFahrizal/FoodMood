@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:food_mood_2/screen/auth/profile.dart';
 import 'package:food_mood_2/screen/bosan/bsn_page.dart';
+import 'package:food_mood_2/screen/dashboard.dart';
 import 'package:food_mood_2/screen/kategori%20makanan/comfortfood.dart';
 import 'package:food_mood_2/screen/kategori%20makanan/dietfood.dart';
 import 'package:food_mood_2/screen/kategori%20makanan/healtyfood.dart';
@@ -11,19 +13,18 @@ import 'package:food_mood_2/screen/kategori%20makanan/sweetsfood.dart';
 import 'package:food_mood_2/screen/kategori%20makanan/wholefood.dart';
 import 'package:food_mood_2/screen/lelah/llh_page.dart';
 import 'package:food_mood_2/screen/marah/mrh_page.dart';
-import 'package:food_mood_2/screen/auth/profile.dart';
 import 'package:food_mood_2/screen/menu.dart';
 import 'package:food_mood_2/screen/sedih/sdh_page.dart';
 import 'package:food_mood_2/screen/senang/sng_page.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class Home_Admin extends StatefulWidget {
+  const Home_Admin({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<Home_Admin> createState() => _Home_AdminState();
 }
 
-class _HomeState extends State<Home> {
+class _Home_AdminState extends State<Home_Admin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,7 +97,7 @@ class _HomeState extends State<Home> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.menu_book),
+              leading: const Icon(Icons.person),
               title: const Text("My Menu"),
               onTap: () {
                 Navigator.push(
@@ -120,7 +121,7 @@ class _HomeState extends State<Home> {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: Text(
-                "Mood Kamu Lagi Kaya Gimana Nih..",
+                "Admin Page ",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
             ),
@@ -230,6 +231,8 @@ class _HomeState extends State<Home> {
             ),
 
             const SizedBox(height: 15),
+
+            // Bagian ListView.builder yang menampilkan "Item 0, Item 1, ..." telah dihapus di sini.
           ],
         ),
       ),
