@@ -1,106 +1,48 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:food_mood_2/screen/dashboard.dart';
 
-class MenuItemForm extends StatefulWidget {
+class MyMenu extends StatefulWidget {
+  const MyMenu({super.key});
+
   @override
-  _MenuItemFormState createState() => _MenuItemFormState();
+  State<MyMenu> createState() => _MyMenuState();
 }
 
-class _MenuItemFormState extends State<MenuItemForm> {
-  final TextEditingController menuNameController = TextEditingController();
-  final TextEditingController menuDescriptionController = TextEditingController();
-  final TextEditingController imageUrlController = TextEditingController();
-
-  Future<void> saveMenuItem() async {
-    final String menuName = menuNameController.text.trim();
-    final String menuDescription = menuDescriptionController.text.trim();
-    final String imageUrl = imageUrlController.text.trim();
-
-    // Validasi data kosong
-    if (menuName.isEmpty || menuDescription.isEmpty || imageUrl.isEmpty) {
-      // Notifikasi SnackBar untuk validasi kosong
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('⚠️ Semua kolom harus diisi!'),
-          backgroundColor: Colors.orange,
-        ),
-      );
-      return;
-    }
-
-    try {
-      // BAGIAN KONEKSI & PENYIMPANAN ke Firestore
-      await FirebaseFirestore.instance.collection('menuItems').doc(menuName).set({
-        'name': menuName,
-        'description': menuDescription,
-        'imageUrl': imageUrl,
-        'timestamp': FieldValue.serverTimestamp(),
-      });
-
-      // Reset kolom input setelah berhasil
-      setState(() {
-        menuNameController.clear();
-        menuDescriptionController.clear();
-        imageUrlController.clear();
-      });
-
-      // Notifikasi SnackBar untuk SUKSES
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('✅ Data menu berhasil disimpan!'),
-          backgroundColor: Colors.green,
-        ),
-      );
-
-    } catch (e) {
-      // Notifikasi SnackBar untuk GAGAL
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('❌ Gagal menyimpan data menu: $e'),
-          backgroundColor: Colors.red,
-        ),
-      );
-    }
-  }
-  // ------------------------------------------------------------------
-
+class _MyMenuState extends State<MyMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Form Menu Item'),
+        backgroundColor: const Color(0xFFFF714B),
+        title: Center(
+          child: Text(
+            "My Menu",
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontStyle: FontStyle.italic,
+            ),
+          ),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Home()),
+            );
+          },
+          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: menuNameController,
-              decoration: const InputDecoration(
-                labelText: 'Nama Menu',
-              ),
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: menuDescriptionController,
-              decoration: const InputDecoration(
-                labelText: 'Deskripsi Menu',
-              ),
-              maxLines: 3,
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: imageUrlController,
-              decoration: const InputDecoration(
-                labelText: 'URL Gambar Menu',
-              ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: saveMenuItem,
-              child: const Text('Simpan Menu ke Firestore'),
-            ),
-          ],
+
+      body: SingleChildScrollView(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+            ],
+          ),
         ),
       ),
     );

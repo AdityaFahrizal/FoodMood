@@ -101,7 +101,7 @@ class _HomeState extends State<Home> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MenuItemForm()),
+                  MaterialPageRoute(builder: (context) => MyMenu()),
                 );
               },
             ),
@@ -195,7 +195,7 @@ class _HomeState extends State<Home> {
             _buildFoodCard(
               context,
               title: "Processed Food",
-              image: "assets/images/kategori_makanan/prosesfood.jpg",
+              image: "assets/images/kategori_makanan/prosesfood.jpg", 
               page: Processedfood(),
             ),
             _buildFoodCard(

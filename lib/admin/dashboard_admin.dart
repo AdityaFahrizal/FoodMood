@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:food_mood_2/admin/mood%20makanan/bosan/bosan_page.dart';
+import 'package:food_mood_2/admin/mood%20makanan/lelah/lelah_page.dart';
+import 'package:food_mood_2/admin/mood%20makanan/marah/marah_page.dart';
+import 'package:food_mood_2/admin/mood%20makanan/sedih/sedih_page.dart';
+import 'package:food_mood_2/admin/mood%20makanan/senang/senang_page.dart';
 import 'package:food_mood_2/screen/auth/profile.dart';
 import 'package:food_mood_2/screen/bosan/bsn_page.dart';
-import 'package:food_mood_2/screen/dashboard.dart';
 import 'package:food_mood_2/screen/kategori%20makanan/comfortfood.dart';
 import 'package:food_mood_2/screen/kategori%20makanan/dietfood.dart';
 import 'package:food_mood_2/screen/kategori%20makanan/healtyfood.dart';
@@ -13,7 +17,6 @@ import 'package:food_mood_2/screen/kategori%20makanan/sweetsfood.dart';
 import 'package:food_mood_2/screen/kategori%20makanan/wholefood.dart';
 import 'package:food_mood_2/screen/lelah/llh_page.dart';
 import 'package:food_mood_2/screen/marah/mrh_page.dart';
-import 'package:food_mood_2/screen/menu.dart';
 import 'package:food_mood_2/screen/sedih/sdh_page.dart';
 import 'package:food_mood_2/screen/senang/sng_page.dart';
 
@@ -25,6 +28,16 @@ class Home_Admin extends StatefulWidget {
 }
 
 class _Home_AdminState extends State<Home_Admin> {
+  String? selectedValue;
+
+  final List<String> items = [
+    'Senang',
+    'Sedih',
+    'Marah',
+    'Lelah',
+    'Bosan',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +95,7 @@ class _Home_AdminState extends State<Home_Admin> {
               onTap: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const Home()),
+                  MaterialPageRoute(builder: (context) => const Home_Admin()),
                 );
               },
             ),
@@ -96,20 +109,50 @@ class _Home_AdminState extends State<Home_Admin> {
                 );
               },
             ),
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text("My Menu"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MenuItemForm()),
-                );
-              },
-            ),
-            const ListTile(
-              leading: Icon(Icons.favorite),
-              title: Text("Favorit"),
-            ),
+            DropdownButton<String>(
+          hint: const Text("Page Mood"),
+          value: selectedValue,
+          items: items.map((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          onChanged: (newValue) {
+            setState(() {
+              selectedValue = newValue;
+            });
+
+            if (newValue == "Senang") {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SenangPageAdmin()),
+              );
+            } else if (newValue == 'Sedih') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SedihPageAdmin()),
+              );
+            } else if (newValue == 'Marah') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MarahPageAdmin()),
+              );
+            }
+            else if (newValue == 'Lelah') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LelahPageAdmin()),
+              );
+            }
+            else if (newValue == 'Bosan') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BosanPageAdmin()),
+              );
+            }
+          },
+            )
           ],
         ),
       ),
@@ -135,7 +178,7 @@ class _Home_AdminState extends State<Home_Admin> {
                   _buildMoodButton("😁", "Senang", () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SenangFood()),
+                      MaterialPageRoute(builder: (context) => SenangPageAdmin()),
                     );
                   }),
                   _buildMoodButton("😭", "Sedih", () {
@@ -232,8 +275,7 @@ class _Home_AdminState extends State<Home_Admin> {
 
             const SizedBox(height: 15),
 
-            // Bagian ListView.builder yang menampilkan "Item 0, Item 1, ..." telah dihapus di sini.
-          ],
+          ]
         ),
       ),
     );
