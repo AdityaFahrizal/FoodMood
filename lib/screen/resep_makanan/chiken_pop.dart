@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_mood_2/screen/sedih/sdh_page.dart';
+import 'package:food_mood_2/screen/mood/sedih/sdh_page.dart';
 
 class ResepChickenPopcorn extends StatelessWidget {
   const ResepChickenPopcorn({super.key});

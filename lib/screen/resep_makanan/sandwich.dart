@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_mood_2/screen/senang/mkn_sng.dart';
+import 'package:food_mood_2/screen/mood/senang/mkn_sng.dart';
 
 class ResepSandwich extends StatelessWidget {
   const ResepSandwich({super.key});

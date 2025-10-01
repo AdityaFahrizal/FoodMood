@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_mood_2/screen/sedih/mkn_sdh.dart';
+import 'package:food_mood_2/screen/mood/sedih/mkn_sdh.dart';
 
 class ResepMac extends StatelessWidget {
   const ResepMac({super.key});

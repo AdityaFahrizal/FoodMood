@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food_mood_2/screen/senang/mnm_sng.dart';
-import 'package:food_mood_2/screen/senang/sng_page.dart';
+import 'package:food_mood_2/screen/mood/senang/mnm_sng.dart';
+import 'package:food_mood_2/screen/mood/senang/sng_page.dart';
 
 class ResepMilkshake2 extends StatelessWidget {
   const ResepMilkshake2({super.key});

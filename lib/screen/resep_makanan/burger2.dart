@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food_mood_2/screen/senang/mkn_sng.dart';
-import 'package:food_mood_2/screen/senang/sng_page.dart';
+import 'package:food_mood_2/screen/mood/senang/mkn_sng.dart';
+import 'package:food_mood_2/screen/mood/senang/sng_page.dart';
 
 class ResepBurger2 extends StatelessWidget {
   const ResepBurger2({super.key});

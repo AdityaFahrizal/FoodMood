@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:food_mood_2/admin/dashboard_admin.dart';
+import 'package:food_mood_2/screen/admin/dashboard_admin.dart';
 import 'package:food_mood_2/screen/dashboard.dart';
 import 'package:food_mood_2/screen/auth/register.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; 
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -27,10 +27,11 @@ class _LoginState extends State<Login> {
     });
 
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailcotroler.text,
-        password: _passwordcotroler.text,
-      );
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+            email: _emailcotroler.text,
+            password: _passwordcotroler.text,
+          );
       String uid = userCredential.user!.uid;
 
       String role = 'user';
@@ -44,13 +45,12 @@ class _LoginState extends State<Login> {
 
         if (userDoc.exists && userDoc.data() != null) {
           final data = userDoc.data() as Map<String, dynamic>;
-          
+
           if (data.containsKey('role') && data['role'] is String) {
             role = data['role'];
           }
         }
       }
-      
 
       if (role == 'admin') {
         Navigator.pushReplacement(
@@ -68,13 +68,13 @@ class _LoginState extends State<Login> {
         _isLoading = false;
         _message = "Login Berhasil!";
       });
-
     } on FirebaseAuthException catch (e) {
       setState(() {
         _isLoading = false;
       });
 
-      String errorMessage = "Terjadi kesalahan. Silakan cek email dan password Anda.";
+      String errorMessage =
+          "Terjadi kesalahan. Silakan cek email dan password Anda.";
 
       if (e.code == 'user-not-found') {
         errorMessage = "Pengguna dengan email ini tidak ditemukan!";
@@ -100,10 +100,10 @@ class _LoginState extends State<Login> {
     } catch (e) {
       setState(() {
         _isLoading = false;
-        String errorMessage = e.toString().contains("tidak ditemukan") 
-                              ? "Login berhasil, namun data peran tidak lengkap. Masuk sebagai User biasa."
-                              : "Login gagal: ${e.toString()}";
-        
+        String errorMessage = e.toString().contains("tidak ditemukan")
+            ? "Login berhasil, namun data peran tidak lengkap. Masuk sebagai User biasa."
+            : "Login gagal: ${e.toString()}";
+
         showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
@@ -200,8 +200,14 @@ class _LoginState extends State<Login> {
                         ),
 
                         Padding(
-                          padding: const EdgeInsets.only(top: 10 ,left: 220),
-                          child: TextButton(onPressed: () {}, child: Text("Forgot Password", style: TextStyle(fontSize: 12),)),
+                          padding: const EdgeInsets.only(top: 10, left: 220),
+                          child: TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              "Forgot Password",
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ),
                         ),
 
                         const SizedBox(height: 10),
