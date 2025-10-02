@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_mood_2/screen/admin/dashboard_admin.dart';
-import 'package:food_mood_2/screen/admin/mood%20makanan/senang/makanan.dart';
-import 'package:food_mood_2/screen/admin/mood%20makanan/senang/minuman.dart';
-import 'package:food_mood_2/screen/admin/tambah_menu%20.dart';
+import 'package:food_mood_2/screen/admin/mood makanan/senang/makanan.dart';
+import 'package:food_mood_2/screen/admin/mood makanan/senang/minuman.dart';
+import 'package:food_mood_2/screen/admin/tambah_menu .dart';
 
 class SenangPageAdmin extends StatefulWidget {
   const SenangPageAdmin({super.key});
@@ -50,7 +51,7 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
                   height: 50,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFA6B28B),
+                      backgroundColor: Color(0xFFA6B28B),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -63,7 +64,7 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
                         ),
                       );
                     },
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.fastfood, color: Colors.white, size: 25),
@@ -80,13 +81,13 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12),
                 SizedBox(
                   width: 180,
                   height: 50,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF8BA3B2),
+                      backgroundColor: Color(0xFF8BA3B2),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -99,7 +100,7 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
                         ),
                       );
                     },
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.local_cafe, color: Colors.white, size: 25),
@@ -145,13 +146,50 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
               padding: EdgeInsets.symmetric(horizontal: 5),
               child: Text(
                 "Semoga Kamu Suka Ya..",
-                style: TextStyle(fontSize: 12, fontWeight: 
-                FontWeight.w600),
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
               ),
+            ),
+            SizedBox(height: 20),
+
+            StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('menuSenang')
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                }
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  return Text("Belum ada menu ditambahkan");
+                }
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    var data = snapshot.data!.docs[index];
+                    return Card(
+                      child: ListTile(
+                        leading: data['image'] != null
+                            ? Image.network(
+                                data['image'],
+                                width: 50,
+                                height: 50,
+                                fit: BoxFit.cover,
+                              )
+                            : Icon(Icons.fastfood),
+                        title: Text(data['nama'] ?? 'Tanpa Nama'),
+                        subtitle: Text(data['deskripsi'] ?? ''),
+                      ),
+                    );
+                  },
+                );
+              },
             ),
           ],
         ),
       ),
+
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color(0xFFFF714B),
         onPressed: () {

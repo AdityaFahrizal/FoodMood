@@ -1,7 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/senang/senang_page.dart';
-import 'package:food_mood_2/screen/mood/senang/sng_page.dart';
+import 'package:image_picker/image_picker.dart';
 
 class TambahMenuSenang extends StatefulWidget {
   @override
@@ -12,13 +15,31 @@ class _TambahMenuSenang extends State<TambahMenuSenang> {
   final TextEditingController menuNameController = TextEditingController();
   final TextEditingController menuDescriptionController =
       TextEditingController();
-  final TextEditingController imageUrlController = TextEditingController();
+
+  File? _imageFile;
+  String? _imageBase64;
+
+  Future<void> pickImage() async {
+    final pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 800,
+      maxHeight: 800,
+    );
+
+    if (pickedFile != null) {
+      final bytes = await pickedFile.readAsBytes();
+      setState(() {
+        _imageFile = File(pickedFile.path);
+        _imageBase64 = base64Encode(bytes);
+      });
+    }
+  }
 
   Future<void> saveMenuItem() async {
     final String menuName = menuNameController.text.trim();
     final String menuDescription = menuDescriptionController.text.trim();
-    final String imageUrl = imageUrlController.text.trim();
-    if (menuName.isEmpty || menuDescription.isEmpty || imageUrl.isEmpty) {
+
+    if (menuName.isEmpty || menuDescription.isEmpty || _imageBase64 == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Semua kolom harus diisi!'),
@@ -29,31 +50,30 @@ class _TambahMenuSenang extends State<TambahMenuSenang> {
     }
 
     try {
-      await FirebaseFirestore.instance
-          .collection('menuItems')
-          .doc(menuName)
-          .set({
-            'name': menuName,
-            'description': menuDescription,
-            'imageUrl': imageUrl,
-            'timestamp': FieldValue.serverTimestamp(),
-          });
+      await FirebaseFirestore.instance.collection('menuSenang').add({
+        'name': menuName,
+        'description': menuDescription,
+        'imageBase64': _imageBase64,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+
       setState(() {
         menuNameController.clear();
         menuDescriptionController.clear();
-        imageUrlController.clear();
+        _imageFile = null;
+        _imageBase64 = null;
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text(' Data menu berhasil disimpan!'),
+          content: Text('Data menu berhasil disimpan!'),
           backgroundColor: Colors.green,
         ),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(' Gagal menyimpan data menu: $e'),
+          content: Text('Gagal menyimpan data menu: $e'),
           backgroundColor: Colors.red,
         ),
       );
@@ -64,8 +84,8 @@ class _TambahMenuSenang extends State<TambahMenuSenang> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFFF714B),
-        title: Text(
+        backgroundColor: const Color(0xFFFF714B),
+        title: const Text(
           "Food Mood",
           style: TextStyle(
             fontSize: 30,
@@ -81,54 +101,62 @@ class _TambahMenuSenang extends State<TambahMenuSenang> {
               MaterialPageRoute(builder: (context) => SenangPageAdmin()),
             );
           },
-          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: menuNameController,
-              decoration: InputDecoration(
-                label: const Text("Email"),
-                prefixIcon: const Icon(Icons.mail),
-                hintText: "Masukan Email Kalian",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              TextField(
+                controller: menuNameController,
+                decoration: InputDecoration(
+                  label: const Text("Nama Menu"),
+                  prefixIcon: const Icon(Icons.menu_book),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: menuDescriptionController,
-              decoration: InputDecoration(
-                label: const Text("Email"),
-                prefixIcon: const Icon(Icons.mail),
-                hintText: "Masukan Email Kalian",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+              const SizedBox(height: 20),
+              TextField(
+                controller: menuDescriptionController,
+                keyboardType: TextInputType.multiline,
+                minLines: 5,
+                maxLines: 5,
+                decoration: InputDecoration(
+                  label: const Text("Deskripsi Menu"),
+                  prefixIcon: const Icon(Icons.description),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: imageUrlController,
-              decoration: InputDecoration(
-                label: const Text("Email"),
-                prefixIcon: const Icon(Icons.mail),
-                hintText: "Masukan Email Kalian",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: pickImage,
+                child: Container(
+                  height: 150,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: _imageBase64 == null
+                      ? const Center(child: Text("Pilih Gambar Menu"))
+                      : Image.memory(
+                          base64Decode(_imageBase64!),
+                          fit: BoxFit.cover,
+                        ),
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: saveMenuItem,
-              child: const Text('Simpan Data'),
-            ),
-          ],
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: saveMenuItem,
+                child: const Text('Simpan Data Menu'),
+              ),
+            ],
+          ),
         ),
       ),
     );

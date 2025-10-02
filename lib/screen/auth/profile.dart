@@ -44,7 +44,6 @@ class _ProfileState extends State<Profile> {
         });
       }
     } catch (e) {
-      print("Error ambil data user: $e");
     }
   }
 
