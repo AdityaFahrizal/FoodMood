@@ -18,7 +18,6 @@ import 'package:food_mood_2/screen/kategori%20makanan/wholefood.dart';
 import 'package:food_mood_2/screen/mood/lelah/llh_page.dart';
 import 'package:food_mood_2/screen/mood/marah/mrh_page.dart';
 import 'package:food_mood_2/screen/mood/sedih/sdh_page.dart';
-import 'package:food_mood_2/screen/mood/senang/sng_page.dart';
 
 class Home_Admin extends StatefulWidget {
   const Home_Admin({super.key});
@@ -79,7 +78,7 @@ class _Home_AdminState extends State<Home_Admin> {
               ),
               child: Center(
                 child: Text(
-                  "Food Mood",
+                  "Admin Food Mood",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 24,
@@ -209,15 +208,6 @@ class _Home_AdminState extends State<Home_Admin> {
               ),
             ),
 
-            const SizedBox(height: 40),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                "Atau Mau Cari Resep Makanan Nih..",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-            ),
-
             _buildFoodCard(
               context,
               title: "Junk Food",
@@ -282,31 +272,30 @@ class _Home_AdminState extends State<Home_Admin> {
   }
 
   Widget _buildMoodButton(String emoji, String label, VoidCallback onTap) {
-    return SizedBox(
-      width: 65,
-      height: 100,
-      child: ElevatedButton(
-        onPressed: onTap,
-        style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.zero,
-          shadowColor: Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.16,
+        height: MediaQuery.of(context).size.height * 0.11,
+        margin: const EdgeInsets.symmetric(horizontal: 4),
         child: Card(
           elevation: 4,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(15),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(emoji, style: const TextStyle(fontSize: 35)),
+              Text(
+                emoji,
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * 0.08,
+                ),
+              ),
               Text(
                 label,
-                style: const TextStyle(
-                  fontSize: 10,
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * 0.035,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),

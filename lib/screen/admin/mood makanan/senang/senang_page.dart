@@ -1,9 +1,8 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_mood_2/screen/admin/dashboard_admin.dart';
-import 'package:food_mood_2/screen/admin/mood makanan/senang/makanan.dart';
-import 'package:food_mood_2/screen/admin/mood makanan/senang/minuman.dart';
-import 'package:food_mood_2/screen/admin/tambah_menu .dart';
+import 'package:food_mood_2/screen/admin/tambah_menu%20.dart';
 
 class SenangPageAdmin extends StatefulWidget {
   const SenangPageAdmin({super.key});
@@ -13,12 +12,15 @@ class SenangPageAdmin extends StatefulWidget {
 }
 
 class _SenangPageAdminState extends State<SenangPageAdmin> {
+  final TextEditingController _searchController = TextEditingController();
+  String searchQuery = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFFF714B),
-        title: Text(
+        backgroundColor: const Color(0xFFFF714B),
+        title: const Text(
           "Food Mood",
           style: TextStyle(
             fontSize: 30,
@@ -34,7 +36,7 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
               MaterialPageRoute(builder: (context) => Home_Admin()),
             );
           },
-          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
         ),
       ),
 
@@ -42,90 +44,19 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(padding: EdgeInsets.only(top: 20)),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 180,
-                  height: 50,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFFA6B28B),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MakananSenangAdmin(),
-                        ),
-                      );
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.fastfood, color: Colors.white, size: 25),
-                        SizedBox(width: 10),
-                        Text(
-                          "Makanan",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(width: 12),
-                SizedBox(
-                  width: 180,
-                  height: 50,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF8BA3B2),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MinumanSenangAdmin(),
-                        ),
-                      );
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.local_cafe, color: Colors.white, size: 25),
-                        SizedBox(width: 10),
-                        Text(
-                          "Minuman",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Padding(padding: EdgeInsets.only(top: 15)),
+            const SizedBox(height: 20),
             SizedBox(
               width: 350,
               height: 40,
               child: SearchBar(
+                controller: _searchController,
+                onChanged: (value) {
+                  setState(() {
+                    searchQuery = value.toLowerCase();
+                  });
+                },
                 textInputAction: TextInputAction.search,
-                leading: Icon(Icons.search),
+                leading: const Icon(Icons.search),
                 hintText: "Cari di sini...",
                 shape: WidgetStateProperty.all(
                   RoundedRectangleBorder(
@@ -134,52 +65,123 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
                 ),
               ),
             ),
-            Padding(padding: EdgeInsets.only(top: 25)),
-            Padding(
+            const SizedBox(height: 25),
+            const Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: Text(
-                "Ini Ada Beberapa Rekomendasi Makanan..",
+                "Ini Ada Beberapa Rekomendasi Menu..",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.symmetric(horizontal: 5),
               child: Text(
                 "Semoga Kamu Suka Ya..",
                 style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('menuSenang')
+                  .orderBy('timestamp', descending: true)
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const Center(child: CircularProgressIndicator());
                 }
                 if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return Text("Belum ada menu ditambahkan");
+                  return const Text("Belum ada menu ditambahkan");
                 }
+
+                var allDocs = snapshot.data!.docs;
+
+                // kalau ada search -> filter, kalau kosong -> tampil semua
+                var filteredDocs = searchQuery.isEmpty
+                    ? allDocs
+                    : allDocs.where((doc) {
+                        var data = doc.data() as Map<String, dynamic>;
+                        final nama =
+                            (data['name'] ?? '').toString().toLowerCase();
+                        final deskripsi =
+                            (data['description'] ?? '').toString().toLowerCase();
+                        return nama.contains(searchQuery) ||
+                            deskripsi.contains(searchQuery);
+                      }).toList();
+
                 return ListView.builder(
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: snapshot.data!.docs.length,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: filteredDocs.length,
                   itemBuilder: (context, index) {
-                    var data = snapshot.data!.docs[index];
-                    return Card(
-                      child: ListTile(
-                        leading: data['image'] != null
-                            ? Image.network(
-                                data['image'],
-                                width: 50,
-                                height: 50,
-                                fit: BoxFit.cover,
-                              )
-                            : Icon(Icons.fastfood),
-                        title: Text(data['nama'] ?? 'Tanpa Nama'),
-                        subtitle: Text(data['deskripsi'] ?? ''),
+                    var data =
+                        filteredDocs[index].data() as Map<String, dynamic>;
+
+                    final nama = data['name'] ?? 'Tanpa Nama';
+                    final deskripsi = data['description'] ?? '';
+                    final kategori = data['kategori'] ?? '';
+                    final imageBase64 = data['imageBase64'];
+
+                    Color cardColor = kategori == "Minuman"
+                        ? const Color(0xFF8BA3B2)
+                        : const Color(0xFFA6B28B);
+
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 6, horizontal: 10),
+                      child: Container(
+                        height: 100,
+                        decoration: BoxDecoration(
+                          color: cardColor,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          children: [
+                            const SizedBox(width: 8),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: imageBase64 != null
+                                  ? Image.memory(
+                                      base64Decode(imageBase64),
+                                      fit: BoxFit.cover,
+                                      width: 85,
+                                      height: 85,
+                                    )
+                                  : const Icon(Icons.fastfood,
+                                      size: 50, color: Colors.white),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    nama,
+                                    style: const TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    deskripsi,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -191,14 +193,14 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
       ),
 
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color(0xFFFF714B),
+        backgroundColor: const Color(0xFFFF714B),
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => TambahMenuSenang()),
           );
         },
-        child: Icon(Icons.add, color: Colors.white),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );

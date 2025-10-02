@@ -19,6 +19,8 @@ class _TambahMenuSenang extends State<TambahMenuSenang> {
   File? _imageFile;
   String? _imageBase64;
 
+  String? _kategori; // buat pilihan makanan/minuman
+
   Future<void> pickImage() async {
     final pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
@@ -39,7 +41,10 @@ class _TambahMenuSenang extends State<TambahMenuSenang> {
     final String menuName = menuNameController.text.trim();
     final String menuDescription = menuDescriptionController.text.trim();
 
-    if (menuName.isEmpty || menuDescription.isEmpty || _imageBase64 == null) {
+    if (menuName.isEmpty ||
+        menuDescription.isEmpty ||
+        _imageBase64 == null ||
+        _kategori == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Semua kolom harus diisi!'),
@@ -53,6 +58,7 @@ class _TambahMenuSenang extends State<TambahMenuSenang> {
       await FirebaseFirestore.instance.collection('menuSenang').add({
         'name': menuName,
         'description': menuDescription,
+        'kategori': _kategori, // simpan kategori makanan/minuman
         'imageBase64': _imageBase64,
         'timestamp': FieldValue.serverTimestamp(),
       });
@@ -62,6 +68,7 @@ class _TambahMenuSenang extends State<TambahMenuSenang> {
         menuDescriptionController.clear();
         _imageFile = null;
         _imageBase64 = null;
+        _kategori = null;
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -134,6 +141,29 @@ class _TambahMenuSenang extends State<TambahMenuSenang> {
                 ),
               ),
               const SizedBox(height: 20),
+
+              // Dropdown kategori
+              DropdownButtonFormField<String>(
+                value: _kategori,
+                decoration: InputDecoration(
+                  label: const Text("Kategori"),
+                  prefixIcon: const Icon(Icons.category),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                items: const [
+                  DropdownMenuItem(value: "Makanan", child: Text("Makanan")),
+                  DropdownMenuItem(value: "Minuman", child: Text("Minuman")),
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    _kategori = value;
+                  });
+                },
+              ),
+              const SizedBox(height: 20),
+
               GestureDetector(
                 onTap: pickImage,
                 child: Container(
