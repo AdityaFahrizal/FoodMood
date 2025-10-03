@@ -96,8 +96,6 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
                 }
 
                 var allDocs = snapshot.data!.docs;
-
-                // kalau ada search -> filter, kalau kosong -> tampil semua
                 var filteredDocs = searchQuery.isEmpty
                     ? allDocs
                     : allDocs.where((doc) {
@@ -152,32 +150,35 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
                                       size: 50, color: Colors.white),
                             ),
                             const SizedBox(width: 10),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    nama,
-                                    style: const TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 10),
+                                Text(
+                                  nama,
+                                  style: const TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
                                   ),
-                                  const SizedBox(height: 5),
-                                  Text(
-                                    deskripsi,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  deskripsi,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                IconButton(onPressed: () {}, icon: Icon(Icons.edit))
+                              ],
                             ),
                             const SizedBox(width: 10),
                           ],

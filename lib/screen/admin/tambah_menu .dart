@@ -19,7 +19,7 @@ class _TambahMenuSenang extends State<TambahMenuSenang> {
   File? _imageFile;
   String? _imageBase64;
 
-  String? _kategori; // buat pilihan makanan/minuman
+  String? _kategori;
 
   Future<void> pickImage() async {
     final pickedFile = await ImagePicker().pickImage(
@@ -58,7 +58,7 @@ class _TambahMenuSenang extends State<TambahMenuSenang> {
       await FirebaseFirestore.instance.collection('menuSenang').add({
         'name': menuName,
         'description': menuDescription,
-        'kategori': _kategori, // simpan kategori makanan/minuman
+        'kategori': _kategori,
         'imageBase64': _imageBase64,
         'timestamp': FieldValue.serverTimestamp(),
       });
@@ -142,7 +142,6 @@ class _TambahMenuSenang extends State<TambahMenuSenang> {
               ),
               const SizedBox(height: 20),
 
-              // Dropdown kategori
               DropdownButtonFormField<String>(
                 value: _kategori,
                 decoration: InputDecoration(
