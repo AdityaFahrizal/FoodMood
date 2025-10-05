@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:food_mood_2/screen/mood/bosan/bsn_page.dart';
-import 'package:food_mood_2/screen/kategori%20makanan/comfortfood.dart';
-import 'package:food_mood_2/screen/kategori%20makanan/dietfood.dart';
-import 'package:food_mood_2/screen/kategori%20makanan/healtyfood.dart';
-import 'package:food_mood_2/screen/kategori%20makanan/junkfood.dart';
-import 'package:food_mood_2/screen/kategori%20makanan/organicfood.dart';
-import 'package:food_mood_2/screen/kategori%20makanan/pastryfood.dart';
-import 'package:food_mood_2/screen/kategori%20makanan/processedfppd.dart';
-import 'package:food_mood_2/screen/kategori%20makanan/sweetsfood.dart';
-import 'package:food_mood_2/screen/kategori%20makanan/wholefood.dart';
-import 'package:food_mood_2/screen/mood/lelah/llh_page.dart';
-import 'package:food_mood_2/screen/mood/marah/mrh_page.dart';
+import 'package:food_mood_2/screen/user/mood/bosan/bsn_page.dart';
+import 'package:food_mood_2/screen/user/kategori%20makanan/comfortfood.dart';
+import 'package:food_mood_2/screen/user/kategori%20makanan/dietfood.dart';
+import 'package:food_mood_2/screen/user/kategori%20makanan/healtyfood.dart';
+import 'package:food_mood_2/screen/user/kategori%20makanan/junkfood.dart';
+import 'package:food_mood_2/screen/user/kategori%20makanan/organicfood.dart';
+import 'package:food_mood_2/screen/user/kategori%20makanan/pastryfood.dart';
+import 'package:food_mood_2/screen/user/kategori%20makanan/processedfppd.dart';
+import 'package:food_mood_2/screen/user/kategori%20makanan/sweetsfood.dart';
+import 'package:food_mood_2/screen/user/kategori%20makanan/wholefood.dart';
+import 'package:food_mood_2/screen/user/mood/lelah/llh_page.dart';
+import 'package:food_mood_2/screen/user/mood/marah/mrh_page.dart';
 import 'package:food_mood_2/screen/auth/profile.dart';
 import 'package:food_mood_2/screen/menu.dart';
-import 'package:food_mood_2/screen/mood/sedih/sdh_page.dart';
-import 'package:food_mood_2/screen/mood/senang/sng_page.dart';
+import 'package:food_mood_2/screen/user/mood/sedih/sdh_page.dart';
+import 'package:food_mood_2/screen/user/mood/senang/sng_page.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});

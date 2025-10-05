@@ -93,7 +93,7 @@ class _TambahMenuSenang extends State<TambahMenuSenang> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFFF714B),
         title: const Text(
-          "Food Mood",
+          "Tambah Menu",
           style: TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.bold,
