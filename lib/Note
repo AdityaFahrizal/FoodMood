@@ -19,7 +19,7 @@ class _MenuItemFormState extends State<MenuItemForm> {
     if (menuName.isEmpty || menuDescription.isEmpty || imageUrl.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('⚠️ Semua kolom harus diisi!'),
+          content: Text('Semua kolom harus diisi!'),
           backgroundColor: Colors.orange,
         ),
       );

@@ -21,13 +21,15 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFFF714B),
-        title: const Text(
-          "Food Mood",
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            fontStyle: FontStyle.italic,
+        title: Center(
+          child: Text(
+            "Food Mood",
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontStyle: FontStyle.italic,
+            ),
           ),
         ),
         leading: IconButton(
@@ -44,7 +46,7 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
             SizedBox(
               width: 350,
               height: 40,
