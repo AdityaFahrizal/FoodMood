@@ -46,7 +46,7 @@ class _EditMenuPageState extends State<EditMenuPage> {
   Future<void> _updateMenu() async {
     if (_formKey.currentState!.validate()) {
       await FirebaseFirestore.instance
-          .collection('menuSenang')
+          .collection('menuSedih')
           .doc(widget.docId)
           .update({
         'name': _nameController.text,

@@ -183,25 +183,25 @@ class _Home_AdminState extends State<Home_Admin> {
                   _buildMoodButton("😭", "Sedih", () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SedihPage()),
+                      MaterialPageRoute(builder: (context) => SedihPageAdmin()),
                     );
                   }),
                   _buildMoodButton("😡", "Marah", () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MarahFood()),
+                      MaterialPageRoute(builder: (context) => MarahPageAdmin()),
                     );
                   }),
                   _buildMoodButton("😕", "Lelah", () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => LelahFood()),
+                      MaterialPageRoute(builder: (context) => LelahPageAdmin()),
                     );
                   }),
                   _buildMoodButton("😩", "Bosan", () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => BosanFood()),
+                      MaterialPageRoute(builder: (context) => BosanPageAdmin()),
                     );
                   }),
                 ],

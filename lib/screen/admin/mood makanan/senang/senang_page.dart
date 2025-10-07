@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_mood_2/screen/admin/dashboard_admin.dart';
 import 'package:food_mood_2/screen/admin/edit_pesanan.dart';
-import 'package:food_mood_2/screen/admin/tambah_menu%20.dart';
+import 'package:food_mood_2/screen/admin/mood%20makanan/senang/tambah_menu%20.dart';
 
 class SenangPageAdmin extends StatefulWidget {
   const SenangPageAdmin({super.key});
@@ -199,7 +199,7 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
-                                        fontSize: 17,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.normal,
                                         color: Colors.black,
                                       ),
