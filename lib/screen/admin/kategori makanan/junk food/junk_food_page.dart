@@ -2,17 +2,18 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_mood_2/screen/admin/dashboard_admin.dart';
-import 'package:food_mood_2/screen/admin/mood%20makanan/lelah/edit_menu_lelah.dart';
-import 'package:food_mood_2/screen/admin/mood%20makanan/lelah/tambah_menu_lelah.dart';
+import 'package:food_mood_2/screen/admin/kategori%20makanan/junk%20food/edit_menu_junkfood.dart';
+import 'package:food_mood_2/screen/admin/kategori%20makanan/junk%20food/tambah_menu_junkfood.dart';
+import 'package:food_mood_2/screen/admin/mood%20makanan/senang/edit_menu_senang.dart';
 
-class LelahPageAdmin extends StatefulWidget {
-  const LelahPageAdmin({super.key});
+class JunkFoodPageAdmin extends StatefulWidget {
+  const JunkFoodPageAdmin({super.key});
 
   @override
-  State<LelahPageAdmin> createState() => _LelahPageAdminState();
+  State<JunkFoodPageAdmin> createState() => _JunkFoodPageAdmin();
 }
 
-class _LelahPageAdminState extends State<LelahPageAdmin> {
+class _JunkFoodPageAdmin extends State<JunkFoodPageAdmin> {
   final TextEditingController _searchController = TextEditingController();
   String searchQuery = "";
 
@@ -85,7 +86,7 @@ class _LelahPageAdminState extends State<LelahPageAdmin> {
             const SizedBox(height: 20),
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
-                  .collection('menuLelah')
+                  .collection('menuJunkFood')
                   .orderBy('timestamp', descending: true)
                   .snapshots(),
               builder: (context, snapshot) {
@@ -218,7 +219,7 @@ class _LelahPageAdminState extends State<LelahPageAdmin> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => EditMenuLelah(
+                                            builder: (context) => EditMenuJunkFood(
                                               docId: doc.id,
                                               data: data,
                                             ),
@@ -234,7 +235,7 @@ class _LelahPageAdminState extends State<LelahPageAdmin> {
                                     IconButton(
                                       onPressed: () async {
                                         await FirebaseFirestore.instance
-                                            .collection('menuLekah')
+                                            .collection('menuJunkFood')
                                             .doc(doc.id)
                                             .delete();
                                       },
@@ -265,7 +266,7 @@ class _LelahPageAdminState extends State<LelahPageAdmin> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => TambahMenuLelah()),
+            MaterialPageRoute(builder: (context) => TambahMenuJunkfood()),
           );
         },
         child: const Icon(Icons.add, color: Colors.white),

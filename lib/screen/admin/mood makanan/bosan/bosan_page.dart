@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_mood_2/screen/admin/dashboard_admin.dart';
-import 'package:food_mood_2/screen/admin/edit_pesanan.dart';
+import 'package:food_mood_2/screen/admin/mood%20makanan/bosan/edit_menu_bosan.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/bosan/tambah_menu_bosan.dart';
 
 class BosanPageAdmin extends StatefulWidget {
@@ -218,7 +218,7 @@ class _BosanPageAdminState extends State<BosanPageAdmin> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => EditMenuPage(
+                                            builder: (context) => EditMenuBosan(
                                               docId: doc.id,
                                               data: data,
                                             ),

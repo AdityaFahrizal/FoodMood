@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_mood_2/screen/admin/dashboard_admin.dart';
-import 'package:food_mood_2/screen/admin/edit_pesanan.dart';
+import 'package:food_mood_2/screen/admin/mood%20makanan/sedih/edit_menu_sedih.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/sedih/tambah_menu_sedih.dart';
 
 class SedihPageAdmin extends StatefulWidget {
@@ -218,7 +218,7 @@ class _SedihPageAdminState extends State<SedihPageAdmin> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => EditMenuPage(
+                                            builder: (context) => EditMenuSedih(
                                               docId: doc.id,
                                               data: data,
                                             ),

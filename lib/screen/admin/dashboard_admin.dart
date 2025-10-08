@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:food_mood_2/screen/admin/kategori%20makanan/junk%20food/junk_food_page.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/bosan/bosan_page.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/lelah/lelah_page.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/marah/marah_page.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/sedih/sedih_page.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/senang/senang_page.dart';
 import 'package:food_mood_2/screen/auth/profile.dart';
-import 'package:food_mood_2/screen/user/mood/bosan/bsn_page.dart';
 import 'package:food_mood_2/screen/user/kategori%20makanan/comfortfood.dart';
 import 'package:food_mood_2/screen/user/kategori%20makanan/dietfood.dart';
 import 'package:food_mood_2/screen/user/kategori%20makanan/healtyfood.dart';
@@ -15,9 +15,6 @@ import 'package:food_mood_2/screen/user/kategori%20makanan/pastryfood.dart';
 import 'package:food_mood_2/screen/user/kategori%20makanan/processedfppd.dart';
 import 'package:food_mood_2/screen/user/kategori%20makanan/sweetsfood.dart';
 import 'package:food_mood_2/screen/user/kategori%20makanan/wholefood.dart';
-import 'package:food_mood_2/screen/user/mood/lelah/llh_page.dart';
-import 'package:food_mood_2/screen/user/mood/marah/mrh_page.dart';
-import 'package:food_mood_2/screen/user/mood/sedih/sdh_page.dart';
 
 class Home_Admin extends StatefulWidget {
   const Home_Admin({super.key});
@@ -151,6 +148,68 @@ class _Home_AdminState extends State<Home_Admin> {
               );
             }
           },
+            ),
+            DropdownButton<String>(
+          hint: const Text("Kategory Food"),
+          value: selectedValue,
+          items: items.map((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          onChanged: (newValue) {
+            setState(() {
+              selectedValue = newValue;
+            });
+
+            if (newValue == "Junk Food") {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SenangPageAdmin()),
+              );
+            } else if (newValue == 'Healty Food') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SedihPageAdmin()),
+              );
+            } else if (newValue == 'Whole Food') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MarahPageAdmin()),
+              );
+            }
+            else if (newValue == 'Processed Food') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LelahPageAdmin()),
+              );
+            }
+            else if (newValue == 'Comfort Food') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BosanPageAdmin()),
+              );
+            }
+            else if (newValue == 'Diet Food') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BosanPageAdmin()),
+              );
+            }
+            else if (newValue == 'Pastry Food') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BosanPageAdmin()),
+              );
+            }
+            else if (newValue == 'Sweets Food') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BosanPageAdmin()),
+              );
+            }
+          },
             )
           ],
         ),
@@ -212,7 +271,7 @@ class _Home_AdminState extends State<Home_Admin> {
               context,
               title: "Junk Food",
               image: "assets/images/kategori_makanan/JunkFood.jpg",
-              page: Junkfood(),
+              page: JunkFoodPageAdmin(),
             ),
             _buildFoodCard(
               context,

@@ -4,17 +4,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class EditMenuPage extends StatefulWidget {
+class EditMenuBosan extends StatefulWidget {
   final String docId;
   final Map<String, dynamic> data;
 
-  const EditMenuPage({super.key, required this.docId, required this.data});
+  const EditMenuBosan({super.key, required this.docId, required this.data});
 
   @override
-  State<EditMenuPage> createState() => _EditMenuPageState();
+  State<EditMenuBosan> createState() => _EditMenuBosanState();
 }
 
-class _EditMenuPageState extends State<EditMenuPage> {
+class _EditMenuBosanState extends State<EditMenuBosan> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
   late TextEditingController _descController;
@@ -46,7 +46,7 @@ class _EditMenuPageState extends State<EditMenuPage> {
   Future<void> _updateMenu() async {
     if (_formKey.currentState!.validate()) {
       await FirebaseFirestore.instance
-          .collection('menuSedih')
+          .collection('menuBosan')
           .doc(widget.docId)
           .update({
         'name': _nameController.text,

@@ -1,20 +1,22 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:food_mood_2/screen/admin/mood%20makanan/marah/marah_page.dart';
+import 'package:food_mood_2/screen/admin/kategori%20makanan/junk%20food/junk_food_page.dart';
 import 'package:image_picker/image_picker.dart';
 
-class TambahMenuMarah extends StatefulWidget {
+class TambahMenuJunkfood extends StatefulWidget {
   @override
-  _TambahMenuMarah createState() => _TambahMenuMarah();
+  _TambahMenuJunkFood createState() => _TambahMenuJunkFood();
 }
 
-class _TambahMenuMarah extends State<TambahMenuMarah> {
+class _TambahMenuJunkFood extends State<TambahMenuJunkfood> {
   final TextEditingController menuNameController = TextEditingController();
   final TextEditingController menuDescriptionController =
       TextEditingController();
 
+  File? _imageFile;
   String? _imageBase64;
 
   String? _kategori;
@@ -29,6 +31,7 @@ class _TambahMenuMarah extends State<TambahMenuMarah> {
     if (pickedFile != null) {
       final bytes = await pickedFile.readAsBytes();
       setState(() {
+        _imageFile = File(pickedFile.path);
         _imageBase64 = base64Encode(bytes);
       });
     }
@@ -52,7 +55,7 @@ class _TambahMenuMarah extends State<TambahMenuMarah> {
     }
 
     try {
-      await FirebaseFirestore.instance.collection('menuMarah').add({
+      await FirebaseFirestore.instance.collection('menuJunkFood').add({
         'name': menuName,
         'description': menuDescription,
         'kategori': _kategori,
@@ -63,6 +66,7 @@ class _TambahMenuMarah extends State<TambahMenuMarah> {
       setState(() {
         menuNameController.clear();
         menuDescriptionController.clear();
+        _imageFile = null;
         _imageBase64 = null;
         _kategori = null;
       });
@@ -101,7 +105,7 @@ class _TambahMenuMarah extends State<TambahMenuMarah> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => MarahPageAdmin()),
+              MaterialPageRoute(builder: (context) => JunkFoodPageAdmin()),
             );
           },
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_mood_2/screen/admin/dashboard_admin.dart';
-import 'package:food_mood_2/screen/admin/edit_pesanan.dart';
+import 'package:food_mood_2/screen/admin/mood%20makanan/marah/edit_menu_marah.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/marah/tambah_menu_marah.dart';
 
 class MarahPageAdmin extends StatefulWidget {
@@ -218,7 +218,7 @@ class _MarahPageAdminState extends State<MarahPageAdmin> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => EditMenuPage(
+                                            builder: (context) => EditMenuMarah(
                                               docId: doc.id,
                                               data: data,
                                             ),
