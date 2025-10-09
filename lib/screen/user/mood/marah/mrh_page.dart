@@ -47,7 +47,7 @@ class _MarahFoodState extends State<MarahFood> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Home()),
+                MaterialPageRoute(builder: (context) => HomePage()),
               );
             },
             icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -85,7 +85,7 @@ class _MarahFoodState extends State<MarahFood> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Home()),
+                        MaterialPageRoute(builder: (context) => HomePage()),
                       );
                     },
                   ),

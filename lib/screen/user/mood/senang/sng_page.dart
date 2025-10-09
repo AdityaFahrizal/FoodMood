@@ -80,7 +80,7 @@ class _SenangFoodState extends State<SenangFood> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const Home()),
+              MaterialPageRoute(builder: (context) => const HomePage()),
             );
           },
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -115,7 +115,7 @@ class _SenangFoodState extends State<SenangFood> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const Home()),
+                  MaterialPageRoute(builder: (context) => const HomePage()),
                 );
               },
             ),

@@ -42,7 +42,7 @@ class Junkfood extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Home()),
+                    MaterialPageRoute(builder: (context) => HomePage()),
                   );
                 },
                 icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -82,7 +82,7 @@ class Junkfood extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Home()),
+                        MaterialPageRoute(builder: (context) => HomePage()),
                       );
                     },
                   ),

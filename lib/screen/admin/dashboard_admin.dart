@@ -32,6 +32,15 @@ class _Home_AdminState extends State<Home_Admin> {
     'Marah',
     'Lelah',
     'Bosan',
+    'Junk Food',
+    'Healty Food',
+    'Whole Food',
+    'Processes Food',
+    'Organic Food',
+    'Comfort Food',
+    'Diet Food',
+    'Pastry Food',
+    'Sweets Food',
   ];
 
   @override
@@ -222,214 +231,758 @@ class _Home_AdminState extends State<Home_Admin> {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: Text(
-                "Admin Page ",
+                "Mood",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
             ),
             const SizedBox(height: 15),
 
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _buildMoodButton("😁", "Senang", () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SenangPageAdmin()),
-                    );
-                  }),
-                  _buildMoodButton("😭", "Sedih", () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SedihPageAdmin()),
-                    );
-                  }),
-                  _buildMoodButton("😡", "Marah", () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MarahPageAdmin()),
-                    );
-                  }),
-                  _buildMoodButton("😕", "Lelah", () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LelahPageAdmin()),
-                    );
-                  }),
-                  _buildMoodButton("😩", "Bosan", () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => BosanPageAdmin()),
-                    );
-                  }),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SenangPageAdmin()),
+                      );
+                    },
+                    child: SizedBox(
+                      width: 75,
+                      height: 105,
+                      child: Card(
+                        shadowColor: const Color.fromARGB(255, 43, 43, 43),
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        child: Column(
+                          children: [
+                            Padding(padding: EdgeInsets.only(top: 5)),
+                            Text("😁", style: TextStyle(fontSize: 40)),
+                            Text(
+                              "Senang",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SedihPageAdmin()),
+                      );
+                    },
+                    child: SizedBox(
+                      width: 75,
+                      height: 105,
+                      child: Card(
+                        shadowColor: const Color.fromARGB(255, 43, 43, 43),
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        child: Column(
+                          children: [
+                            Padding(padding: EdgeInsets.only(top: 5)),
+                            Text("😭", style: TextStyle(fontSize: 40)),
+                            Text(
+                              "Sedih",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MarahPageAdmin()),
+                      );
+                    },
+                    child: SizedBox(
+                      width: 75,
+                      height: 105,
+                      child: Card(
+                        shadowColor: const Color.fromARGB(255, 43, 43, 43),
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        child: Column(
+                          children: [
+                            Padding(padding: EdgeInsets.only(top: 5)),
+                            Text("😡", style: TextStyle(fontSize: 40)),
+                            Text(
+                              "Marah",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LelahPageAdmin()),
+                      );
+                    },
+                    child: SizedBox(
+                      width: 75,
+                      height: 105,
+                      child: Card(
+                        shadowColor: const Color.fromARGB(255, 43, 43, 43),
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        child: Column(
+                          children: [
+                            Padding(padding: EdgeInsets.only(top: 5)),
+                            Text("😕", style: TextStyle(fontSize: 40)),
+                            Text(
+                              "Lelah",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => BosanPageAdmin()),
+                      );
+                    },
+                    child: SizedBox(
+                      width: 75,
+                      height: 105,
+                      child: Card(
+                        shadowColor: const Color.fromARGB(255, 43, 43, 43),
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        child: Column(
+                          children: [
+                            Padding(padding: EdgeInsets.only(top: 5)),
+                            Text("😩", style: TextStyle(fontSize: 40)),
+                            Text(
+                              "Bosan",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
 
-            _buildFoodCard(
-              context,
-              title: "Junk Food",
-              image: "assets/images/kategori_makanan/JunkFood.jpg",
-              page: JunkFoodPageAdmin(),
+            const SizedBox(height: 20),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                "Kategori Makanan",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
             ),
-            _buildFoodCard(
-              context,
-              title: "Healty Food",
-              image: "assets/images/kategori_makanan/healtyfood.jpg",
-              page: Healtyfood(),
-            ),
-            _buildFoodCard(
-              context,
-              title: "Whole Food",
-              image: "assets/images/kategori_makanan/wholefood.jpg",
-              page: Wholefood(),
-            ),
-            _buildFoodCard(
-              context,
-              title: "Processed Food",
-              image: "assets/images/kategori_makanan/prosesfood.jpg",
-              page: Processedfood(),
-            ),
-            _buildFoodCard(
-              context,
-              title: "Organic Food",
-              image: "assets/images/kategori_makanan/organicfood.jpg",
-              page: Organicfood(),
-            ),
-            _buildFoodCard(
-              context,
-              title: "Comfort Food",
-              image: "assets/images/kategori_makanan/Confortfood.jpg",
-              page: Comfortfood(),
-            ),
-            _buildFoodCard(
-              context,
-              title: "Diet Food",
-              image: "assets/images/kategori_makanan/dietfood.jpg",
-              page: Dietfood(),
-            ),
-            _buildFoodCard(
-              context,
-              title: "Pastry Food",
-              image: "assets/images/kategori_makanan/pastryfood.jpg",
-              page: Pastryfood(),
-            ),
-            _buildFoodCard(
-              context,
-              title: "Sweets Food",
-              image: "assets/images/kategori_makanan/sweetsfood.jpg",
-              page: Sweetsfood(),
+            SizedBox(height: 20,),
+
+            Column(
+              children: [
+
+                //===== Junk Food =====/
+
+                Container(
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: 380,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                              'assets/images/kategori_makanan/JunkFood.jpg',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+
+                      Container(
+                        width: 380,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.5),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+
+                      Padding(
+                            padding: const EdgeInsets.only(top: 5, left: 260),
+                            child: TextButton(onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Junkfood()));
+                            }, child: Text(
+                              "See Details",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),),
+                          ),
+
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 100, left: 15),
+                            child: Text(
+                              "Junk Food",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
+
+                SizedBox(height: 15,),
+
+                //===== Healty Food =====//
+
+                Container(
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: 380,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                              'assets/images/kategori_makanan/healtyfood.jpg',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+
+                      Container(
+                        width: 380,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.5),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5, left: 260),
+                            child: TextButton(onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Healtyfood()));
+                            }, child: Text(
+                              "See Details",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 45, left: 15),
+                            child: Text(
+                              "Healty Food",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: 15,),
+
+                //===== Whole Food =====//
+
+                Container(
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: 380,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                              'assets/images/kategori_makanan/wholefood.jpg',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+
+                      Container(
+                        width: 380,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.5),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5, left: 260),
+                            child: TextButton(onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Wholefood()));
+                            }, child: Text(
+                              "See Details",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 45, left: 15),
+                            child: Text(
+                              "Whole Food",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: 15,),
+
+                //===== Processes Food =====//
+
+                Container(
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: 380,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                              'assets/images/kategori_makanan/prosesfood.jpg',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+
+                      Container(
+                        width: 380,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.5),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5, left: 260),
+                            child: TextButton(onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Processedfood()));
+                            }, child: Text(
+                              "See Details",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 45, left: 15),
+                            child: Text(
+                              "Processed Food",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: 15,),
+
+                //===== Diet Food =====//
+
+
+                Container(
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: 380,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                              'assets/images/kategori_makanan/dietfood.jpg',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+
+                      Container(
+                        width: 380,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.5),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5, left: 260),
+                            child: TextButton(onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Dietfood()));
+                            }, child: Text(
+                              "See Details",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 45, left: 15),
+                            child: Text(
+                              "Diet Food",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: 15,),
+
+                //===== Comfort Food =====//
+
+                Container(
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: 380,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                              'assets/images/kategori_makanan/Confortfood.jpg',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+
+                      Container(
+                        width: 380,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.5),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5, left: 260),
+                            child: TextButton(onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Comfortfood()));
+                            }, child: Text(
+                              "See Details",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 45, left: 15),
+                            child: Text(
+                              "Comfort Food",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: 15,),
+
+                //===== Organic Food =====//
+
+                Container(
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: 380,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                              'assets/images/kategori_makanan/organicfood.jpg',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+
+                      Container(
+                        width: 380,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.5),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5, left: 260),
+                            child: TextButton(onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Organicfood()));
+                            }, child: Text(
+                              "See Details",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 45, left: 15),
+                            child: Text(
+                              "Organic Food",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: 15,),
+
+                //===== Pastry Food =====//
+
+                Container(
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: 380,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                              'assets/images/kategori_makanan/dietfood.jpg',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+
+                      Container(
+                        width: 380,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.5),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5, left: 260),
+                            child: TextButton(onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Pastryfood()));
+                            }, child: Text(
+                              "See Details",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 45, left: 15),
+                            child: Text(
+                              "Passtry Food",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: 15,),
+
+                //===== Diet Food =====//
+
+                Container(
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: 380,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                              'assets/images/kategori_makanan/sweetsfood.jpg',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+
+                      Container(
+                        width: 380,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.5),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5, left: 260),
+                            child: TextButton(onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Sweetsfood()));
+                            }, child: Text(
+                              "See Details",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 45, left: 15),
+                            child: Text(
+                              "Sweets Food",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: 15,),
+              ],
             ),
 
             const SizedBox(height: 15),
 
-          ]
+            
+          ],
         ),
       ),
-    );
-  }
 
-  Widget _buildMoodButton(String emoji, String label, VoidCallback onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.16,
-        height: MediaQuery.of(context).size.height * 0.11,
-        margin: const EdgeInsets.symmetric(horizontal: 4),
-        child: Card(
-          elevation: 4,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                emoji,
-                style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width * 0.08,
-                ),
-              ),
-              Text(
-                label,
-                style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width * 0.035,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildFoodCard(
-    BuildContext context, {
-    required String title,
-    required String image,
-    required Widget page,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 15),
-      child: SizedBox(
-        width: 380,
-        height: 160,
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Opacity(
-                  opacity: 0.5,
-                  child: Image.asset(
-                    image,
-                    width: double.infinity,
-                    height: 160,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 5, left: 10),
-                child: Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              Positioned(
-                right: 10,
-                bottom: 5,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => page),
-                    );
-                  },
-                  child: const Text(
-                    "see details",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

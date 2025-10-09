@@ -47,7 +47,7 @@ class _BosanFoodState extends State<BosanFood> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Home()),
+                MaterialPageRoute(builder: (context) => HomePage()),
               );
             },
             icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -83,7 +83,7 @@ class _BosanFoodState extends State<BosanFood> {
                     leading: Icon(Icons.home),
                     title: Text("Home"),
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
                     },
                   ),
                 ],
