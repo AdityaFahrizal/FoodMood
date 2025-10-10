@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_mood_2/screen/admin/kategori%20makanan/junk%20food/junk_food_page.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/bosan/bosan_page.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/lelah/lelah_page.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/marah/marah_page.dart';
@@ -24,25 +23,26 @@ class Home_Admin extends StatefulWidget {
 }
 
 class _Home_AdminState extends State<Home_Admin> {
-  String? selectedValue;
+  final Map<String, Widget Function()> jenisMood = {
+  'Senang': () => SenangPageAdmin(),
+  'Sedih': () => SedihPageAdmin(),
+  'Marah': () => MarahPageAdmin(),
+  'Lelah': () => LelahPageAdmin(),
+  'Bosan': () => BosanPageAdmin(),
+};
 
-  final List<String> items = [
-    'Senang',
-    'Sedih',
-    'Marah',
-    'Lelah',
-    'Bosan',
-    'Junk Food',
-    'Healty Food',
-    'Whole Food',
-    'Processes Food',
-    'Organic Food',
-    'Comfort Food',
-    'Diet Food',
-    'Pastry Food',
-    'Sweets Food',
-  ];
-
+final Map<String, Widget Function()> jenisMakanan = {
+  'Junk Food': () => SenangPageAdmin(),
+  'Healty Food': () => SedihPageAdmin(),
+  'Whole Food': () => MarahPageAdmin(),
+  'Processed Food': () => LelahPageAdmin(),
+  'Diet Food': () => BosanPageAdmin(),
+  'Comfort Food': () => BosanPageAdmin(),
+  'Organic Food': () => BosanPageAdmin(),
+  'Pasrty Food': () => BosanPageAdmin(),
+  'Sweets Food': () => BosanPageAdmin(),
+};
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,112 +114,83 @@ class _Home_AdminState extends State<Home_Admin> {
                 );
               },
             ),
-            DropdownButton<String>(
-          hint: const Text("Page Mood"),
-          value: selectedValue,
-          items: items.map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          onChanged: (newValue) {
-            setState(() {
-              selectedValue = newValue;
-            });
+            DropdownButton(
+              hint: Text("Kategori Mood"),
+              value: jenisMood,
+              items: [
+                DropdownMenuItem(
+                  value: 'Senang',
+                  child: Text("Senang"),
 
-            if (newValue == "Senang") {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SenangPageAdmin()),
-              );
-            } else if (newValue == 'Sedih') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SedihPageAdmin()),
-              );
-            } else if (newValue == 'Marah') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const MarahPageAdmin()),
-              );
-            }
-            else if (newValue == 'Lelah') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const LelahPageAdmin()),
-              );
-            }
-            else if (newValue == 'Bosan') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const BosanPageAdmin()),
-              );
-            }
-          },
+                ),
+                DropdownMenuItem(
+                  value: 'Sedih' , child: Text("Sedih"),
+                ),
+                
+                DropdownMenuItem(
+                  value: 'Marah',
+                  child: Text("Marah"),
+                ),
+                DropdownMenuItem(
+                  value: 'Lelah',
+                  child: Text("Lelah"),
+                ),
+                DropdownMenuItem(
+                  value: 'Bosan' ,
+                  child: Text("Bosan"),
+                ),
+              ],
+
+              onChanged: (value) {
+                setState(() {});
+              },
             ),
-            DropdownButton<String>(
-          hint: const Text("Kategory Food"),
-          value: selectedValue,
-          items: items.map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          onChanged: (newValue) {
-            setState(() {
-              selectedValue = newValue;
-            });
 
-            if (newValue == "Junk Food") {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SenangPageAdmin()),
-              );
-            } else if (newValue == 'Healty Food') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SedihPageAdmin()),
-              );
-            } else if (newValue == 'Whole Food') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const MarahPageAdmin()),
-              );
-            }
-            else if (newValue == 'Processed Food') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const LelahPageAdmin()),
-              );
-            }
-            else if (newValue == 'Comfort Food') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const BosanPageAdmin()),
-              );
-            }
-            else if (newValue == 'Diet Food') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const BosanPageAdmin()),
-              );
-            }
-            else if (newValue == 'Pastry Food') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const BosanPageAdmin()),
-              );
-            }
-            else if (newValue == 'Sweets Food') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const BosanPageAdmin()),
-              );
-            }
-          },
-            )
+            DropdownButton(
+              hint: Text("Kategori Makanan"),
+              value: jenisMakanan,
+              items: [
+                DropdownMenuItem(
+                  value: 'Junk Food',
+                  child: Text("Junk Food"),
+                ),
+                DropdownMenuItem(
+                  value: 'Healty Food',
+                  child: Text("Healty Food"),
+                ),
+                DropdownMenuItem(
+                  value: 'Wole Food',
+                  child: Text("Whole Food"),
+                ),
+                DropdownMenuItem(
+                  value: 'Processed Food',
+                  child: Text("Processed Food"),
+                ),
+                DropdownMenuItem(
+                  value: 'Diet Food',
+                  child: Text("Diet Food"),
+                ),
+                DropdownMenuItem(
+                  value: 'Comfort Food',
+                  child: Text("Comfort Food"),
+                ),
+                DropdownMenuItem(
+                  value: 'Organic Food',
+                  child: Text("Organic Food"),
+                ),
+                DropdownMenuItem(
+                  value: 'pasrty Food',
+                  child: Text("Pastry Food"),
+                ),
+                DropdownMenuItem(
+                  value: 'Sweets Food',
+                  child: Text("Sweets Food"),
+                ),
+              ],
+              onChanged: (value) {
+                setState(() {});
+              },
+            ),
           ],
         ),
       ),
@@ -246,7 +217,9 @@ class _Home_AdminState extends State<Home_Admin> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SenangPageAdmin()),
+                        MaterialPageRoute(
+                          builder: (context) => SenangPageAdmin(),
+                        ),
                       );
                     },
                     child: SizedBox(
@@ -275,7 +248,9 @@ class _Home_AdminState extends State<Home_Admin> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SedihPageAdmin()),
+                        MaterialPageRoute(
+                          builder: (context) => SedihPageAdmin(),
+                        ),
                       );
                     },
                     child: SizedBox(
@@ -304,7 +279,9 @@ class _Home_AdminState extends State<Home_Admin> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => MarahPageAdmin()),
+                        MaterialPageRoute(
+                          builder: (context) => MarahPageAdmin(),
+                        ),
                       );
                     },
                     child: SizedBox(
@@ -333,7 +310,9 @@ class _Home_AdminState extends State<Home_Admin> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => LelahPageAdmin()),
+                        MaterialPageRoute(
+                          builder: (context) => LelahPageAdmin(),
+                        ),
                       );
                     },
                     child: SizedBox(
@@ -362,7 +341,9 @@ class _Home_AdminState extends State<Home_Admin> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => BosanPageAdmin()),
+                        MaterialPageRoute(
+                          builder: (context) => BosanPageAdmin(),
+                        ),
                       );
                     },
                     child: SizedBox(
@@ -399,13 +380,11 @@ class _Home_AdminState extends State<Home_Admin> {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 20),
 
             Column(
               children: [
-
                 //===== Junk Food =====/
-
                 Container(
                   child: Stack(
                     children: [
@@ -433,18 +412,26 @@ class _Home_AdminState extends State<Home_Admin> {
                       ),
 
                       Padding(
-                            padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Junkfood()));
-                            }, child: Text(
-                              "See Details",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                        padding: const EdgeInsets.only(top: 5, left: 260),
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Junkfood(),
                               ),
-                            ),),
+                            );
+                          },
+                          child: Text(
+                            "See Details",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
                           ),
+                        ),
+                      ),
 
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -466,11 +453,9 @@ class _Home_AdminState extends State<Home_Admin> {
                   ),
                 ),
 
-
-                SizedBox(height: 15,),
+                SizedBox(height: 15),
 
                 //===== Healty Food =====//
-
                 Container(
                   child: Stack(
                     children: [
@@ -502,16 +487,24 @@ class _Home_AdminState extends State<Home_Admin> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Healtyfood()));
-                            }, child: Text(
-                              "See Details",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Healtyfood(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "See Details",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 45, left: 15),
@@ -530,10 +523,9 @@ class _Home_AdminState extends State<Home_Admin> {
                   ),
                 ),
 
-                SizedBox(height: 15,),
+                SizedBox(height: 15),
 
                 //===== Whole Food =====//
-
                 Container(
                   child: Stack(
                     children: [
@@ -565,16 +557,24 @@ class _Home_AdminState extends State<Home_Admin> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Wholefood()));
-                            }, child: Text(
-                              "See Details",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Wholefood(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "See Details",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 45, left: 15),
@@ -593,10 +593,9 @@ class _Home_AdminState extends State<Home_Admin> {
                   ),
                 ),
 
-                SizedBox(height: 15,),
+                SizedBox(height: 15),
 
                 //===== Processes Food =====//
-
                 Container(
                   child: Stack(
                     children: [
@@ -628,16 +627,24 @@ class _Home_AdminState extends State<Home_Admin> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Processedfood()));
-                            }, child: Text(
-                              "See Details",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Processedfood(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "See Details",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 45, left: 15),
@@ -656,11 +663,9 @@ class _Home_AdminState extends State<Home_Admin> {
                   ),
                 ),
 
-                SizedBox(height: 15,),
+                SizedBox(height: 15),
 
                 //===== Diet Food =====//
-
-
                 Container(
                   child: Stack(
                     children: [
@@ -692,16 +697,24 @@ class _Home_AdminState extends State<Home_Admin> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Dietfood()));
-                            }, child: Text(
-                              "See Details",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Dietfood(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "See Details",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 45, left: 15),
@@ -720,10 +733,9 @@ class _Home_AdminState extends State<Home_Admin> {
                   ),
                 ),
 
-                SizedBox(height: 15,),
+                SizedBox(height: 15),
 
                 //===== Comfort Food =====//
-
                 Container(
                   child: Stack(
                     children: [
@@ -755,16 +767,24 @@ class _Home_AdminState extends State<Home_Admin> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Comfortfood()));
-                            }, child: Text(
-                              "See Details",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Comfortfood(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "See Details",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 45, left: 15),
@@ -783,10 +803,9 @@ class _Home_AdminState extends State<Home_Admin> {
                   ),
                 ),
 
-                SizedBox(height: 15,),
+                SizedBox(height: 15),
 
                 //===== Organic Food =====//
-
                 Container(
                   child: Stack(
                     children: [
@@ -818,16 +837,24 @@ class _Home_AdminState extends State<Home_Admin> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Organicfood()));
-                            }, child: Text(
-                              "See Details",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Organicfood(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "See Details",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 45, left: 15),
@@ -846,10 +873,9 @@ class _Home_AdminState extends State<Home_Admin> {
                   ),
                 ),
 
-                SizedBox(height: 15,),
+                SizedBox(height: 15),
 
                 //===== Pastry Food =====//
-
                 Container(
                   child: Stack(
                     children: [
@@ -881,21 +907,29 @@ class _Home_AdminState extends State<Home_Admin> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Pastryfood()));
-                            }, child: Text(
-                              "See Details",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Pastryfood(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "See Details",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 45, left: 15),
                             child: Text(
-                              "Passtry Food",
+                              "Pastry Food",
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 30,
@@ -909,10 +943,9 @@ class _Home_AdminState extends State<Home_Admin> {
                   ),
                 ),
 
-                SizedBox(height: 15,),
+                SizedBox(height: 15),
 
                 //===== Diet Food =====//
-
                 Container(
                   child: Stack(
                     children: [
@@ -944,16 +977,24 @@ class _Home_AdminState extends State<Home_Admin> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Sweetsfood()));
-                            }, child: Text(
-                              "See Details",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Sweetsfood(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "See Details",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 45, left: 15),
@@ -972,17 +1013,14 @@ class _Home_AdminState extends State<Home_Admin> {
                   ),
                 ),
 
-                SizedBox(height: 15,),
+                SizedBox(height: 15),
               ],
             ),
 
             const SizedBox(height: 15),
-
-            
           ],
         ),
       ),
-
     );
   }
 }
