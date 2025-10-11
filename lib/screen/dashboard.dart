@@ -149,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SenangFood()),
+                        MaterialPageRoute(builder: (context) => SenangPage()),
                       );
                     },
                     child: SizedBox(

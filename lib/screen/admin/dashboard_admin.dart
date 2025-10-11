@@ -73,7 +73,7 @@ final Map<String, Widget Function()> jenisMakanan = {
         ],
       ),
 
-      drawer: Drawer(
+            drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -114,86 +114,54 @@ final Map<String, Widget Function()> jenisMakanan = {
                 );
               },
             ),
-            DropdownButton(
-              hint: Text("Kategori Mood"),
-              value: jenisMood,
-              items: [
-                DropdownMenuItem(
-                  value: 'Senang',
-                  child: Text("Senang"),
-
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: DropdownButtonFormField<String>(
+                decoration: const InputDecoration(
+                  labelText: "Kategori Mood",
+                  border: OutlineInputBorder(),
                 ),
-                DropdownMenuItem(
-                  value: 'Sedih' , child: Text("Sedih"),
-                ),
-                
-                DropdownMenuItem(
-                  value: 'Marah',
-                  child: Text("Marah"),
-                ),
-                DropdownMenuItem(
-                  value: 'Lelah',
-                  child: Text("Lelah"),
-                ),
-                DropdownMenuItem(
-                  value: 'Bosan' ,
-                  child: Text("Bosan"),
-                ),
-              ],
-
-              onChanged: (value) {
-                setState(() {});
-              },
+                value: null,
+                items: jenisMood.keys.map((String mood) {
+                  return DropdownMenuItem<String>(
+                    value: mood,
+                    child: Text(mood),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => jenisMood[value]!()),
+                  );
+                },
+              ),
             ),
-
-            DropdownButton(
-              hint: Text("Kategori Makanan"),
-              value: jenisMakanan,
-              items: [
-                DropdownMenuItem(
-                  value: 'Junk Food',
-                  child: Text("Junk Food"),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: DropdownButtonFormField<String>(
+                decoration: const InputDecoration(
+                  labelText: "Kategori Makanan",
+                  border: OutlineInputBorder(),
                 ),
-                DropdownMenuItem(
-                  value: 'Healty Food',
-                  child: Text("Healty Food"),
-                ),
-                DropdownMenuItem(
-                  value: 'Wole Food',
-                  child: Text("Whole Food"),
-                ),
-                DropdownMenuItem(
-                  value: 'Processed Food',
-                  child: Text("Processed Food"),
-                ),
-                DropdownMenuItem(
-                  value: 'Diet Food',
-                  child: Text("Diet Food"),
-                ),
-                DropdownMenuItem(
-                  value: 'Comfort Food',
-                  child: Text("Comfort Food"),
-                ),
-                DropdownMenuItem(
-                  value: 'Organic Food',
-                  child: Text("Organic Food"),
-                ),
-                DropdownMenuItem(
-                  value: 'pasrty Food',
-                  child: Text("Pastry Food"),
-                ),
-                DropdownMenuItem(
-                  value: 'Sweets Food',
-                  child: Text("Sweets Food"),
-                ),
-              ],
-              onChanged: (value) {
-                setState(() {});
-              },
+                value: null,
+                items: jenisMakanan.keys.map((String makanan) {
+                  return DropdownMenuItem<String>(
+                    value: makanan,
+                    child: Text(makanan),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => jenisMakanan[value]!()),
+                  );
+                },
+              ),
             ),
           ],
         ),
       ),
+
 
       body: SingleChildScrollView(
         child: Column(

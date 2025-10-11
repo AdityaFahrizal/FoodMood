@@ -1,59 +1,28 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:food_mood_2/screen/user/resep_makanan/burger.dart';
+import 'package:food_mood_2/screen/admin/dashboard_admin.dart';
+import 'package:food_mood_2/screen/admin/mood%20makanan/senang/edit_menu_senang.dart';
+import 'package:food_mood_2/screen/admin/mood%20makanan/senang/tambah_menu%20.dart';
 import 'package:food_mood_2/screen/dashboard.dart';
-import 'package:food_mood_2/screen/user/resep_minuman/milkshake.dart';
-import 'package:food_mood_2/screen/user/mood/senang/mkn_sng.dart';
-import 'package:food_mood_2/screen/user/mood/senang/mnm_sng.dart';
 
-class SenangFood extends StatefulWidget {
-  const SenangFood({super.key});
+class SenangPage extends StatefulWidget {
+  const SenangPage({super.key});
 
   @override
-  State<SenangFood> createState() => _SenangFoodState();
+  State<SenangPage> createState() => _SenangPageState();
 }
 
-class _SenangFoodState extends State<SenangFood> {
-  TextEditingController searchController = TextEditingController();
-
-  List<Map<String, dynamic>> allMenuData = []; 
-  List<Map<String, dynamic>> tampilMenu = [];
-
-  @override
-  void initState() {
-    super.initState();
-    tampilMenu = allMenuData;
-  }
-
-  void filterSearch(String query) {
-    setState(() {
-      if (query.isEmpty) {
-        tampilMenu = allMenuData;
-      } else {
-        tampilMenu = allMenuData
-            .where((item) =>
-                item["name"].toLowerCase().contains(query.toLowerCase()) ||
-                item["description"].toLowerCase().contains(query.toLowerCase()))
-            .toList();
-      }
-    });
-  }
-
-  Widget getMenuPage(String menuName) {
-    if (menuName.toLowerCase().contains("burger")) {
-      return const ResepBurger();
-    } else if (menuName.toLowerCase().contains("milkshake")) {
-      return const ResepMilkshake();
-    }
-    return const MakananSenang(); 
-  }
+class _SenangPageState extends State<SenangPage> {
+  final TextEditingController _searchController = TextEditingController();
+  String searchQuery = "";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFFF714B),
-        title: const Center(
+        title: Center(
           child: Text(
             "Food Mood",
             style: TextStyle(
@@ -64,285 +33,245 @@ class _SenangFoodState extends State<SenangFood> {
             ),
           ),
         ),
-        actions: [
-          Builder(
-            builder: (context) {
-              return IconButton(
-                icon: const Icon(Icons.menu, color: Colors.white),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-              );
-            },
-          ),
-        ],
         leading: IconButton(
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const HomePage()),
+              MaterialPageRoute(builder: (context) => HomePage()),
             );
           },
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
         ),
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color(0xFFFF714B),
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(20),
-                ),
-              ),
-              child: Center(
-                child: Text(
-                  "Food Mood",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-              ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text("Home"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-
       body: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              margin: const EdgeInsets.only(top: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 180,
-                    height: 50,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFA6B28B),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MakananSenang(),
-                          ),
-                        );
-                      },
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.fastfood, color: Colors.white, size: 25),
-                          SizedBox(width: 10),
-                          Text(
-                            "Makanan",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  SizedBox(
-                    width: 180,
-                    height: 50,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF8BA3B2),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MinumanSenang(),
-                          ),
-                        );
-                      },
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.local_cafe, color: Colors.white, size: 25),
-                          SizedBox(width: 10),
-                          Text(
-                            "Minuman",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
             SizedBox(
               width: 350,
               height: 40,
-              child: TextField(
-                controller: searchController,
-                onChanged: filterSearch,
-                decoration: InputDecoration(
-                  hintText: "Cari di sini...",
-                  prefixIcon: const Icon(Icons.search),
-                  border: OutlineInputBorder(
+              child: SearchBar(
+                controller: _searchController,
+                onChanged: (value) {
+                  setState(() {
+                    searchQuery = value.toLowerCase();
+                  });
+                },
+                textInputAction: TextInputAction.search,
+                leading: const Icon(Icons.search),
+                hintText: "Cari di sini...",
+                shape: WidgetStateProperty.all(
+                  RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
               ),
             ),
-
             const SizedBox(height: 25),
-            const Text(
-              "Ini Ada Beberapa Rekomendasi Makanan..",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                "Ini Ada Beberapa Rekomendasi Menu..",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
             ),
-            const Text(
-              "Semoga Kamu Suka Ya..",
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5),
+              child: Text(
+                "Semoga Kamu Suka Ya..",
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+              ),
             ),
-
             const SizedBox(height: 20),
-
             StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance.collection('menuItems').snapshots(),
+              stream: FirebaseFirestore.instance
+                  .collection('menuSenang')
+                  .orderBy('timestamp', descending: true)
+                  .snapshots(),
               builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return Center(child: Text('Terjadi kesalahan: ${snapshot.error}'));
-                }
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
-
-                final List<Map<String, dynamic>> fetchedMenu = snapshot.data!.docs
-                    .asMap()
-                    .entries
-                    .map((entry) {
-                      final index = entry.key;
-                      final data = entry.value.data()! as Map<String, dynamic>;
-                      
-                      data['warna'] = data['warna'] ?? (index.isEven ? const Color(0xFFA6B28B) : const Color(0xFF8BA3B2));
-                      data['page'] = getMenuPage(data['name'] ?? ''); 
-                      return data;
-                    }).toList();
-
-                if (fetchedMenu.length != allMenuData.length || searchController.text.isEmpty) {
-                    allMenuData = fetchedMenu;
-                    if (searchController.text.isEmpty) {
-                       tampilMenu = fetchedMenu;
-                    }
-                }
-                
-                final List<Map<String, dynamic>> menuToDisplay = searchController.text.isEmpty ? allMenuData : tampilMenu;
-
-                if (menuToDisplay.isEmpty && searchController.text.isEmpty) {
-                  return const Center(child: Text('Belum ada menu di Firestore.'));
-                } else if (menuToDisplay.isEmpty && searchController.text.isNotEmpty) {
-                  return const Center(child: Text('Menu tidak ditemukan.'));
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  return const Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 80),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.fastfood, size: 60, color: Colors.grey),
+                          SizedBox(height: 15),
+                          Text(
+                            "Belum ada menu ditambahkan",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
                 }
 
+                var allDocs = snapshot.data!.docs;
+                var filteredDocs = searchQuery.isEmpty
+                    ? allDocs
+                    : allDocs.where((doc) {
+                        var data = doc.data() as Map<String, dynamic>;
+                        final nama =
+                            (data['name'] ?? '').toString().toLowerCase();
+                        final deskripsi =
+                            (data['description'] ?? '').toString().toLowerCase();
+                        return nama.contains(searchQuery) ||
+                            deskripsi.contains(searchQuery);
+                      }).toList();
 
-                return Column(
-                  children: menuToDisplay.map((item) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => item["page"]),
-                        );
-                      },
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: filteredDocs.length,
+                  itemBuilder: (context, index) {
+                    var doc = filteredDocs[index];
+                    var data = doc.data() as Map<String, dynamic>;
+
+                    final nama = data['name'] ?? 'Tanpa Nama';
+                    final deskripsi = data['description'] ?? '';
+                    final kategori = data['kategori'] ?? '';
+                    final imageBase64 = data['imageBase64'];
+
+                    Color cardColor = kategori == "Minuman"
+                        ? const Color(0xFF8BA3B2)
+                        : const Color(0xFFA6B28B);
+
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 6,
+                        horizontal: 10,
+                      ),
                       child: Container(
-                        width: 380,
-                        height: 100,
-                        margin: const EdgeInsets.only(bottom: 10),
+                        height: 110,
                         decoration: BoxDecoration(
+                          color: cardColor,
                           borderRadius: BorderRadius.circular(10),
-                          color: item["warna"] ?? const Color(0xFFA6B28B), 
                         ),
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(width: 8),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.network(
-                                item["imageUrl"] ?? '', 
-                                fit: BoxFit.cover,
-                                width: 85,
-                                height: 85,
-                                errorBuilder: (context, error, stackTrace) => 
-                                    const Icon(Icons.fastfood, size: 50, color: Colors.white), 
+                            const SizedBox(width: 12),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 12.0),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: imageBase64 != null
+                                    ? Image.memory(
+                                        base64Decode(imageBase64),
+                                        fit: BoxFit.cover,
+                                        width: 100,
+                                        height: 100,
+                                      )
+                                    : const Icon(
+                                        Icons.fastfood,
+                                        size: 50,
+                                        color: Colors.white,
+                                      ),
                               ),
                             ),
                             const SizedBox(width: 10),
-                            SizedBox(
-                              width: 250,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    item["name"] ?? 'Tidak Ada Nama',
-                                    style: const TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      nama,
+                                      style: const TextStyle(
+                                        fontSize: 28,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    item["description"] ?? 'Tidak Ada Deskripsi',
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
+                                    Text(
+                                      deskripsi,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.black,
+                                      ),
                                     ),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => EditMenuSenang(
+                                              docId: doc.id,
+                                              data: data,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      icon: const Icon(
+                                        Icons.edit,
+                                        color: Colors.white,
+                                        size: 20,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () async {
+                                        await FirebaseFirestore.instance
+                                            .collection('menuSenang')
+                                            .doc(doc.id)
+                                            .delete();
+                                      },
+                                      icon: const Icon(
+                                        Icons.delete,
+                                        color: Colors.redAccent,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                              ],
+                            )
                           ],
                         ),
                       ),
                     );
-                  }).toList(),
+                  },
                 );
               },
             ),
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xFFFF714B),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TambahMenuSenang()),
+          );
+        },
+        child: const Icon(Icons.add, color: Colors.white),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

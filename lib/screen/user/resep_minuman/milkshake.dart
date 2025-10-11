@@ -25,7 +25,7 @@ class ResepMilkshake extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SenangFood()),
+                MaterialPageRoute(builder: (context) => SenangPage()),
               );
             },
             icon: Icon(Icons.arrow_back_ios, color: Colors.white),

@@ -85,7 +85,7 @@ class _MarahPageAdminState extends State<MarahPageAdmin> {
             const SizedBox(height: 20),
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
-                  .collection('menuMarah')
+                  .collection('menuMood')
                   .orderBy('timestamp', descending: true)
                   .snapshots(),
               builder: (context, snapshot) {
@@ -234,7 +234,7 @@ class _MarahPageAdminState extends State<MarahPageAdmin> {
                                     IconButton(
                                       onPressed: () async {
                                         await FirebaseFirestore.instance
-                                            .collection('menuMarah')
+                                            .collection('menuMood')
                                             .doc(doc.id)
                                             .delete();
                                       },

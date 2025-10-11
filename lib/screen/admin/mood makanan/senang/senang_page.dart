@@ -85,7 +85,7 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
             const SizedBox(height: 20),
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
-                  .collection('menuSenang')
+                  .collection('menuMood')
                   .orderBy('timestamp', descending: true)
                   .snapshots(),
               builder: (context, snapshot) {
@@ -234,7 +234,7 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
                                     IconButton(
                                       onPressed: () async {
                                         await FirebaseFirestore.instance
-                                            .collection('menuSenang')
+                                            .collection('menuMood')
                                             .doc(doc.id)
                                             .delete();
                                       },
