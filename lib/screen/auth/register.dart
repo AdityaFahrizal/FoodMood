@@ -41,6 +41,7 @@ class _RegisterState extends State<Register> {
           "uid": user.uid,
           "Nama": name,
           "Email": user.email,  
+          "Role": 'user',
           "Waktu  Register": FieldValue.serverTimestamp(),
         });
 

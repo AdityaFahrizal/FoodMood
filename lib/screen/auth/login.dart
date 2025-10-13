@@ -32,35 +32,37 @@ class _LoginState extends State<Login> {
             email: _emailcotroler.text,
             password: _passwordcotroler.text,
           );
+
       String uid = userCredential.user!.uid;
 
-      String role = 'user';
-      if (_emailcotroler.text.toLowerCase().endsWith('@admin.com')) {
-        role = 'admin';
-      } else {
-        DocumentSnapshot userDoc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(uid)
-            .get();
+      final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-        if (userDoc.exists && userDoc.data() != null) {
-          final data = userDoc.data() as Map<String, dynamic>;
+      DocumentSnapshot userDoc = await _firestore
+          .collection('users')
+          .doc(uid)
+          .get();
 
-          if (data.containsKey('role') && data['role'] is String) {
-            role = data['role'];
-          }
+      if (userDoc.exists) {
+        String role = userDoc['role'];
+
+        if (role == 'admin') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (_) => const Home_Admin()),
+          );
+        } else if (role == 'user') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (_) => const HomePage()),
+          );
+        } else {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(const SnackBar(content: Text('Role tidak dikenali')));
         }
-      }
-
-      if (role == 'admin') {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => Home_Admin()),
-        );
       } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage()),
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('User tidak ditemukan di Firestore')),
         );
       }
 
@@ -75,14 +77,6 @@ class _LoginState extends State<Login> {
 
       String errorMessage =
           "Terjadi kesalahan. Silakan cek email dan password Anda.";
-
-      if (e.code == 'user-not-found') {
-        errorMessage = "Pengguna dengan email ini tidak ditemukan!";
-      } else if (e.code == 'wrong-password') {
-        errorMessage = "Password salah!";
-      } else if (e.code == 'invalid-email') {
-        errorMessage = "Format email tidak valid!";
-      }
 
       showDialog(
         context: context,
@@ -100,23 +94,27 @@ class _LoginState extends State<Login> {
     } catch (e) {
       setState(() {
         _isLoading = false;
-        String errorMessage = e.toString().contains("tidak ditemukan")
-            ? "Login berhasil, namun data peran tidak lengkap. Masuk sebagai User biasa."
-            : "Login gagal: ${e.toString()}";
+      });
 
-        showDialog(
-          context: context,
-          builder: (ctx) => AlertDialog(
-            title: const Text("Login Gagal Total"),
-            content: Text(errorMessage),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(ctx).pop(),
-                child: const Text("OK"),
-              ),
-            ],
-          ),
-        );
+      String errorMessage = e.toString().contains("tidak ditemukan")
+          ? "Login berhasil, namun data peran tidak lengkap. Masuk sebagai User biasa."
+          : "Login gagal: ${e.toString()}";
+
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text("Login Gagal Total"),
+          content: Text(errorMessage),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
+
+      setState(() {
         _message = "Terjadi kesalahan serius.";
       });
     }
@@ -153,7 +151,6 @@ class _LoginState extends State<Login> {
                             fontStyle: FontStyle.italic,
                           ),
                         ),
-
                         const Padding(padding: EdgeInsets.only(top: 15)),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -169,7 +166,6 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                         ),
-
                         const Padding(padding: EdgeInsets.only(top: 10)),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -198,18 +194,16 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                         ),
-
                         Padding(
                           padding: const EdgeInsets.only(top: 10, left: 220),
                           child: TextButton(
                             onPressed: () {},
-                            child: Text(
+                            child: const Text(
                               "Forgot Password",
                               style: TextStyle(fontSize: 12),
                             ),
                           ),
                         ),
-
                         const SizedBox(height: 10),
                         _isLoading
                             ? const CircularProgressIndicator()
@@ -220,7 +214,6 @@ class _LoginState extends State<Login> {
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ),
-
                         const Padding(padding: EdgeInsets.only(top: 15)),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -234,7 +227,7 @@ class _LoginState extends State<Login> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => Register(),
+                                    builder: (context) => const Register(),
                                   ),
                                 );
                               },
