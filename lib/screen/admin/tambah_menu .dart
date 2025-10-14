@@ -1,24 +1,25 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:food_mood_2/screen/admin/mood%20makanan/bosan/bosan_page.dart';
 import 'package:image_picker/image_picker.dart';
 
-class TambahMenuBosan extends StatefulWidget {
+class TambahMenuMoodPage extends StatefulWidget {
+  final String mood;
+
+  const TambahMenuMoodPage({super.key, required this.mood});
+
   @override
-  _TambahMenuBosan createState() => _TambahMenuBosan();
+  State<TambahMenuMoodPage> createState() => _TambahMenuMoodPageState();
 }
 
-class _TambahMenuBosan extends State<TambahMenuBosan> {
+class _TambahMenuMoodPageState extends State<TambahMenuMoodPage> {
   final TextEditingController menuNameController = TextEditingController();
   final TextEditingController menuDescriptionController =
       TextEditingController();
 
   File? _imageFile;
   String? _imageBase64;
-
   String? _kategori;
 
   Future<void> pickImage() async {
@@ -55,14 +56,17 @@ class _TambahMenuBosan extends State<TambahMenuBosan> {
     }
 
     try {
-      await FirebaseFirestore.instance.collection('menuBosan').add({
+      // 🔧 pastikan collection-nya konsisten untuk semua mood
+      await FirebaseFirestore.instance.collection('menuMood').add({
         'name': menuName,
         'description': menuDescription,
         'kategori': _kategori,
         'imageBase64': _imageBase64,
         'timestamp': FieldValue.serverTimestamp(),
+        'mood': widget.mood, // ✅ penting! bedakan berdasarkan mood
       });
 
+      // 🔧 bersihkan input setelah simpan
       setState(() {
         menuNameController.clear();
         menuDescriptionController.clear();
@@ -71,12 +75,15 @@ class _TambahMenuBosan extends State<TambahMenuBosan> {
         _kategori = null;
       });
 
+      // 🔧 tampilkan snackbar lalu kembali ke halaman sebelumnya
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Data menu berhasil disimpan!'),
           backgroundColor: Colors.green,
         ),
       );
+
+      Navigator.pop(context, true); // ✅ kembali ke halaman mood
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -92,22 +99,17 @@ class _TambahMenuBosan extends State<TambahMenuBosan> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFFF714B),
-        title: const Text(
-          "Tambah Menu",
-          style: TextStyle(
-            fontSize: 30,
+        title: Text(
+          "Tambah Menu (${widget.mood})",
+          style: const TextStyle(
+            fontSize: 24,
             fontWeight: FontWeight.bold,
             color: Colors.white,
-            fontStyle: FontStyle.italic,
           ),
         ),
+        // 🔧 ubah back button biar balik ke halaman sebelumnya, bukan hardcoded ke SenangPageAdmin
         leading: IconButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => BosanPageAdmin()),
-            );
-          },
+          onPressed: () => Navigator.pop(context),
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
         ),
       ),
@@ -119,7 +121,7 @@ class _TambahMenuBosan extends State<TambahMenuBosan> {
               TextField(
                 controller: menuNameController,
                 decoration: InputDecoration(
-                  label: const Text("Nama Menu"),
+                  labelText: "Nama Menu",
                   prefixIcon: const Icon(Icons.menu_book),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -133,7 +135,7 @@ class _TambahMenuBosan extends State<TambahMenuBosan> {
                 minLines: 5,
                 maxLines: 5,
                 decoration: InputDecoration(
-                  label: const Text("Deskripsi Menu"),
+                  labelText: "Deskripsi Menu",
                   prefixIcon: const Icon(Icons.description),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -141,11 +143,10 @@ class _TambahMenuBosan extends State<TambahMenuBosan> {
                 ),
               ),
               const SizedBox(height: 20),
-
               DropdownButtonFormField<String>(
                 value: _kategori,
                 decoration: InputDecoration(
-                  label: const Text("Kategori"),
+                  labelText: "Kategori",
                   prefixIcon: const Icon(Icons.category),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -162,7 +163,6 @@ class _TambahMenuBosan extends State<TambahMenuBosan> {
                 },
               ),
               const SizedBox(height: 20),
-
               GestureDetector(
                 onTap: pickImage,
                 child: Container(
@@ -173,16 +173,28 @@ class _TambahMenuBosan extends State<TambahMenuBosan> {
                   ),
                   child: _imageBase64 == null
                       ? const Center(child: Text("Pilih Gambar Menu"))
-                      : Image.memory(
-                          base64Decode(_imageBase64!),
-                          fit: BoxFit.cover,
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.memory(
+                            base64Decode(_imageBase64!),
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                          ),
                         ),
                 ),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: saveMenuItem,
-                child: const Text('Simpan Data Menu'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFFF714B),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                ),
+                child: const Text(
+                  'Simpan Data Menu',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
               ),
             ],
           ),

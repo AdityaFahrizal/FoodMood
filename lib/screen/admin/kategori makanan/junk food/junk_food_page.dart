@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_mood_2/screen/admin/dashboard_admin.dart';
 import 'package:food_mood_2/screen/admin/kategori%20makanan/junk%20food/edit_menu_junkfood.dart';
 import 'package:food_mood_2/screen/admin/kategori%20makanan/junk%20food/tambah_menu_junkfood.dart';
-import 'package:food_mood_2/screen/admin/mood%20makanan/senang/edit_menu_senang.dart';
+import 'package:food_mood_2/screen/admin/edit_menu_senang.dart';
 
 class JunkFoodPageAdmin extends StatefulWidget {
   const JunkFoodPageAdmin({super.key});

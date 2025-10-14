@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_mood_2/screen/admin/dashboard_admin.dart';
-import 'package:food_mood_2/screen/admin/mood%20makanan/senang/edit_menu_senang.dart';
-import 'package:food_mood_2/screen/admin/mood%20makanan/senang/tambah_menu%20.dart';
+import 'package:food_mood_2/screen/admin/edit_menu_senang.dart';
+import 'package:food_mood_2/screen/admin/tambah_menu%20.dart';
 import 'package:food_mood_2/screen/dashboard.dart';
 
 class SenangPage extends StatefulWidget {
@@ -209,47 +209,6 @@ class _SenangPageState extends State<SenangPage> {
                                 ),
                               ),
                             ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Row(
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => EditMenuSenang(
-                                              docId: doc.id,
-                                              data: data,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      icon: const Icon(
-                                        Icons.edit,
-                                        color: Colors.white,
-                                        size: 20,
-                                      ),
-                                    ),
-                                    IconButton(
-                                      onPressed: () async {
-                                        await FirebaseFirestore.instance
-                                            .collection('menuSenang')
-                                            .doc(doc.id)
-                                            .delete();
-                                      },
-                                      icon: const Icon(
-                                        Icons.delete,
-                                        color: Colors.redAccent,
-                                        size: 20,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 5),
-                              ],
-                            )
                           ],
                         ),
                       ),
@@ -261,17 +220,6 @@ class _SenangPageState extends State<SenangPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xFFFF714B),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => TambahMenuSenang()),
-          );
-        },
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

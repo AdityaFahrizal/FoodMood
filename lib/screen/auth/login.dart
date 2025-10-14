@@ -29,48 +29,50 @@ class _LoginState extends State<Login> {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
-            email: _emailcotroler.text,
-            password: _passwordcotroler.text,
-          );
+        email: _emailcotroler.text.trim(),
+        password: _passwordcotroler.text.trim(),
+      );
+
+      if (!mounted) return;
 
       String uid = userCredential.user!.uid;
-
       final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-      DocumentSnapshot userDoc = await _firestore
-          .collection('users')
-          .doc(uid)
-          .get();
+      DocumentSnapshot userDoc =
+          await _firestore.collection('users').doc(uid).get();
+
+      if (!mounted) return;
 
       if (userDoc.exists) {
-        String role = userDoc['role'];
+        final data = userDoc.data() as Map<String, dynamic>;
+        String role = (data['role'] ?? data['Role'] ?? 'user').toString();
 
         if (role == 'admin') {
+          if (!mounted) return;
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (_) => const Home_Admin()),
+            MaterialPageRoute(builder: (context) => const Home_Admin()),
           );
-        } else if (role == 'user') {
+        } else {
+          if (!mounted) return;
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (_) => const HomePage()),
           );
-        } else {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text('Role tidak dikenali')));
         }
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('User tidak ditemukan di Firestore')),
-        );
+        setState(() {
+          _message = "Data pengguna tidak ditemukan di Firestore.";
+        });
       }
 
+      if (!mounted) return;
       setState(() {
         _isLoading = false;
         _message = "Login Berhasil!";
       });
     } on FirebaseAuthException catch (e) {
+      if (!mounted) return;
       setState(() {
         _isLoading = false;
       });
@@ -92,19 +94,15 @@ class _LoginState extends State<Login> {
         ),
       );
     } catch (e) {
+      if (!mounted) return;
       setState(() {
         _isLoading = false;
       });
-
-      String errorMessage = e.toString().contains("tidak ditemukan")
-          ? "Login berhasil, namun data peran tidak lengkap. Masuk sebagai User biasa."
-          : "Login gagal: ${e.toString()}";
 
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
           title: const Text("Login Gagal Total"),
-          content: Text(errorMessage),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(),

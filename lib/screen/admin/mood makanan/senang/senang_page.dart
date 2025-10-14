@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_mood_2/screen/admin/dashboard_admin.dart';
-import 'package:food_mood_2/screen/admin/mood%20makanan/senang/edit_menu_senang.dart';
-import 'package:food_mood_2/screen/admin/mood%20makanan/senang/tambah_menu%20.dart';
+import 'package:food_mood_2/screen/admin/edit_menu_senang.dart';
+import 'package:food_mood_2/screen/admin/tambah_menu%20.dart';
 
 class SenangPageAdmin extends StatefulWidget {
   const SenangPageAdmin({super.key});
@@ -21,7 +21,7 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFFF714B),
-        title: Center(
+        title: const Center(
           child: Text(
             "Food Mood",
             style: TextStyle(
@@ -36,7 +36,7 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Home_Admin()),
+              MaterialPageRoute(builder: (context) => const Home_Admin()),
             );
           },
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -46,7 +46,7 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             SizedBox(
               width: 350,
               height: 40,
@@ -86,6 +86,7 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('menuMood')
+                  .where('mood', isEqualTo: 'Senang')
                   .orderBy('timestamp', descending: true)
                   .snapshots(),
               builder: (context, snapshot) {
@@ -161,7 +162,8 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
                           children: [
                             const SizedBox(width: 12),
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 12.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 12.0),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: imageBase64 != null
@@ -181,10 +183,12 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
                             const SizedBox(width: 10),
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       nama,
@@ -218,7 +222,8 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => EditMenuSenang(
+                                            builder: (context) =>
+                                                EditMenuMoodPage(
                                               docId: doc.id,
                                               data: data,
                                             ),
@@ -265,7 +270,9 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => TambahMenuSenang()),
+            MaterialPageRoute(
+              builder: (context) => const TambahMenuMoodPage(mood: 'Senang'),
+            ),
           );
         },
         child: const Icon(Icons.add, color: Colors.white),
