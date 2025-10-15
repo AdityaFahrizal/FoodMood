@@ -15,26 +15,31 @@ class TambahMenuMoodPage extends StatefulWidget {
 
 class _TambahMenuMoodPageState extends State<TambahMenuMoodPage> {
   final TextEditingController menuNameController = TextEditingController();
-  final TextEditingController menuDescriptionController =
-      TextEditingController();
+  final TextEditingController menuDescriptionController = TextEditingController();
 
   File? _imageFile;
   String? _imageBase64;
   String? _kategori;
 
   Future<void> pickImage() async {
-    final pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
-      maxWidth: 800,
-      maxHeight: 800,
-    );
+    try {
+      final pickedFile = await ImagePicker().pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 800,
+        maxHeight: 800,
+      );
 
-    if (pickedFile != null) {
-      final bytes = await pickedFile.readAsBytes();
-      setState(() {
-        _imageFile = File(pickedFile.path);
-        _imageBase64 = base64Encode(bytes);
-      });
+      if (pickedFile != null) {
+        final bytes = await pickedFile.readAsBytes();
+        setState(() {
+          _imageFile = File(pickedFile.path);
+          _imageBase64 = base64Encode(bytes);
+        });
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Gagal memuat gambar: $e')),
+      );
     }
   }
 
@@ -56,17 +61,15 @@ class _TambahMenuMoodPageState extends State<TambahMenuMoodPage> {
     }
 
     try {
-      // 🔧 pastikan collection-nya konsisten untuk semua mood
       await FirebaseFirestore.instance.collection('menuMood').add({
         'name': menuName,
         'description': menuDescription,
         'kategori': _kategori,
         'imageBase64': _imageBase64,
         'timestamp': FieldValue.serverTimestamp(),
-        'mood': widget.mood, // ✅ penting! bedakan berdasarkan mood
+        'mood': widget.mood,
       });
 
-      // 🔧 bersihkan input setelah simpan
       setState(() {
         menuNameController.clear();
         menuDescriptionController.clear();
@@ -75,7 +78,6 @@ class _TambahMenuMoodPageState extends State<TambahMenuMoodPage> {
         _kategori = null;
       });
 
-      // 🔧 tampilkan snackbar lalu kembali ke halaman sebelumnya
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Data menu berhasil disimpan!'),
@@ -83,7 +85,7 @@ class _TambahMenuMoodPageState extends State<TambahMenuMoodPage> {
         ),
       );
 
-      Navigator.pop(context, true); // ✅ kembali ke halaman mood
+      Navigator.pop(context, true);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -102,12 +104,11 @@ class _TambahMenuMoodPageState extends State<TambahMenuMoodPage> {
         title: Text(
           "Tambah Menu (${widget.mood})",
           style: const TextStyle(
-            fontSize: 24,
+            fontSize: 22,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
-        // 🔧 ubah back button biar balik ke halaman sebelumnya, bukan hardcoded ke SenangPageAdmin
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -132,7 +133,7 @@ class _TambahMenuMoodPageState extends State<TambahMenuMoodPage> {
               TextField(
                 controller: menuDescriptionController,
                 keyboardType: TextInputType.multiline,
-                minLines: 5,
+                minLines: 4,
                 maxLines: 5,
                 decoration: InputDecoration(
                   labelText: "Deskripsi Menu",
@@ -167,6 +168,7 @@ class _TambahMenuMoodPageState extends State<TambahMenuMoodPage> {
                 onTap: pickImage,
                 child: Container(
                   height: 150,
+                  width: double.infinity,
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(10),
@@ -188,12 +190,21 @@ class _TambahMenuMoodPageState extends State<TambahMenuMoodPage> {
                 onPressed: saveMenuItem,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFFF714B),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 60,
+                    vertical: 15,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
                 child: const Text(
                   'Simpan Data Menu',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],

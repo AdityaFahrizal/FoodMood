@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_mood_2/screen/admin/dashboard_admin.dart';
 import 'package:food_mood_2/screen/admin/edit_menu_senang.dart';
-import 'package:food_mood_2/screen/admin/tambah_menu%20.dart';
+import 'package:food_mood_2/screen/admin/tambah_menu.dart';
 
 class BosanPageAdmin extends StatefulWidget {
   const BosanPageAdmin({super.key});
