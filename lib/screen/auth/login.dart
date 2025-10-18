@@ -82,12 +82,12 @@ class _LoginState extends State<Login> {
 
       showDialog(
         context: context,
-        builder: (ctx) => AlertDialog(
+        builder: (contex) => AlertDialog(
           title: const Text("Login Gagal"),
           content: Text(errorMessage),
           actions: [
             TextButton(
-              onPressed: () => Navigator.of(ctx).pop(),
+              onPressed: () => Navigator.of(contex).pop(),
               child: const Text("OK"),
             ),
           ],
