@@ -68,8 +68,6 @@ class _RegisterState extends State<Register> {
       String errorMessage = "Terjadi kesalahan";
       if (e.code == 'email-already-in-use') {
         errorMessage = "Email sudah digunakan!";
-      } else if (e.code == 'invalid-email') {
-        errorMessage = "Format email tidak valid!";
       } else if (e.code == 'weak-password') {
         errorMessage = "Password terlalu lemah! (minimal 6 karakter)";
       }

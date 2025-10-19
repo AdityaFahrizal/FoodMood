@@ -66,7 +66,6 @@ class _TambahMenuMoodPageState extends State<TambahMenuMoodPage> {
         'description': menuDescription,
         'kategori': _kategori,
         'imageBase64': _imageBase64,
-        'timestamp': FieldValue.serverTimestamp(),
         'mood': widget.mood,
       });
 
