@@ -22,6 +22,8 @@ class _ResepSenangPageState extends State<ResepSenangPage> {
         (menuData['id'] ?? menuData['docId'] ?? menuData['menuId'] ?? '')
             .toString();
 
+
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFFF714B),
@@ -49,7 +51,7 @@ class _ResepSenangPageState extends State<ResepSenangPage> {
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('resep')
-            .where('moodName', isEqualTo: moodName)
+            .where('menuId', isEqualTo: menuId)
             .orderBy('timestamp', descending: true)
             .snapshots(),
 
