@@ -6,14 +6,14 @@ import 'package:food_mood_2/screen/admin/dashboard_admin.dart';
 import 'package:food_mood_2/screen/admin/edit_menu.dart';
 import 'package:food_mood_2/screen/admin/tambah_menu.dart';
 
-class JunkFoodPage extends StatefulWidget {
-  const JunkFoodPage({super.key});
+class OrganicFoodPageAdmin extends StatefulWidget {
+  const OrganicFoodPageAdmin({super.key});
 
   @override
-  State<JunkFoodPage> createState() => _JunkFoodPageState();
+  State<OrganicFoodPageAdmin> createState() => _OrganicFoodPageAdminState();
 }
 
-class _JunkFoodPageState extends State<JunkFoodPage> {
+class _OrganicFoodPageAdminState extends State<OrganicFoodPageAdmin> {
   final TextEditingController _searchController = TextEditingController();
   String searchQuery = "";
   String selectedCategory = 'All';
@@ -142,7 +142,7 @@ class _JunkFoodPageState extends State<JunkFoodPage> {
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('menuMood')
-                  .where('mood', isEqualTo: 'ComfortFood')
+                  .where('mood', isEqualTo: 'OrganicFood')
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -313,6 +313,46 @@ class _JunkFoodPageState extends State<JunkFoodPage> {
                                 ),
                               ],
                             ),
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              EditMenuMoodPage(
+                                                docId: doc.id,
+                                                data: data,
+                                              ),
+                                        ),
+                                      );
+                                    },
+                                    icon: const Icon(
+                                      Icons.edit,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () async {
+                                      await FirebaseFirestore.instance
+                                          .collection('menuMood')
+                                          .doc(doc.id)
+                                          .delete();
+                                    },
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: Colors.redAccent,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -324,6 +364,19 @@ class _JunkFoodPageState extends State<JunkFoodPage> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xFFFF714B),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TambahMenuMoodPage(mood: 'OrganicFood'),
+            ),
+          );
+        },
+        child: const Icon(Icons.add, color: Colors.white),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

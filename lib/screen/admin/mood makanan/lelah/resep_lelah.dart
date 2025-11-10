@@ -1,23 +1,24 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:food_mood_2/screen/admin/mood%20makanan/senang/senang_page.dart';
+import 'package:food_mood_2/screen/admin/mood%20makanan/lelah/lelah_page.dart';
+import 'package:food_mood_2/screen/admin/mood%20makanan/sedih/sedih_page.dart';
 import 'package:food_mood_2/screen/admin/tambah_resep.dart';
 
-class ResepSenangPage extends StatefulWidget {
+class ResepLelahPage extends StatefulWidget {
   final Map<String, dynamic> menuData;
-  const ResepSenangPage({super.key, required this.menuData});
+  const ResepLelahPage({super.key, required this.menuData});
 
   @override
-  State<ResepSenangPage> createState() => _ResepSenangPageState();
+  State<ResepLelahPage> createState() => _ResepLelahPageState();
 }
 
-class _ResepSenangPageState extends State<ResepSenangPage> {
+class _ResepLelahPageState extends State<ResepLelahPage> {
   @override
   Widget build(BuildContext context) {
     final menuData = widget.menuData;
     final String moodName =
-        (menuData['mood'] ?? menuData['kategori'] ?? 'Senang').toString();
+        (menuData['mood'] ?? menuData['kategori'] ?? 'Lelah').toString();
     final String menuId =
         (menuData['id'] ?? menuData['docId'] ?? menuData['menuId'] ?? '').toString();
 
@@ -38,7 +39,7 @@ class _ResepSenangPageState extends State<ResepSenangPage> {
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const SenangPageAdmin()),
+              MaterialPageRoute(builder: (context) => const lelahPageAdmin()),
             );
           },
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -97,7 +98,7 @@ class _ResepSenangPageState extends State<ResepSenangPage> {
                                 docId: docId,
                                 menuData: {
                                   ...menuData,
-                                  'id': menuId, // pastikan id menu dikirim
+                                  'id': menuId,
                                 },
                               ),
                             ),

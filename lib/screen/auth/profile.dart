@@ -135,6 +135,7 @@ class _ProfileState extends State<Profile> {
                     shadowColor: Colors.transparent,
                     backgroundColor: Colors.redAccent),
                 onPressed: () {
+                  FirebaseAuth.instance.signOut();
                   Navigator.pushReplacement(
                       context, MaterialPageRoute(builder: (_) => const Login()));
                 },

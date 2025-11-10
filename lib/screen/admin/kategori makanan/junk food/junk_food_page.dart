@@ -1,21 +1,23 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_mood_2/screen/admin/dashboard_admin.dart';
-import 'package:food_mood_2/screen/admin/kategori%20makanan/junk%20food/edit_menu_junkfood.dart';
-import 'package:food_mood_2/screen/admin/kategori%20makanan/junk%20food/tambah_menu_junkfood.dart';
-import 'package:food_mood_2/screen/admin/edit_menu_senang.dart';
+import 'package:food_mood_2/screen/admin/edit_menu.dart';
+import 'package:food_mood_2/screen/admin/tambah_menu.dart';
+import 'package:food_mood_2/screen/admin/tambah_resep.dart';
 
 class JunkFoodPageAdmin extends StatefulWidget {
   const JunkFoodPageAdmin({super.key});
 
   @override
-  State<JunkFoodPageAdmin> createState() => _JunkFoodPageAdmin();
+  State<JunkFoodPageAdmin> createState() => _JunkPageAdminState();
 }
 
-class _JunkFoodPageAdmin extends State<JunkFoodPageAdmin> {
+class _JunkPageAdminState extends State<JunkFoodPageAdmin> {
   final TextEditingController _searchController = TextEditingController();
   String searchQuery = "";
+  String selectedCategory = 'All';
 
   @override
   Widget build(BuildContext context) {
@@ -47,26 +49,83 @@ class _JunkFoodPageAdmin extends State<JunkFoodPageAdmin> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 20),
-            SizedBox(
-              width: 350,
-              height: 40,
-              child: SearchBar(
-                controller: _searchController,
-                onChanged: (value) {
-                  setState(() {
-                    searchQuery = value.toLowerCase();
-                  });
-                },
-                textInputAction: TextInputAction.search,
-                leading: const Icon(Icons.search),
-                hintText: "Cari di sini...",
-                shape: WidgetStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 310,
+                  height: 45,
+                  child: SearchBar(
+                    controller: _searchController,
+                    onChanged: (value) {
+                      setState(() {
+                        searchQuery = value.toLowerCase();
+                      });
+                    },
+                    textInputAction: TextInputAction.search,
+                    leading: const Icon(Icons.search),
+                    hintText: "Cari di sini...",
+                    shape: WidgetStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 5),
+                      child: IconButton(
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                        icon: const Icon(Icons.filter_alt_outlined, size: 22),
+                        onPressed: () async {
+                          final result = await showMenu<String>(
+                            context: context,
+                            position: const RelativeRect.fromLTRB(
+                              100,
+                              80,
+                              0,
+                              0,
+                            ),
+                            items: const [
+                              PopupMenuItem(
+                                value: 'All',
+                                child: Text('Semua'),
+                              ),
+                              PopupMenuItem(
+                                value: 'Makanan',
+                                child: Text('Makanan'),
+                              ),
+                              PopupMenuItem(
+                                value: 'Minuman',
+                                child: Text('Minuman'),
+                              ),
+                            ],
+                          );
+                          if (result != null) {
+                            setState(() {
+                              selectedCategory = result;
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 33, left: 10),
+                      child: Text(
+                        "FILTER",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
             const SizedBox(height: 25),
             const Padding(
@@ -86,8 +145,8 @@ class _JunkFoodPageAdmin extends State<JunkFoodPageAdmin> {
             const SizedBox(height: 20),
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
-                  .collection('menuJunkFood')
-                  .orderBy('timestamp', descending: true)
+                  .collection('menuMood')
+                  .where('mood', isEqualTo: 'JunkFood')
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -116,33 +175,60 @@ class _JunkFoodPageAdmin extends State<JunkFoodPageAdmin> {
                   );
                 }
 
-                var allDocs = snapshot.data!.docs;
-                var filteredDocs = searchQuery.isEmpty
-                    ? allDocs
-                    : allDocs.where((doc) {
-                        var data = doc.data() as Map<String, dynamic>;
-                        final nama =
-                            (data['name'] ?? '').toString().toLowerCase();
-                        final deskripsi =
-                            (data['description'] ?? '').toString().toLowerCase();
-                        return nama.contains(searchQuery) ||
-                            deskripsi.contains(searchQuery);
-                      }).toList();
+                final allDocs = snapshot.data!.docs;
+
+                final filteredDocs = allDocs
+                    .where(
+                      (doc) =>
+                          selectedCategory == 'All' ||
+                          (doc.data() as Map<String, dynamic>)['kategori'] ==
+                              selectedCategory,
+                    )
+                    .where((doc) {
+                      final data = doc.data() as Map<String, dynamic>;
+                      final nama = (data['name'] ?? '').toString().toLowerCase();
+                      final deskripsi =
+                          (data['description'] ?? '').toString().toLowerCase();
+                      return searchQuery.isEmpty ||
+                          nama.contains(searchQuery) ||
+                          deskripsi.contains(searchQuery);
+                    })
+                    .toList();
+
+                if (filteredDocs.isEmpty) {
+                  return const Padding(
+                    padding: EdgeInsets.only(top: 60),
+                    child: Column(
+                      children: [
+                        Icon(
+                          Icons.sentiment_dissatisfied,
+                          size: 50,
+                          color: Colors.grey,
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          "Tidak ada data ditemukan.",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  );
+                }
 
                 return ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: filteredDocs.length,
                   itemBuilder: (context, index) {
-                    var doc = filteredDocs[index];
-                    var data = doc.data() as Map<String, dynamic>;
+                    final doc = filteredDocs[index];
+                    final data = doc.data() as Map<String, dynamic>;
 
                     final nama = data['name'] ?? 'Tanpa Nama';
                     final deskripsi = data['description'] ?? '';
                     final kategori = data['kategori'] ?? '';
                     final imageBase64 = data['imageBase64'];
 
-                    Color cardColor = kategori == "Minuman"
+                    final cardColor = kategori == "Minuman"
                         ? const Color(0xFF8BA3B2)
                         : const Color(0xFFA6B28B);
 
@@ -152,104 +238,118 @@ class _JunkFoodPageAdmin extends State<JunkFoodPageAdmin> {
                         horizontal: 10,
                       ),
                       child: Container(
-                        height: 110,
+                        height: 120,
                         decoration: BoxDecoration(
                           color: cardColor,
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Stack(
                           children: [
-                            const SizedBox(width: 12),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 12.0),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: imageBase64 != null
-                                    ? Image.memory(
-                                        base64Decode(imageBase64),
-                                        fit: BoxFit.cover,
-                                        width: 100,
-                                        height: 100,
-                                      )
-                                    : const Icon(
-                                        Icons.fastfood,
-                                        size: 50,
-                                        color: Colors.white,
-                                      ),
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      nama,
-                                      style: const TextStyle(
-                                        fontSize: 28,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    Text(
-                                      deskripsi,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Row(
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => EditMenuJunkFood(
-                                              docId: doc.id,
-                                              data: data,
+                                const SizedBox(width: 10),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Container(
+                                    margin: const EdgeInsets.all(2),
+                                    child: imageBase64 != null
+                                        ? Image.memory(
+                                            base64Decode(imageBase64),
+                                            fit: BoxFit.cover,
+                                            width: 100,
+                                            height: 95,
+                                          )
+                                        : const Icon(
+                                            Icons.fastfood,
+                                            size: 50,
+                                            color: Colors.white,
+                                          ),
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 10,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          nama,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 6),
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width *
+                                              0.45,
+                                          child: Text(
+                                            deskripsi,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            softWrap: true,
+                                            style: const TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.black,
+                                              height: 1.4,
                                             ),
                                           ),
-                                        );
-                                      },
-                                      icon: const Icon(
-                                        Icons.edit,
-                                        color: Colors.white,
-                                        size: 20,
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                    IconButton(
-                                      onPressed: () async {
-                                        await FirebaseFirestore.instance
-                                            .collection('menuJunkFood')
-                                            .doc(doc.id)
-                                            .delete();
-                                      },
-                                      icon: const Icon(
-                                        Icons.delete,
-                                        color: Colors.redAccent,
-                                        size: 20,
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                                const SizedBox(height: 5),
                               ],
-                            )
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => EditMenuMoodPage(
+                                            docId: doc.id,
+                                            data: data,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    icon: const Icon(
+                                      Icons.edit,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () async {
+                                      await FirebaseFirestore.instance
+                                          .collection('menuFood')
+                                          .doc(doc.id)
+                                          .delete();
+                                    },
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: Colors.redAccent,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -266,7 +366,11 @@ class _JunkFoodPageAdmin extends State<JunkFoodPageAdmin> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => TambahMenuJunkfood()),
+            MaterialPageRoute(
+              builder: (context) => const TambahResepPage(
+                moodName: 'JunkFood', // cukup kirim moodName
+              ),
+            ),
           );
         },
         child: const Icon(Icons.add, color: Colors.white),

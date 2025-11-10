@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_mood_2/screen/auth/login.dart';
 import 'package:food_mood_2/screen/auth/profile.dart';
@@ -9,13 +10,13 @@ import 'package:food_mood_2/screen/user/kategori%20makanan/junkfood.dart';
 import 'package:food_mood_2/screen/user/kategori%20makanan/organicfood.dart';
 import 'package:food_mood_2/screen/user/kategori%20makanan/pastryfood.dart';
 import 'package:food_mood_2/screen/user/kategori%20makanan/processedfppd.dart';
-import 'package:food_mood_2/screen/user/kategori%20makanan/sweetsfood.dart';
 import 'package:food_mood_2/screen/user/kategori%20makanan/wholefood.dart';
 import 'package:food_mood_2/screen/user/mood/bosan/bsn_page.dart';
 import 'package:food_mood_2/screen/user/mood/lelah/llh_page.dart';
 import 'package:food_mood_2/screen/user/mood/marah/mrh_page.dart';
 import 'package:food_mood_2/screen/user/mood/sedih/sdh_page.dart';
 import 'package:food_mood_2/screen/user/mood/senang/sng_page.dart';
+import 'package:food_mood_2/screen/user/test_resep_chk_pcrn.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -117,6 +118,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               onTap: () {
+                FirebaseAuth.instance.signOut();
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => Login()),
@@ -207,7 +209,7 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => MarahFood()),
+                        MaterialPageRoute(builder: (context) => MarahPage()),
                       );
                     },
                     child: SizedBox(
@@ -236,7 +238,7 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => LelahFood()),
+                        MaterialPageRoute(builder: (context) => LelahPage()),
                       );
                     },
                     child: SizedBox(
@@ -265,7 +267,7 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => BosanFood()),
+                        MaterialPageRoute(builder: (context) => BosanPage()),
                       );
                     },
                     child: SizedBox(
@@ -338,7 +340,7 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
                             child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Junkfood()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => JunkFoodPage()));
                             }, child: Text(
                               "See Details",
                               style: TextStyle(
@@ -406,7 +408,7 @@ class _HomePageState extends State<HomePage> {
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
                             child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Healtyfood()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => HealtyFoodPage()));
                             }, child: Text(
                               "See Details",
                               style: TextStyle(
@@ -469,7 +471,7 @@ class _HomePageState extends State<HomePage> {
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
                             child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Wholefood()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => WholeFoodPage()));
                             }, child: Text(
                               "See Details",
                               style: TextStyle(
@@ -532,7 +534,7 @@ class _HomePageState extends State<HomePage> {
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
                             child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Processedfood()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => ProcessedFoodPage()));
                             }, child: Text(
                               "See Details",
                               style: TextStyle(
@@ -596,7 +598,7 @@ class _HomePageState extends State<HomePage> {
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
                             child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Dietfood()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => DietFoodPage()));
                             }, child: Text(
                               "See Details",
                               style: TextStyle(
@@ -659,7 +661,7 @@ class _HomePageState extends State<HomePage> {
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
                             child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Comfortfood()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => ComfortFoodPage()));
                             }, child: Text(
                               "See Details",
                               style: TextStyle(
@@ -722,7 +724,7 @@ class _HomePageState extends State<HomePage> {
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
                             child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Organicfood()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => OrganicFoodPage()));
                             }, child: Text(
                               "See Details",
                               style: TextStyle(
@@ -785,7 +787,7 @@ class _HomePageState extends State<HomePage> {
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
                             child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Pastryfood()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => PastryFoodPage()));
                             }, child: Text(
                               "See Details",
                               style: TextStyle(
@@ -848,7 +850,7 @@ class _HomePageState extends State<HomePage> {
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
                             child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Sweetsfood()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => ResepChickenPopcorn()));
                             }, child: Text(
                               "See Details",
                               style: TextStyle(

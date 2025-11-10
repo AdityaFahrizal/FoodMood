@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:food_mood_2/screen/admin/kategori%20makanan/comfort%20food/comfort_food_page.dart';
+import 'package:food_mood_2/screen/admin/kategori%20makanan/diet%20food/diet_food_page.dart';
+import 'package:food_mood_2/screen/admin/kategori%20makanan/healty%20food/healty_food_page.dart';
+import 'package:food_mood_2/screen/admin/kategori%20makanan/junk%20food/junk_food_page.dart';
+import 'package:food_mood_2/screen/admin/kategori%20makanan/organic%20food/organic_food_page.dart';
+import 'package:food_mood_2/screen/admin/kategori%20makanan/pasty%20food/pastry_food_page.dart';
+import 'package:food_mood_2/screen/admin/kategori%20makanan/processed%20food/processed_food_page.dart';
+import 'package:food_mood_2/screen/admin/kategori%20makanan/sweets%20food/sweets_food_page.dart';
+import 'package:food_mood_2/screen/admin/kategori%20makanan/whole%20food/whole_food_page.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/bosan/bosan_page.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/lelah/lelah_page.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/marah/marah_page.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/sedih/sedih_page.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/senang/senang_page.dart';
 import 'package:food_mood_2/screen/auth/profile.dart';
-import 'package:food_mood_2/screen/user/kategori%20makanan/comfortfood.dart';
-import 'package:food_mood_2/screen/user/kategori%20makanan/dietfood.dart';
-import 'package:food_mood_2/screen/user/kategori%20makanan/healtyfood.dart';
-import 'package:food_mood_2/screen/user/kategori%20makanan/junkfood.dart';
-import 'package:food_mood_2/screen/user/kategori%20makanan/organicfood.dart';
-import 'package:food_mood_2/screen/user/kategori%20makanan/pastryfood.dart';
-import 'package:food_mood_2/screen/user/kategori%20makanan/processedfppd.dart';
-import 'package:food_mood_2/screen/user/kategori%20makanan/sweetsfood.dart';
-import 'package:food_mood_2/screen/user/kategori%20makanan/wholefood.dart';
 
 class Home_Admin extends StatefulWidget {
   const Home_Admin({super.key});
@@ -27,7 +27,7 @@ class _Home_AdminState extends State<Home_Admin> {
   'Senang': () => SenangPageAdmin(),
   'Sedih': () => SedihPageAdmin(),
   'Marah': () => MarahPageAdmin(),
-  'Lelah': () => LelahPageAdmin(),
+  'Lelah': () => lelahPageAdmin(),
   'Bosan': () => BosanPageAdmin(),
 };
 
@@ -35,7 +35,7 @@ final Map<String, Widget Function()> jenisMakanan = {
   'Junk Food': () => SenangPageAdmin(),
   'Healty Food': () => SedihPageAdmin(),
   'Whole Food': () => MarahPageAdmin(),
-  'Processed Food': () => LelahPageAdmin(),
+  'Processed Food': () => lelahPageAdmin(),
   'Diet Food': () => BosanPageAdmin(),
   'Comfort Food': () => BosanPageAdmin(),
   'Organic Food': () => BosanPageAdmin(),
@@ -121,7 +121,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                   labelText: "Kategori Mood",
                   border: OutlineInputBorder(),
                 ),
-                value: null,
+                initialValue: null,
                 items: jenisMood.keys.map((String mood) {
                   return DropdownMenuItem<String>(
                     value: mood,
@@ -143,7 +143,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                   labelText: "Kategori Makanan",
                   border: OutlineInputBorder(),
                 ),
-                value: null,
+                initialValue: null,
                 items: jenisMakanan.keys.map((String makanan) {
                   return DropdownMenuItem<String>(
                     value: makanan,
@@ -279,7 +279,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LelahPageAdmin(),
+                          builder: (context) => lelahPageAdmin(),
                         ),
                       );
                     },
@@ -292,7 +292,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                         child: Column(
                           children: [
                             Padding(padding: EdgeInsets.only(top: 5)),
-                            Text("😕", style: TextStyle(fontSize: 40)),
+                            Text("😩", style: TextStyle(fontSize: 40)),
                             Text(
                               "Lelah",
                               style: TextStyle(
@@ -323,7 +323,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                         child: Column(
                           children: [
                             Padding(padding: EdgeInsets.only(top: 5)),
-                            Text("😩", style: TextStyle(fontSize: 40)),
+                            Text("😕", style: TextStyle(fontSize: 40)),
                             Text(
                               "Bosan",
                               style: TextStyle(
@@ -386,7 +386,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Junkfood(),
+                                builder: (context) => JunkFoodPageAdmin(),
                               ),
                             );
                           },
@@ -460,7 +460,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => Healtyfood(),
+                                    builder: (context) => HealtyFoodPageAdmin(),
                                   ),
                                 );
                               },
@@ -530,7 +530,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => Wholefood(),
+                                    builder: (context) => WholeFoodPageAdmin(),
                                   ),
                                 );
                               },
@@ -600,7 +600,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => Processedfood(),
+                                    builder: (context) => ProcessedFoodPageAdmin(),
                                   ),
                                 );
                               },
@@ -670,7 +670,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => Dietfood(),
+                                    builder: (context) => DietFoodPageAdmin(),
                                   ),
                                 );
                               },
@@ -740,7 +740,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => Comfortfood(),
+                                    builder: (context) => ComfortFoodPageAdmin(),
                                   ),
                                 );
                               },
@@ -810,7 +810,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => Organicfood(),
+                                    builder: (context) => OrganicFoodPageAdmin(),
                                   ),
                                 );
                               },
@@ -880,7 +880,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => Pastryfood(),
+                                    builder: (context) => PastryFoodPageAdmin(),
                                   ),
                                 );
                               },
@@ -913,7 +913,7 @@ final Map<String, Widget Function()> jenisMakanan = {
 
                 SizedBox(height: 15),
 
-                //===== Diet Food =====//
+                //===== Sweets Food =====//
                 Container(
                   child: Stack(
                     children: [
@@ -950,7 +950,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => Sweetsfood(),
+                                    builder: (context) => SweetsFoodPageAdmin(),
                                   ),
                                 );
                               },

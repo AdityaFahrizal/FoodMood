@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_mood_2/screen/admin/dashboard_admin.dart';
-import 'package:food_mood_2/screen/admin/edit_menu_senang.dart';
+import 'package:food_mood_2/screen/admin/edit_menu.dart';
+import 'package:food_mood_2/screen/admin/mood%20makanan/marah/resep_marah.dart';
 import 'package:food_mood_2/screen/admin/tambah_menu.dart';
 
 class MarahPageAdmin extends StatefulWidget {
@@ -15,13 +16,14 @@ class MarahPageAdmin extends StatefulWidget {
 class _MarahPageAdminState extends State<MarahPageAdmin> {
   final TextEditingController _searchController = TextEditingController();
   String searchQuery = "";
+  String selectedCategory = 'All';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFFF714B),
-        title: Center(
+        title: const Center(
           child: Text(
             "Food Mood",
             style: TextStyle(
@@ -44,212 +46,333 @@ class _MarahPageAdminState extends State<MarahPageAdmin> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 20),
-            SizedBox(
-              width: 350,
-              height: 40,
-              child: SearchBar(
-                controller: _searchController,
-                onChanged: (value) {
-                  setState(() {
-                    searchQuery = value.toLowerCase();
-                  });
-                },
-                textInputAction: TextInputAction.search,
-                leading: const Icon(Icons.search),
-                hintText: "Cari di sini...",
-                shape: WidgetStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 310,
+                  height: 40,
+                  child: SearchBar(
+                    controller: _searchController,
+                    onChanged: (value) {
+                      setState(() {
+                        searchQuery = value.toLowerCase();
+                      });
+                    },
+                    textInputAction: TextInputAction.search,
+                    leading: const Icon(Icons.search),
+                    hintText: "Cari di sini...",
+                    shape: WidgetStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            const SizedBox(height: 25),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Text(
-                "Ini Ada Beberapa Rekomendasi Menu..",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5),
-              child: Text(
-                "Semoga Kamu Suka Ya..",
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-              ),
+                Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 5),
+                      child: IconButton(
+                        icon: const Icon(Icons.filter_alt_outlined, size: 22),
+                        onPressed: () async {
+                          final result = await showMenu<String>(
+                            context: context,
+                            position: const RelativeRect.fromLTRB(
+                              100,
+                              80,
+                              0,
+                              0,
+                            ),
+                            items: const [
+                              PopupMenuItem(value: 'All', child: Text('Semua')),
+                              PopupMenuItem(
+                                value: 'Makanan',
+                                child: Text('Makanan'),
+                              ),
+                              PopupMenuItem(
+                                value: 'Minuman',
+                                child: Text('Minuman'),
+                              ),
+                            ],
+                          );
+                          if (result != null) {
+                            setState(() {
+                              selectedCategory = result;
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 33, left: 10),
+                      child: Text(
+                        "FILTER",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
             const SizedBox(height: 20),
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('menuMood')
                   .where('mood', isEqualTo: 'Marah')
-                  .orderBy('timestamp', descending: true)
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
+
                 if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return const Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 80),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.fastfood, size: 60, color: Colors.grey),
-                          SizedBox(height: 15),
-                          Text(
-                            "Belum ada menu ditambahkan",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
+                  return const Padding(
+                    padding: EdgeInsets.only(top: 100),
+                    child: Column(
+                      children: [
+                        Icon(Icons.fastfood, size: 60, color: Colors.grey),
+                        SizedBox(height: 15),
+                        Text(
+                          "Belum ada menu ditambahkan",
+                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                        ),
+                      ],
                     ),
                   );
                 }
 
-                var allDocs = snapshot.data!.docs;
-                var filteredDocs = searchQuery.isEmpty
-                    ? allDocs
-                    : allDocs.where((doc) {
-                        var data = doc.data() as Map<String, dynamic>;
-                        final nama =
-                            (data['name'] ?? '').toString().toLowerCase();
-                        final deskripsi =
-                            (data['description'] ?? '').toString().toLowerCase();
-                        return nama.contains(searchQuery) ||
-                            deskripsi.contains(searchQuery);
-                      }).toList();
+                final allDocs = snapshot.data!.docs;
+
+                final filteredDocs = allDocs
+                    .where(
+                      (doc) =>
+                          selectedCategory == 'All' ||
+                          (doc.data() as Map<String, dynamic>)['kategori'] ==
+                              selectedCategory,
+                    )
+                    .where((doc) {
+                      final data = doc.data() as Map<String, dynamic>;
+                      final nama = (data['name'] ?? '')
+                          .toString()
+                          .toLowerCase();
+                      final deskripsi = (data['description'] ?? '')
+                          .toString()
+                          .toLowerCase();
+                      return searchQuery.isEmpty ||
+                          nama.contains(searchQuery) ||
+                          deskripsi.contains(searchQuery);
+                    })
+                    .toList();
+
+                if (filteredDocs.isEmpty) {
+                  return const Padding(
+                    padding: EdgeInsets.only(top: 60),
+                    child: Column(
+                      children: [
+                        Icon(
+                          Icons.sentiment_dissatisfied,
+                          size: 50,
+                          color: Colors.grey,
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          "Tidak ada data ditemukan.",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  );
+                }
 
                 return ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: filteredDocs.length,
                   itemBuilder: (context, index) {
-                    var doc = filteredDocs[index];
-                    var data = doc.data() as Map<String, dynamic>;
-
+                    final doc = filteredDocs[index];
+                    final data = doc.data() as Map<String, dynamic>;
                     final nama = data['name'] ?? 'Tanpa Nama';
                     final deskripsi = data['description'] ?? '';
                     final kategori = data['kategori'] ?? '';
                     final imageBase64 = data['imageBase64'];
 
-                    Color cardColor = kategori == "Minuman"
+                    final cardColor = kategori == "Minuman"
                         ? const Color(0xFF8BA3B2)
                         : const Color(0xFFA6B28B);
 
                     return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 6,
-                        horizontal: 10,
-                      ),
+                      padding: const EdgeInsets.all(5),
                       child: Container(
-                        height: 110,
+                        height: 120,
                         decoration: BoxDecoration(
                           color: cardColor,
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
                         ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Stack(
                           children: [
-                            const SizedBox(width: 12),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 12.0),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: imageBase64 != null
-                                    ? Image.memory(
-                                        base64Decode(imageBase64),
-                                        fit: BoxFit.cover,
-                                        width: 100,
-                                        height: 100,
-                                      )
-                                    : const Icon(
-                                        Icons.fastfood,
-                                        size: 50,
-                                        color: Colors.white,
-                                      ),
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      nama,
-                                      style: const TextStyle(
-                                        fontSize: 28,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    Text(
-                                      deskripsi,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                            Row(
                               children: [
-                                Row(
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => EditMenuMoodPage(
-                                              docId: doc.id,
-                                              data: data,
+                                const SizedBox(width: 10),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: imageBase64 != null
+                                      ? Image.memory(
+                                          base64Decode(imageBase64),
+                                          fit: BoxFit.cover,
+                                          width: 90,
+                                          height: 90,
+                                        )
+                                      : const Icon(
+                                          Icons.fastfood,
+                                          size: 60,
+                                          color: Colors.white,
+                                        ),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      top: 10,
+                                      right: 8,
+                                      bottom: 8,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              nama,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 4),
+                                            Text(
+                                              deskripsi,
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: SizedBox(
+                                            height: 28,
+                                            child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                    ),
+                                                backgroundColor: const Color(
+                                                  0xFFFF714B,
+                                                ),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                final enrichedData = {
+                                                  ...data,
+                                                  'menuId': doc.id,
+                                                  'docId': doc.id,
+                                                  'mood': 'Marah',
+                                                };
+
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ResepMarahPage(
+                                                          menuData:
+                                                              enrichedData,
+                                                        ),
+                                                  ),
+                                                );
+                                              },
+
+                                              child: const Text(
+                                                "Lihat Detail",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12,
+                                                ),
+                                              ),
                                             ),
                                           ),
-                                        );
-                                      },
-                                      icon: const Icon(
-                                        Icons.edit,
-                                        color: Colors.white,
-                                        size: 20,
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                    IconButton(
-                                      onPressed: () async {
-                                        await FirebaseFirestore.instance
-                                            .collection('menuMood')
-                                            .doc(doc.id)
-                                            .delete();
-                                      },
-                                      icon: const Icon(
-                                        Icons.delete,
-                                        color: Colors.redAccent,
-                                        size: 20,
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                                const SizedBox(height: 5),
                               ],
-                            )
+                            ),
+                            Positioned(
+                              right: 0,
+                              top: 0,
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              EditMenuMoodPage(
+                                                docId: doc.id,
+                                                data: data,
+                                              ),
+                                        ),
+                                      );
+                                    },
+                                    icon: const Icon(
+                                      Icons.edit,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () async {
+                                      await FirebaseFirestore.instance
+                                          .collection('menuMood')
+                                          .doc(doc.id)
+                                          .delete();
+                                    },
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: Colors.redAccent,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -266,12 +389,13 @@ class _MarahPageAdminState extends State<MarahPageAdmin> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => TambahMenuMoodPage(mood: 'Marah')),
+            MaterialPageRoute(
+              builder: (context) => TambahMenuMoodPage(mood: 'Marah'),
+            ),
           );
         },
         child: const Icon(Icons.add, color: Colors.white),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

@@ -4,23 +4,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class EditMenuJunkFood extends StatefulWidget {
+class EditMenuMoodPage extends StatefulWidget {
   final String docId;
   final Map<String, dynamic> data;
 
-  const EditMenuJunkFood({super.key, required this.docId, required this.data});
+  const EditMenuMoodPage({super.key, required this.docId, required this.data});
 
   @override
-  State<EditMenuJunkFood> createState() => _EditMenuJunkFoodState();
+  State<EditMenuMoodPage> createState() => _EditMenuMoodPageState();
 }
 
-class _EditMenuJunkFoodState extends State<EditMenuJunkFood> {
+class _EditMenuMoodPageState extends State<EditMenuMoodPage> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
   late TextEditingController _descController;
   late String _kategori;
   String? _imageBase64;
   Uint8List? _imageBytes;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -45,21 +46,33 @@ class _EditMenuJunkFoodState extends State<EditMenuJunkFood> {
 
   Future<void> _updateMenu() async {
     if (_formKey.currentState!.validate()) {
-      await FirebaseFirestore.instance
-          .collection('menuJunkFood')
-          .doc(widget.docId)
-          .update({
-        'name': _nameController.text,
-        'description': _descController.text,
-        'kategori': _kategori,
-        'imageBase64': _imageBase64,
-        'timestamp': FieldValue.serverTimestamp(),
-      });
+      setState(() => _isLoading = true);
 
-      Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Menu berhasil diperbarui!')),
-      );
+      try {
+        await FirebaseFirestore.instance
+            .collection('menuMood')
+            .doc(widget.docId)
+            .update({
+          'name': _nameController.text,
+          'description': _descController.text,
+          'kategori': _kategori,
+          'imageBase64': _imageBase64,
+          'timestamp': FieldValue.serverTimestamp(),
+        });
+
+        if (mounted) {
+          Navigator.pop(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Menu berhasil diperbarui!')),
+          );
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Gagal memperbarui menu: $e')),
+        );
+      } finally {
+        if (mounted) setState(() => _isLoading = false);
+      }
     }
   }
 
@@ -69,7 +82,7 @@ class _EditMenuJunkFoodState extends State<EditMenuJunkFood> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFFF714B),
         title: const Text(
-          "Tambah Menu",
+          "Edit Menu",
           style: TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.bold,
@@ -79,7 +92,7 @@ class _EditMenuJunkFoodState extends State<EditMenuJunkFood> {
         ),
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context); 
+            Navigator.pop(context);
           },
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
         ),
@@ -134,30 +147,32 @@ class _EditMenuJunkFoodState extends State<EditMenuJunkFood> {
                 DropdownButtonFormField<String>(
                   value: _kategori,
                   items: const [
-                    DropdownMenuItem(
-                        value: "Makanan", child: Text("Makanan")),
-                    DropdownMenuItem(
-                        value: "Minuman", child: Text("Minuman")),
+                    DropdownMenuItem(value: "Makanan", child: Text("Makanan")),
+                    DropdownMenuItem(value: "Minuman", child: Text("Minuman")),
                   ],
                   onChanged: (value) => setState(() => _kategori = value!),
                   decoration: const InputDecoration(labelText: 'Kategori'),
                 ),
                 const SizedBox(height: 30),
                 Center(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFFF714B),
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 12),
-                    ),
-                    onPressed: _updateMenu,
-                    child: const Text(
-                      "Simpan Perubahan",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                  child: _isLoading
+                      ? const CircularProgressIndicator(
+                          color: Color(0xFFFF714B),
+                        )
+                      : ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFFFF714B),
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 40, vertical: 12),
+                          ),
+                          onPressed: _updateMenu,
+                          child: const Text(
+                            "Simpan Perubahan",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                        ),
                 ),
               ],
             ),

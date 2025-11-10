@@ -113,7 +113,7 @@ class _LoginState extends State<Login> {
       );
 
       setState(() {
-        _message = "Terjadi kesalahan serius.";
+        _message = "Terjadi kesalahan";
       });
     }
   }
@@ -192,16 +192,16 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10, left: 220),
-                          child: TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              "Forgot Password",
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(top: 10, left: 220),
+                        //   child: TextButton(
+                        //     onPressed: () {},
+                        //     child: const Text(
+                        //       "Forgot Password",
+                        //       style: TextStyle(fontSize: 12),
+                        //     ),
+                        //   ),
+                        // ),
                         const SizedBox(height: 10),
                         _isLoading
                             ? const CircularProgressIndicator()

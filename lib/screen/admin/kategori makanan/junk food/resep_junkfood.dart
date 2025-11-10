@@ -1,25 +1,23 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:food_mood_2/screen/admin/mood%20makanan/senang/senang_page.dart';
+import 'package:food_mood_2/screen/admin/kategori%20makanan/junk%20food/junk_food_page.dart';
 import 'package:food_mood_2/screen/admin/tambah_resep.dart';
 
-class ResepSenangPage extends StatefulWidget {
+class ResepJunkFoodPage extends StatefulWidget {
   final Map<String, dynamic> menuData;
-  const ResepSenangPage({super.key, required this.menuData});
+  const ResepJunkFoodPage({super.key, required this.menuData});
 
   @override
-  State<ResepSenangPage> createState() => _ResepSenangPageState();
+  State<ResepJunkFoodPage> createState() => _ResepJunkFoodPageState();
 }
 
-class _ResepSenangPageState extends State<ResepSenangPage> {
+class _ResepJunkFoodPageState extends State<ResepJunkFoodPage> {
   @override
   Widget build(BuildContext context) {
     final menuData = widget.menuData;
-    final String moodName =
-        (menuData['mood'] ?? menuData['kategori'] ?? 'Senang').toString();
-    final String menuId =
-        (menuData['id'] ?? menuData['docId'] ?? menuData['menuId'] ?? '').toString();
+    final String moodName = (menuData['mood'] ?? menuData['kategori'] ?? 'JunkFood').toString();
+    final String menuId = (menuData['id'] ?? menuData['docId'] ?? menuData['menuId'] ?? '').toString();
 
     return Scaffold(
       appBar: AppBar(
@@ -38,20 +36,21 @@ class _ResepSenangPageState extends State<ResepSenangPage> {
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const SenangPageAdmin()),
+              MaterialPageRoute(builder: (context) => const JunkFoodPageAdmin()),
             );
           },
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
         ),
       ),
-
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('menuMood')
-            .doc(menuId)
-            .collection('resep')
+            .doc(moodName)
+            .collection('menuResep')
+            .where('menuId', isEqualTo: menuId)
             .orderBy('timestamp', descending: true)
             .snapshots(),
+
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -64,8 +63,10 @@ class _ResepSenangPageState extends State<ResepSenangPage> {
                 children: [
                   Icon(Icons.fastfood, size: 80, color: Colors.grey),
                   SizedBox(height: 10),
-                  Text("Resep tidak ditemukan",
-                      style: TextStyle(fontSize: 18, color: Colors.grey)),
+                  Text(
+                    "Resep tidak ditemukan",
+                    style: TextStyle(fontSize: 18, color: Colors.grey),
+                  ),
                 ],
               ),
             );
@@ -95,10 +96,7 @@ class _ResepSenangPageState extends State<ResepSenangPage> {
                               builder: (context) => TambahResepPage(
                                 moodName: moodName,
                                 docId: docId,
-                                menuData: {
-                                  ...menuData,
-                                  'id': menuId, // pastikan id menu dikirim
-                                },
+                                menuData: menuData,
                               ),
                             ),
                           );
@@ -109,8 +107,8 @@ class _ResepSenangPageState extends State<ResepSenangPage> {
                         onPressed: () async {
                           await FirebaseFirestore.instance
                               .collection('menuMood')
-                              .doc(menuId)
-                              .collection('resep')
+                              .doc(moodName)
+                              .collection('menuResep')
                               .doc(docId)
                               .delete();
                         },
@@ -138,7 +136,9 @@ class _ResepSenangPageState extends State<ResepSenangPage> {
                               fit: BoxFit.cover,
                             ),
                           ),
+
                         const SizedBox(height: 12),
+
                         Text(
                           data['nama'] ?? 'Tanpa Nama',
                           style: const TextStyle(
@@ -148,6 +148,7 @@ class _ResepSenangPageState extends State<ResepSenangPage> {
                           ),
                         ),
                         const SizedBox(height: 6),
+
                         Text(
                           data['deskripsi'] ?? '',
                           textAlign: TextAlign.center,
@@ -158,12 +159,16 @@ class _ResepSenangPageState extends State<ResepSenangPage> {
                           ),
                         ),
                         const SizedBox(height: 6),
+
                         if (data['waktu'] != null && data['waktu'] != '')
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Icon(Icons.access_time,
-                                  size: 18, color: Colors.white),
+                              const Icon(
+                                Icons.access_time,
+                                size: 18,
+                                color: Colors.white,
+                              ),
                               const SizedBox(width: 4),
                               Text(
                                 data['waktu'],
@@ -180,17 +185,21 @@ class _ResepSenangPageState extends State<ResepSenangPage> {
                     ),
                   ),
 
-                  const Text("Bahan-bahan:",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const Text(
+                    "Bahan-bahan:",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
                   const SizedBox(height: 6),
-                  Text(data['bahan'] ?? '-',
-                      style: const TextStyle(fontSize: 15, height: 1.6)),
+                  Text(
+                    data['bahan'] ?? '-',
+                    style: const TextStyle(fontSize: 15, height: 1.6),
+                  ),
                   const SizedBox(height: 12),
 
-                  const Text("Langkah-langkah:",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const Text(
+                    "Langkah-langkah:",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
                   const SizedBox(height: 6),
                   if (data['langkah'] != null)
                     Column(
@@ -205,10 +214,12 @@ class _ResepSenangPageState extends State<ResepSenangPage> {
                               children: [
                                 Text(
                                   "${stepIndex + 1}. ${step['text'] ?? '-'}",
-                                  style: const TextStyle(fontSize: 15),
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    height: 1.4,
+                                  ),
                                 ),
-                                if (step['image'] != null &&
-                                    step['image'] != '')
+                                if (step['image'] != null && step['image'] != '')
                                   Padding(
                                     padding: const EdgeInsets.only(top: 6),
                                     child: ClipRRect(
@@ -227,6 +238,7 @@ class _ResepSenangPageState extends State<ResepSenangPage> {
                         },
                       ),
                     ),
+
                   const Divider(thickness: 1.2, height: 30),
                 ],
               );
@@ -234,7 +246,6 @@ class _ResepSenangPageState extends State<ResepSenangPage> {
           );
         },
       ),
-
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFFFF714B),
         onPressed: () {
@@ -243,10 +254,7 @@ class _ResepSenangPageState extends State<ResepSenangPage> {
             MaterialPageRoute(
               builder: (context) => TambahResepPage(
                 moodName: moodName,
-                menuData: {
-                  ...menuData,
-                  'id': menuId,
-                },
+                menuData: menuData,
               ),
             ),
           );
