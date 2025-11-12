@@ -4,10 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_mood_2/screen/admin/dashboard_admin.dart';
 import 'package:food_mood_2/screen/admin/edit_menu.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/lelah/resep_lelah.dart';
-import 'package:food_mood_2/screen/admin/mood%20makanan/sedih/resep_sedih.dart';
-import 'package:food_mood_2/screen/admin/mood%20makanan/senang/resep.dart';
 import 'package:food_mood_2/screen/admin/tambah_menu.dart';
 
+// ignore: camel_case_types
 class lelahPageAdmin extends StatefulWidget {
   const lelahPageAdmin({super.key});
 
@@ -40,11 +39,17 @@ class _LelahPageAdminState extends State<lelahPageAdmin> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Home_Admin()),
+              MaterialPageRoute(builder: (context) => (Home_Admin())),
             );
           },
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.device_hub, color: Colors.transparent),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -217,6 +222,7 @@ class _LelahPageAdminState extends State<lelahPageAdmin> {
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
+                              // ignore: deprecated_member_use
                               color: Colors.black.withOpacity(0.2),
                               blurRadius: 5,
                               offset: const Offset(0, 3),
@@ -313,7 +319,7 @@ class _LelahPageAdminState extends State<lelahPageAdmin> {
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        ResepLelahPage(
+                                                        ResepLelahAdminPage(
                                                           menuData:
                                                               enrichedData,
                                                         ),

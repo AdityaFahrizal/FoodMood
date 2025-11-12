@@ -29,13 +29,17 @@ class _ResepUserPageState extends State<ResepUserPage> {
         ),
         leading: IconButton(
           onPressed: () {
-            Navigator.pushReplacement(
+            Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const HomePage()),
+              MaterialPageRoute(builder: (context) => HomePage()),
             );
           },
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
         ),
+        actions: [
+          IconButton(onPressed: () {
+          }, icon: Icon(Icons.device_hub, color: Colors.transparent,))
+        ],
       ),
 
       body: StreamBuilder<QuerySnapshot>(

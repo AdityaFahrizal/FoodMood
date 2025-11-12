@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_mood_2/screen/admin/dashboard_admin.dart';
 import 'package:food_mood_2/screen/admin/edit_menu.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/sedih/resep_sedih.dart';
-import 'package:food_mood_2/screen/admin/mood%20makanan/senang/resep.dart';
 import 'package:food_mood_2/screen/admin/tambah_menu.dart';
 
 class SedihPageAdmin extends StatefulWidget {
@@ -44,6 +43,12 @@ class _SedihPageAdminState extends State<SedihPageAdmin> {
           },
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.device_hub, color: Colors.transparent),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -216,6 +221,7 @@ class _SedihPageAdminState extends State<SedihPageAdmin> {
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
+                              // ignore: deprecated_member_use
                               color: Colors.black.withOpacity(0.2),
                               blurRadius: 5,
                               offset: const Offset(0, 3),
@@ -312,7 +318,7 @@ class _SedihPageAdminState extends State<SedihPageAdmin> {
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        ResepSedihPage(
+                                                        ResepSedihAdminPage(
                                                           menuData:
                                                               enrichedData,
                                                         ),

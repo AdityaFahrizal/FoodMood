@@ -43,6 +43,12 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
           },
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.device_hub, color: Colors.transparent),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -215,6 +221,7 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
+                              // ignore: deprecated_member_use
                               color: Colors.black.withOpacity(0.2),
                               blurRadius: 5,
                               offset: const Offset(0, 3),
@@ -311,7 +318,7 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        ResepSenangPage(
+                                                        ResepSenangAdminPage(
                                                           menuData:
                                                               enrichedData,
                                                         ),

@@ -14,7 +14,7 @@ class AuthCheck extends StatefulWidget {
 
 class _AuthCheckState extends State<AuthCheck> {
   authcheck() async {
-    final user = await FirebaseAuth.instance.currentUser;
+    final user = FirebaseAuth.instance.currentUser;
     
     print("Tanda di atas");
     if (user == null ) {
@@ -25,10 +25,12 @@ class _AuthCheckState extends State<AuthCheck> {
     else {
       final data = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
       if (data.data()!['Role'] == 'admin') {
+        // ignore: use_build_context_synchronously
         Navigator.push(context, MaterialPageRoute(builder: (context) => Home_Admin()));
       }
 
       else {
+        // ignore: use_build_context_synchronously
         Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
       }
     }

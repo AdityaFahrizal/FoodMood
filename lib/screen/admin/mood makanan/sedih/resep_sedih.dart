@@ -4,45 +4,59 @@ import 'package:flutter/material.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/sedih/sedih_page.dart';
 import 'package:food_mood_2/screen/admin/tambah_resep.dart';
 
-class ResepSedihPage extends StatefulWidget {
+class ResepSedihAdminPage extends StatefulWidget {
   final Map<String, dynamic> menuData;
-  const ResepSedihPage({super.key, required this.menuData});
+  const ResepSedihAdminPage({super.key, required this.menuData});
 
   @override
-  State<ResepSedihPage> createState() => _ResepSeDihPageState();
+  State<ResepSedihAdminPage> createState() => _ResepSedihAdminPageState();
 }
 
-class _ResepSeDihPageState extends State<ResepSedihPage> {
+class _ResepSedihAdminPageState extends State<ResepSedihAdminPage> {
   @override
   Widget build(BuildContext context) {
     final menuData = widget.menuData;
     final String moodName =
         (menuData['mood'] ?? menuData['kategori'] ?? 'Sedih').toString();
     final String menuId =
-        (menuData['id'] ?? menuData['docId'] ?? menuData['menuId'] ?? '').toString();
+        (menuData['id'] ?? menuData['docId'] ?? menuData['menuId'] ?? '')
+            .toString();
+
+    if (menuId.isEmpty) {
+      return const Scaffold(
+        body: Center(child: Text("ID menu tidak ditemukan.")),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFFF714B),
-        title: const Text(
-          "Food Mood",
-          style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            fontStyle: FontStyle.italic,
+        title: const Center(
+          child: Text(
+            "Food Mood",
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontStyle: FontStyle.italic,
+            ),
           ),
         ),
-        centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            Navigator.pushReplacement(
+            Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const SedihPageAdmin()),
+              MaterialPageRoute(builder: (context) => SedihPageAdmin()),
             );
           },
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.device_hub, color: Colors.transparent),
+          ),
+        ],
       ),
 
       body: StreamBuilder<QuerySnapshot>(
@@ -57,6 +71,10 @@ class _ResepSeDihPageState extends State<ResepSedihPage> {
             return const Center(child: CircularProgressIndicator());
           }
 
+          if (snapshot.hasError) {
+            return Center(child: Text("Terjadi kesalahan: ${snapshot.error}"));
+          }
+
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
             return const Center(
               child: Column(
@@ -64,8 +82,10 @@ class _ResepSeDihPageState extends State<ResepSedihPage> {
                 children: [
                   Icon(Icons.fastfood, size: 80, color: Colors.grey),
                   SizedBox(height: 10),
-                  Text("Resep tidak ditemukan",
-                      style: TextStyle(fontSize: 18, color: Colors.grey)),
+                  Text(
+                    "Resep tidak ditemukan",
+                    style: TextStyle(fontSize: 18, color: Colors.grey),
+                  ),
                 ],
               ),
             );
@@ -83,6 +103,7 @@ class _ResepSeDihPageState extends State<ResepSedihPage> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Tombol edit & delete
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -95,10 +116,7 @@ class _ResepSeDihPageState extends State<ResepSedihPage> {
                               builder: (context) => TambahResepPage(
                                 moodName: moodName,
                                 docId: docId,
-                                menuData: {
-                                  ...menuData,
-                                  'id': menuId,
-                                },
+                                menuData: {...menuData, 'id': menuId},
                               ),
                             ),
                           );
@@ -118,13 +136,16 @@ class _ResepSeDihPageState extends State<ResepSedihPage> {
                     ],
                   ),
 
+                  // Header Resep
                   Container(
                     width: double.infinity,
                     color: const Color(0xFFFF714B),
                     padding: const EdgeInsets.all(8),
                     child: Column(
                       children: [
-                        if (data['gambar'] != null && data['gambar'] != '')
+                        if (data['gambar'] != null &&
+                            data['gambar'] != '' &&
+                            data['gambar'] is String)
                           Card(
                             elevation: 5,
                             shape: RoundedRectangleBorder(
@@ -162,8 +183,11 @@ class _ResepSeDihPageState extends State<ResepSedihPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Icon(Icons.access_time,
-                                  size: 18, color: Colors.white),
+                              const Icon(
+                                Icons.access_time,
+                                size: 18,
+                                color: Colors.white,
+                              ),
                               const SizedBox(width: 4),
                               Text(
                                 data['waktu'],
@@ -180,19 +204,27 @@ class _ResepSeDihPageState extends State<ResepSedihPage> {
                     ),
                   ),
 
-                  const Text("Bahan-bahan:",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  // Bahan-bahan
+                  const Text(
+                    "Bahan-bahan:",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
                   const SizedBox(height: 6),
-                  Text(data['bahan'] ?? '-',
-                      style: const TextStyle(fontSize: 15, height: 1.6)),
+                  Text(
+                    data['bahan'] ?? '-',
+                    style: const TextStyle(fontSize: 15, height: 1.6),
+                  ),
                   const SizedBox(height: 12),
 
-                  const Text("Langkah-langkah:",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  // Langkah-langkah
+                  const Text(
+                    "Langkah-langkah:",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
                   const SizedBox(height: 6),
-                  if (data['langkah'] != null)
+                  if (data['langkah'] != null &&
+                      data['langkah'] is List &&
+                      (data['langkah'] as List).isNotEmpty)
                     Column(
                       children: List.generate(
                         (data['langkah'] as List).length,
@@ -208,7 +240,8 @@ class _ResepSeDihPageState extends State<ResepSedihPage> {
                                   style: const TextStyle(fontSize: 15),
                                 ),
                                 if (step['image'] != null &&
-                                    step['image'] != '')
+                                    step['image'] != '' &&
+                                    step['image'] is String)
                                   Padding(
                                     padding: const EdgeInsets.only(top: 6),
                                     child: ClipRRect(
@@ -243,10 +276,7 @@ class _ResepSeDihPageState extends State<ResepSedihPage> {
             MaterialPageRoute(
               builder: (context) => TambahResepPage(
                 moodName: moodName,
-                menuData: {
-                  ...menuData,
-                  'id': menuId,
-                },
+                menuData: {...menuData, 'id': menuId},
               ),
             ),
           );

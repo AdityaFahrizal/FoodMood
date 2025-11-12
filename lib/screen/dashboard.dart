@@ -2,21 +2,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_mood_2/screen/auth/login.dart';
 import 'package:food_mood_2/screen/auth/profile.dart';
-import 'package:food_mood_2/screen/menu.dart';
-import 'package:food_mood_2/screen/user/kategori%20makanan/comfortfood.dart';
-import 'package:food_mood_2/screen/user/kategori%20makanan/dietfood.dart';
-import 'package:food_mood_2/screen/user/kategori%20makanan/healtyfood.dart';
-import 'package:food_mood_2/screen/user/kategori%20makanan/junkfood.dart';
-import 'package:food_mood_2/screen/user/kategori%20makanan/organicfood.dart';
-import 'package:food_mood_2/screen/user/kategori%20makanan/pastryfood.dart';
-import 'package:food_mood_2/screen/user/kategori%20makanan/processedfppd.dart';
-import 'package:food_mood_2/screen/user/kategori%20makanan/wholefood.dart';
+import 'package:food_mood_2/screen/mymenu.dart';
+import 'package:food_mood_2/screen/user/kategori%20makanan/Comfort%20Food/comfortfood.dart';
+import 'package:food_mood_2/screen/user/kategori%20makanan/Diet%20Food/dietfood.dart';
+import 'package:food_mood_2/screen/user/kategori%20makanan/Healty%20Food/healtyfood.dart';
+import 'package:food_mood_2/screen/user/kategori%20makanan/Junk%20Food/junkfood.dart';
+import 'package:food_mood_2/screen/user/kategori%20makanan/Organic%20Food/organicfood.dart';
+import 'package:food_mood_2/screen/user/kategori%20makanan/Pastry%20Food/pastryfood.dart';
+import 'package:food_mood_2/screen/user/kategori%20makanan/Processed%20Food/processedfppd.dart';
+import 'package:food_mood_2/screen/user/kategori%20makanan/Sweets%20Food/sweetsfood.dart';
+import 'package:food_mood_2/screen/user/kategori%20makanan/Whole%20Food/wholefood.dart';
 import 'package:food_mood_2/screen/user/mood/bosan/bsn_page.dart';
 import 'package:food_mood_2/screen/user/mood/lelah/llh_page.dart';
 import 'package:food_mood_2/screen/user/mood/marah/mrh_page.dart';
 import 'package:food_mood_2/screen/user/mood/sedih/sdh_page.dart';
 import 'package:food_mood_2/screen/user/mood/senang/sng_page.dart';
-import 'package:food_mood_2/screen/user/test_resep_chk_pcrn.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -57,8 +57,7 @@ class _HomePageState extends State<HomePage> {
       ),
 
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
+        child: Column(
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(
@@ -77,53 +76,62 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text("Home"),
-              onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text("Profile"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Profile()),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.menu_book),
-              title: const Text("My Menu"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MyMenu()),
-                );
-              },
-            ),
-            SizedBox(height: 400),
-            ListTile(
-              leading: const Icon(Icons.logout, color: Colors.redAccent),
-              title: const Text(
-                "Logout",
-                style: TextStyle(
-                  color: Colors.redAccent,
-                  fontWeight: FontWeight.bold,
-                ),
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  ListTile(
+                    leading: const Icon(Icons.home),
+                    title: const Text("Home"),
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const HomePage()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.person),
+                    title: const Text("Profile"),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Profile()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.menu_book),
+                    title: const Text("My Menu"),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const MyMenuPage()),
+                      );
+                    },
+                  ),
+                ],
               ),
-              onTap: () {
-                FirebaseAuth.instance.signOut();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Login()),
-                );
-              },
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: ListTile(
+                leading: const Icon(Icons.logout, color: Colors.redAccent),
+                title: const Text(
+                  "Logout",
+                  style: TextStyle(
+                    color: Colors.redAccent,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onTap: () {
+                  FirebaseAuth.instance.signOut();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (_) => const Login()),
+                  );
+                },
+              ),
             ),
           ],
         ),
@@ -850,7 +858,7 @@ class _HomePageState extends State<HomePage> {
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
                             child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => ResepChickenPopcorn()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => SweetsFoodPage()));
                             }, child: Text(
                               "See Details",
                               style: TextStyle(

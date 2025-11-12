@@ -1,20 +1,19 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_mood_2/screen/admin/dashboard_admin.dart';
 import 'package:food_mood_2/screen/admin/edit_menu.dart';
+import 'package:food_mood_2/screen/admin/kategori%20makanan/junk%20food/resep_junkfood.dart';
 import 'package:food_mood_2/screen/admin/tambah_menu.dart';
-import 'package:food_mood_2/screen/admin/tambah_resep.dart';
 
 class JunkFoodPageAdmin extends StatefulWidget {
   const JunkFoodPageAdmin({super.key});
 
   @override
-  State<JunkFoodPageAdmin> createState() => _JunkPageAdminState();
+  State<JunkFoodPageAdmin> createState() => _JunkFoodPageAdminState();
 }
 
-class _JunkPageAdminState extends State<JunkFoodPageAdmin> {
+class _JunkFoodPageAdminState extends State<JunkFoodPageAdmin> {
   final TextEditingController _searchController = TextEditingController();
   String searchQuery = "";
   String selectedCategory = 'All';
@@ -24,7 +23,7 @@ class _JunkPageAdminState extends State<JunkFoodPageAdmin> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFFF714B),
-        title: Center(
+        title: const Center(
           child: Text(
             "Food Mood",
             style: TextStyle(
@@ -44,10 +43,15 @@ class _JunkPageAdminState extends State<JunkFoodPageAdmin> {
           },
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.device_hub, color: Colors.transparent),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: 20),
             Row(
@@ -55,7 +59,7 @@ class _JunkPageAdminState extends State<JunkFoodPageAdmin> {
               children: [
                 SizedBox(
                   width: 310,
-                  height: 45,
+                  height: 40,
                   child: SearchBar(
                     controller: _searchController,
                     onChanged: (value) {
@@ -78,8 +82,6 @@ class _JunkPageAdminState extends State<JunkFoodPageAdmin> {
                     Padding(
                       padding: const EdgeInsets.only(left: 5),
                       child: IconButton(
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(),
                         icon: const Icon(Icons.filter_alt_outlined, size: 22),
                         onPressed: () async {
                           final result = await showMenu<String>(
@@ -91,10 +93,7 @@ class _JunkPageAdminState extends State<JunkFoodPageAdmin> {
                               0,
                             ),
                             items: const [
-                              PopupMenuItem(
-                                value: 'All',
-                                child: Text('Semua'),
-                              ),
+                              PopupMenuItem(value: 'All', child: Text('Semua')),
                               PopupMenuItem(
                                 value: 'Makanan',
                                 child: Text('Makanan'),
@@ -113,8 +112,8 @@ class _JunkPageAdminState extends State<JunkFoodPageAdmin> {
                         },
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 33, left: 10),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 33, left: 10),
                       child: Text(
                         "FILTER",
                         style: TextStyle(
@@ -127,21 +126,6 @@ class _JunkPageAdminState extends State<JunkFoodPageAdmin> {
                 ),
               ],
             ),
-            const SizedBox(height: 25),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Text(
-                "Ini Ada Beberapa Rekomendasi Menu..",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5),
-              child: Text(
-                "Semoga Kamu Suka Ya..",
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-              ),
-            ),
             const SizedBox(height: 20),
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
@@ -152,25 +136,19 @@ class _JunkPageAdminState extends State<JunkFoodPageAdmin> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
+
                 if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return const Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 80),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.fastfood, size: 60, color: Colors.grey),
-                          SizedBox(height: 15),
-                          Text(
-                            "Belum ada menu ditambahkan",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
+                  return const Padding(
+                    padding: EdgeInsets.only(top: 100),
+                    child: Column(
+                      children: [
+                        Icon(Icons.fastfood, size: 60, color: Colors.grey),
+                        SizedBox(height: 15),
+                        Text(
+                          "Belum ada menu ditambahkan",
+                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                        ),
+                      ],
                     ),
                   );
                 }
@@ -186,9 +164,12 @@ class _JunkPageAdminState extends State<JunkFoodPageAdmin> {
                     )
                     .where((doc) {
                       final data = doc.data() as Map<String, dynamic>;
-                      final nama = (data['name'] ?? '').toString().toLowerCase();
-                      final deskripsi =
-                          (data['description'] ?? '').toString().toLowerCase();
+                      final nama = (data['name'] ?? '')
+                          .toString()
+                          .toLowerCase();
+                      final deskripsi = (data['description'] ?? '')
+                          .toString()
+                          .toLowerCase();
                       return searchQuery.isEmpty ||
                           nama.contains(searchQuery) ||
                           deskripsi.contains(searchQuery);
@@ -222,7 +203,6 @@ class _JunkPageAdminState extends State<JunkFoodPageAdmin> {
                   itemBuilder: (context, index) {
                     final doc = filteredDocs[index];
                     final data = doc.data() as Map<String, dynamic>;
-
                     final nama = data['name'] ?? 'Tanpa Nama';
                     final deskripsi = data['description'] ?? '';
                     final kategori = data['kategori'] ?? '';
@@ -233,75 +213,126 @@ class _JunkPageAdminState extends State<JunkFoodPageAdmin> {
                         : const Color(0xFFA6B28B);
 
                     return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 6,
-                        horizontal: 10,
-                      ),
+                      padding: const EdgeInsets.all(5),
                       child: Container(
                         height: 120,
                         decoration: BoxDecoration(
                           color: cardColor,
                           borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              // ignore: deprecated_member_use
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
                         ),
                         child: Stack(
                           children: [
                             Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 const SizedBox(width: 10),
                                 ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: Container(
-                                    margin: const EdgeInsets.all(2),
-                                    child: imageBase64 != null
-                                        ? Image.memory(
-                                            base64Decode(imageBase64),
-                                            fit: BoxFit.cover,
-                                            width: 100,
-                                            height: 95,
-                                          )
-                                        : const Icon(
-                                            Icons.fastfood,
-                                            size: 50,
-                                            color: Colors.white,
-                                          ),
-                                  ),
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: imageBase64 != null
+                                      ? Image.memory(
+                                          base64Decode(imageBase64),
+                                          fit: BoxFit.cover,
+                                          width: 90,
+                                          height: 90,
+                                        )
+                                      : const Icon(
+                                          Icons.fastfood,
+                                          size: 60,
+                                          color: Colors.white,
+                                        ),
                                 ),
                                 const SizedBox(width: 12),
                                 Expanded(
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 10,
+                                    padding: const EdgeInsets.only(
+                                      top: 10,
+                                      right: 8,
+                                      bottom: 8,
                                     ),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          nama,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              nama,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 4),
+                                            Text(
+                                              deskripsi,
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        const SizedBox(height: 6),
-                                        SizedBox(
-                                          width: MediaQuery.of(context).size.width *
-                                              0.45,
-                                          child: Text(
-                                            deskripsi,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            softWrap: true,
-                                            style: const TextStyle(
-                                              fontSize: 15,
-                                              color: Colors.black,
-                                              height: 1.4,
+                                        Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: SizedBox(
+                                            height: 28,
+                                            child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                    ),
+                                                backgroundColor: const Color(
+                                                  0xFFFF714B,
+                                                ),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                final enrichedData = {
+                                                  ...data,
+                                                  'menuId': doc.id,
+                                                  'docId': doc.id,
+                                                  'mood': 'LelaH',
+                                                };
+
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ResepJunkFoodAdminPage(
+                                                          menuData:
+                                                              enrichedData,
+                                                        ),
+                                                  ),
+                                                );
+                                              },
+
+                                              child: const Text(
+                                                "Lihat Detail",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12,
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -312,8 +343,8 @@ class _JunkPageAdminState extends State<JunkFoodPageAdmin> {
                               ],
                             ),
                             Positioned(
-                              bottom: 0,
                               right: 0,
+                              top: 0,
                               child: Row(
                                 children: [
                                   IconButton(
@@ -321,30 +352,29 @@ class _JunkPageAdminState extends State<JunkFoodPageAdmin> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => EditMenuMoodPage(
-                                            docId: doc.id,
-                                            data: data,
-                                          ),
+                                          builder: (context) =>
+                                              EditMenuMoodPage(
+                                                docId: doc.id,
+                                                data: data,
+                                              ),
                                         ),
                                       );
                                     },
                                     icon: const Icon(
                                       Icons.edit,
                                       color: Colors.white,
-                                      size: 20,
                                     ),
                                   ),
                                   IconButton(
                                     onPressed: () async {
                                       await FirebaseFirestore.instance
-                                          .collection('menuFood')
+                                          .collection('menuMood')
                                           .doc(doc.id)
                                           .delete();
                                     },
                                     icon: const Icon(
                                       Icons.delete,
                                       color: Colors.redAccent,
-                                      size: 20,
                                     ),
                                   ),
                                 ],
@@ -367,15 +397,12 @@ class _JunkPageAdminState extends State<JunkFoodPageAdmin> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const TambahResepPage(
-                moodName: 'JunkFood', // cukup kirim moodName
-              ),
+              builder: (context) => TambahMenuMoodPage(mood: 'JunkFood'),
             ),
           );
         },
         child: const Icon(Icons.add, color: Colors.white),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

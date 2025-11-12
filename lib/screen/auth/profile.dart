@@ -43,8 +43,7 @@ class _ProfileState extends State<Profile> {
           photoBase64 = data['photoBase64'];
         });
       }
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   Future<void> _pickAndSaveImage() async {
@@ -88,8 +87,17 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Profile"),
+        title: const Text(
+          "Profile",
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
         backgroundColor: const Color(0xFFFF714B),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_sharp, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -127,7 +135,7 @@ class _ProfileState extends State<Profile> {
                     fontSize: 18, fontWeight: FontWeight.bold)),
             Text("Email: $email", style: const TextStyle(fontSize: 16)),
             const Spacer(),
-            Container(
+            SizedBox(
               width: 150,
               height: 50,
               child: ElevatedButton(

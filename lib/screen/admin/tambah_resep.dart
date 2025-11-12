@@ -26,7 +26,7 @@ class _TambahResepPageState extends State<TambahResepPage> {
   final TextEditingController menuDescriptionController = TextEditingController();
   final TextEditingController menuTimeController = TextEditingController();
   final TextEditingController menuResepController = TextEditingController();
-  final TextEditingController menuWarningController = TextEditingController();
+  final TextEditingController menuWarningController = TextEditingController(); // tetap dipakai untuk input
 
   String? _imageBase64;
   bool isLoading = false;
@@ -65,7 +65,7 @@ class _TambahResepPageState extends State<TambahResepPage> {
         menuDescriptionController.text = data['deskripsi'] ?? '';
         menuTimeController.text = data['waktu'] ?? '';
         menuResepController.text = data['bahan'] ?? '';
-        menuWarningController.text = data['warning'] ?? '';
+        menuWarningController.text = data['tidakCocokUntuk'] ?? ''; // ✅ diperbaiki di sini
         _imageBase64 = data['gambar'];
         steps = List<Map<String, dynamic>>.from(
           (data['langkah'] ?? []).map((s) => {'text': s['text'] ?? '', 'image': s['image'] ?? ''}),
@@ -145,7 +145,9 @@ class _TambahResepPageState extends State<TambahResepPage> {
         'deskripsi': menuDescriptionController.text.trim().isEmpty ? 'Tidak ada deskripsi' : menuDescriptionController.text.trim(),
         'waktu': menuTimeController.text.trim().isEmpty ? '-' : menuTimeController.text.trim(),
         'bahan': menuResepController.text.trim().isEmpty ? '-' : menuResepController.text.trim(),
-        'warning': menuWarningController.text.trim().isEmpty ? '-' : menuWarningController.text.trim(),
+        'tidakCocokUntuk': menuWarningController.text.trim().isEmpty // ✅ disamakan
+            ? '-'
+            : menuWarningController.text.trim(),
         'gambar': _imageBase64 ?? '',
         'langkah': validSteps,
         'timestamp': FieldValue.serverTimestamp(),
@@ -287,7 +289,6 @@ class _TambahResepPageState extends State<TambahResepPage> {
               icon: const Icon(Icons.add_circle, color: Color(0xFFFF714B)),
               label: const Text('Tambah Langkah', style: TextStyle(color: Color(0xFFFF714B))),
             ),
-            buildInputCard(Icons.warning, 'Tidak disarankan bagi yang memiliki penyakit', menuWarningController, maxLines: 3),
             const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,

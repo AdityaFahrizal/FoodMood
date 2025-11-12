@@ -36,6 +36,7 @@ class _TambahMenuMoodPageState extends State<TambahMenuMoodPage> {
         });
       }
     } catch (e) {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Gagal memuat gambar: $e')),
       );
@@ -84,6 +85,7 @@ class _TambahMenuMoodPageState extends State<TambahMenuMoodPage> {
         'mood': widget.mood,
       });
 
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
 
       setState(() {
@@ -94,6 +96,7 @@ class _TambahMenuMoodPageState extends State<TambahMenuMoodPage> {
         isLoading = false;
       });
 
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Data menu berhasil disimpan!'),
@@ -168,7 +171,7 @@ class _TambahMenuMoodPageState extends State<TambahMenuMoodPage> {
                 ),
                 const SizedBox(height: 20),
                 DropdownButtonFormField<String>(
-                  value: _kategori,
+                  initialValue: _kategori,
                   decoration: InputDecoration(
                     labelText: "Kategori",
                     prefixIcon: const Icon(Icons.category),

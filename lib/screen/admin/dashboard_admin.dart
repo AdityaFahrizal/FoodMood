@@ -15,6 +15,7 @@ import 'package:food_mood_2/screen/admin/mood%20makanan/sedih/sedih_page.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/senang/senang_page.dart';
 import 'package:food_mood_2/screen/auth/profile.dart';
 
+// ignore: camel_case_types
 class Home_Admin extends StatefulWidget {
   const Home_Admin({super.key});
 
@@ -22,6 +23,7 @@ class Home_Admin extends StatefulWidget {
   State<Home_Admin> createState() => _Home_AdminState();
 }
 
+// ignore: camel_case_types
 class _Home_AdminState extends State<Home_Admin> {
   final Map<String, Widget Function()> jenisMood = {
   'Senang': () => SenangPageAdmin(),
@@ -353,632 +355,614 @@ final Map<String, Widget Function()> jenisMakanan = {
             Column(
               children: [
                 //===== Junk Food =====/
-                Container(
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: 380,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                              'assets/images/kategori_makanan/JunkFood.jpg',
-                            ),
-                            fit: BoxFit.cover,
+                Stack(
+                  children: [
+                    Container(
+                      width: 380,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            'assets/images/kategori_makanan/JunkFood.jpg',
                           ),
-                          borderRadius: BorderRadius.circular(16),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                
+                    Container(
+                      width: 380,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.5),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5, left: 260),
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => JunkFoodPageAdmin(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          "See Details",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
                         ),
                       ),
-
-                      Container(
-                        width: 380,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.5),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                      ),
-
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5, left: 260),
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => JunkFoodPageAdmin(),
-                              ),
-                            );
-                          },
+                    ),
+                
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 100, left: 15),
                           child: Text(
-                            "See Details",
+                            "Junk Food",
                             style: TextStyle(
                               color: Colors.black,
+                              fontSize: 30,
                               fontWeight: FontWeight.bold,
-                              fontSize: 18,
                             ),
                           ),
                         ),
-                      ),
-
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 100, left: 15),
-                            child: Text(
-                              "Junk Food",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+                  ],
                 ),
 
                 SizedBox(height: 15),
 
                 //===== Healty Food =====//
-                Container(
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: 380,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                              'assets/images/kategori_makanan/healtyfood.jpg',
-                            ),
-                            fit: BoxFit.cover,
+                Stack(
+                  children: [
+                    Container(
+                      width: 380,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            'assets/images/kategori_makanan/healtyfood.jpg',
                           ),
-                          borderRadius: BorderRadius.circular(16),
+                          fit: BoxFit.cover,
                         ),
+                        borderRadius: BorderRadius.circular(16),
                       ),
-
-                      Container(
-                        width: 380,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.5),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
+                    ),
+                
+                    Container(
+                      width: 380,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.5),
+                        borderRadius: BorderRadius.circular(16),
                       ),
-
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => HealtyFoodPageAdmin(),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                "See Details",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                    ),
+                
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5, left: 260),
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HealtyFoodPageAdmin(),
                                 ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 45, left: 15),
+                              );
+                            },
                             child: Text(
-                              "Healty Food",
+                              "See Details",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 30,
                                 fontWeight: FontWeight.bold,
+                                fontSize: 18,
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 45, left: 15),
+                          child: Text(
+                            "Healty Food",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
 
                 SizedBox(height: 15),
 
                 //===== Whole Food =====//
-                Container(
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: 380,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                              'assets/images/kategori_makanan/wholefood.jpg',
-                            ),
-                            fit: BoxFit.cover,
+                Stack(
+                  children: [
+                    Container(
+                      width: 380,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            'assets/images/kategori_makanan/wholefood.jpg',
                           ),
-                          borderRadius: BorderRadius.circular(16),
+                          fit: BoxFit.cover,
                         ),
+                        borderRadius: BorderRadius.circular(16),
                       ),
-
-                      Container(
-                        width: 380,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.5),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
+                    ),
+                
+                    Container(
+                      width: 380,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.5),
+                        borderRadius: BorderRadius.circular(16),
                       ),
-
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => WholeFoodPageAdmin(),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                "See Details",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                    ),
+                
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5, left: 260),
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => WholeFoodPageAdmin(),
                                 ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 45, left: 15),
+                              );
+                            },
                             child: Text(
-                              "Whole Food",
+                              "See Details",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 30,
                                 fontWeight: FontWeight.bold,
+                                fontSize: 18,
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 45, left: 15),
+                          child: Text(
+                            "Whole Food",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
 
                 SizedBox(height: 15),
 
                 //===== Processes Food =====//
-                Container(
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: 380,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                              'assets/images/kategori_makanan/prosesfood.jpg',
-                            ),
-                            fit: BoxFit.cover,
+                Stack(
+                  children: [
+                    Container(
+                      width: 380,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            'assets/images/kategori_makanan/prosesfood.jpg',
                           ),
-                          borderRadius: BorderRadius.circular(16),
+                          fit: BoxFit.cover,
                         ),
+                        borderRadius: BorderRadius.circular(16),
                       ),
-
-                      Container(
-                        width: 380,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.5),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
+                    ),
+                
+                    Container(
+                      width: 380,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.5),
+                        borderRadius: BorderRadius.circular(16),
                       ),
-
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ProcessedFoodPageAdmin(),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                "See Details",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                    ),
+                
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5, left: 260),
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ProcessedFoodPageAdmin(),
                                 ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 45, left: 15),
+                              );
+                            },
                             child: Text(
-                              "Processed Food",
+                              "See Details",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 30,
                                 fontWeight: FontWeight.bold,
+                                fontSize: 18,
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 45, left: 15),
+                          child: Text(
+                            "Processed Food",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
 
                 SizedBox(height: 15),
 
                 //===== Diet Food =====//
-                Container(
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: 380,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                              'assets/images/kategori_makanan/dietfood.jpg',
-                            ),
-                            fit: BoxFit.cover,
+                Stack(
+                  children: [
+                    Container(
+                      width: 380,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            'assets/images/kategori_makanan/dietfood.jpg',
                           ),
-                          borderRadius: BorderRadius.circular(16),
+                          fit: BoxFit.cover,
                         ),
+                        borderRadius: BorderRadius.circular(16),
                       ),
-
-                      Container(
-                        width: 380,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.5),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
+                    ),
+                
+                    Container(
+                      width: 380,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.5),
+                        borderRadius: BorderRadius.circular(16),
                       ),
-
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => DietFoodPageAdmin(),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                "See Details",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                    ),
+                
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5, left: 260),
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DietFoodPageAdmin(),
                                 ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 45, left: 15),
+                              );
+                            },
                             child: Text(
-                              "Diet Food",
+                              "See Details",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 30,
                                 fontWeight: FontWeight.bold,
+                                fontSize: 18,
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 45, left: 15),
+                          child: Text(
+                            "Diet Food",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
 
                 SizedBox(height: 15),
 
                 //===== Comfort Food =====//
-                Container(
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: 380,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                              'assets/images/kategori_makanan/Confortfood.jpg',
-                            ),
-                            fit: BoxFit.cover,
+                Stack(
+                  children: [
+                    Container(
+                      width: 380,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            'assets/images/kategori_makanan/Confortfood.jpg',
                           ),
-                          borderRadius: BorderRadius.circular(16),
+                          fit: BoxFit.cover,
                         ),
+                        borderRadius: BorderRadius.circular(16),
                       ),
-
-                      Container(
-                        width: 380,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.5),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
+                    ),
+                
+                    Container(
+                      width: 380,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.5),
+                        borderRadius: BorderRadius.circular(16),
                       ),
-
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ComfortFoodPageAdmin(),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                "See Details",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                    ),
+                
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5, left: 260),
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ComfortFoodPageAdmin(),
                                 ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 45, left: 15),
+                              );
+                            },
                             child: Text(
-                              "Comfort Food",
+                              "See Details",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 30,
                                 fontWeight: FontWeight.bold,
+                                fontSize: 18,
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 45, left: 15),
+                          child: Text(
+                            "Comfort Food",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
 
                 SizedBox(height: 15),
 
                 //===== Organic Food =====//
-                Container(
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: 380,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                              'assets/images/kategori_makanan/organicfood.jpg',
-                            ),
-                            fit: BoxFit.cover,
+                Stack(
+                  children: [
+                    Container(
+                      width: 380,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            'assets/images/kategori_makanan/organicfood.jpg',
                           ),
-                          borderRadius: BorderRadius.circular(16),
+                          fit: BoxFit.cover,
                         ),
+                        borderRadius: BorderRadius.circular(16),
                       ),
-
-                      Container(
-                        width: 380,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.5),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
+                    ),
+                
+                    Container(
+                      width: 380,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.5),
+                        borderRadius: BorderRadius.circular(16),
                       ),
-
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => OrganicFoodPageAdmin(),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                "See Details",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                    ),
+                
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5, left: 260),
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => OrganicFoodPageAdmin(),
                                 ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 45, left: 15),
+                              );
+                            },
                             child: Text(
-                              "Organic Food",
+                              "See Details",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 30,
                                 fontWeight: FontWeight.bold,
+                                fontSize: 18,
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 45, left: 15),
+                          child: Text(
+                            "Organic Food",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
 
                 SizedBox(height: 15),
 
                 //===== Pastry Food =====//
-                Container(
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: 380,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                              'assets/images/kategori_makanan/dietfood.jpg',
-                            ),
-                            fit: BoxFit.cover,
+                Stack(
+                  children: [
+                    Container(
+                      width: 380,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            'assets/images/kategori_makanan/dietfood.jpg',
                           ),
-                          borderRadius: BorderRadius.circular(16),
+                          fit: BoxFit.cover,
                         ),
+                        borderRadius: BorderRadius.circular(16),
                       ),
-
-                      Container(
-                        width: 380,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.5),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
+                    ),
+                
+                    Container(
+                      width: 380,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.5),
+                        borderRadius: BorderRadius.circular(16),
                       ),
-
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PastryFoodPageAdmin(),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                "See Details",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                    ),
+                
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5, left: 260),
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PastryFoodPageAdmin(),
                                 ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 45, left: 15),
+                              );
+                            },
                             child: Text(
-                              "Pastry Food",
+                              "See Details",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 30,
                                 fontWeight: FontWeight.bold,
+                                fontSize: 18,
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 45, left: 15),
+                          child: Text(
+                            "Pastry Food",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
 
                 SizedBox(height: 15),
 
                 //===== Sweets Food =====//
-                Container(
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: 380,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                              'assets/images/kategori_makanan/sweetsfood.jpg',
-                            ),
-                            fit: BoxFit.cover,
+                Stack(
+                  children: [
+                    Container(
+                      width: 380,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            'assets/images/kategori_makanan/sweetsfood.jpg',
                           ),
-                          borderRadius: BorderRadius.circular(16),
+                          fit: BoxFit.cover,
                         ),
+                        borderRadius: BorderRadius.circular(16),
                       ),
-
-                      Container(
-                        width: 380,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.5),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
+                    ),
+                
+                    Container(
+                      width: 380,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.5),
+                        borderRadius: BorderRadius.circular(16),
                       ),
-
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SweetsFoodPageAdmin(),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                "See Details",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                    ),
+                
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5, left: 260),
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SweetsFoodPageAdmin(),
                                 ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 45, left: 15),
+                              );
+                            },
                             child: Text(
-                              "Sweets Food",
+                              "See Details",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 30,
                                 fontWeight: FontWeight.bold,
+                                fontSize: 18,
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 45, left: 15),
+                          child: Text(
+                            "Sweets Food",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
 
                 SizedBox(height: 15),

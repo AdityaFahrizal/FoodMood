@@ -67,6 +67,7 @@ class _EditMenuMoodPageState extends State<EditMenuMoodPage> {
           );
         }
       } catch (e) {
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Gagal memperbarui menu: $e')),
         );
@@ -145,7 +146,7 @@ class _EditMenuMoodPageState extends State<EditMenuMoodPage> {
                 ),
                 const SizedBox(height: 10),
                 DropdownButtonFormField<String>(
-                  value: _kategori,
+                  initialValue: _kategori,
                   items: const [
                     DropdownMenuItem(value: "Makanan", child: Text("Makanan")),
                     DropdownMenuItem(value: "Minuman", child: Text("Minuman")),
