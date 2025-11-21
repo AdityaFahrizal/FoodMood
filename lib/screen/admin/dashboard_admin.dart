@@ -29,7 +29,7 @@ class _Home_AdminState extends State<Home_Admin> {
     'Senang': () => SenangPageAdmin(),
     'Sedih': () => SedihPageAdmin(),
     'Marah': () => MarahPageAdmin(),
-    'Lelah': () => lelahPageAdmin(),
+    'Lelah': () => LelahPageAdmin(),
     'Bosan': () => BosanPageAdmin(),
   };
 
@@ -37,7 +37,7 @@ class _Home_AdminState extends State<Home_Admin> {
     'Junk Food': () => SenangPageAdmin(),
     'Healty Food': () => SedihPageAdmin(),
     'Whole Food': () => MarahPageAdmin(),
-    'Processed Food': () => lelahPageAdmin(),
+    'Processed Food': () => LelahPageAdmin(),
     'Diet Food': () => BosanPageAdmin(),
     'Comfort Food': () => BosanPageAdmin(),
     'Organic Food': () => BosanPageAdmin(),
@@ -227,7 +227,7 @@ class _Home_AdminState extends State<Home_Admin> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => lelahPageAdmin(),
+                          builder: (context) => LelahPageAdmin(),
                         ),
                       );
                     },

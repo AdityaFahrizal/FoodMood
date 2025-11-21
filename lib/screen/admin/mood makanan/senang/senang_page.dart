@@ -2,8 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_mood_2/screen/admin/dashboard_admin.dart';
-import 'package:food_mood_2/screen/dashboard.dart';
-import 'package:food_mood_2/screen/user/mood/senang/resep_sng.dart';
+import 'package:food_mood_2/screen/admin/edit_menu.dart';
+import 'package:food_mood_2/screen/admin/mood makanan/senang/resep.dart';
+import 'package:food_mood_2/screen/admin/tambah_menu.dart';
 
 class SenangPageAdmin extends StatefulWidget {
   const SenangPageAdmin({super.key});
@@ -88,11 +89,15 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
                         onPressed: () async {
                           final result = await showMenu<String>(
                             context: context,
-                            position: const RelativeRect.fromLTRB(100, 80, 0, 0),
+                            position:
+                                const RelativeRect.fromLTRB(100, 80, 0, 0),
                             items: const [
-                              PopupMenuItem(value: 'All', child: Text('Semua')),
-                              PopupMenuItem(value: 'Makanan', child: Text('Makanan')),
-                              PopupMenuItem(value: 'Minuman', child: Text('Minuman')),
+                              PopupMenuItem(
+                                  value: 'All', child: Text('Semua')),
+                              PopupMenuItem(
+                                  value: 'Makanan', child: Text('Makanan')),
+                              PopupMenuItem(
+                                  value: 'Minuman', child: Text('Minuman')),
                             ],
                           );
                           if (result != null) {
@@ -135,11 +140,13 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
                     padding: EdgeInsets.only(top: 100),
                     child: Column(
                       children: [
-                        Icon(Icons.fastfood, size: 60, color: Colors.grey),
+                        Icon(Icons.fastfood,
+                            size: 60, color: Colors.grey),
                         SizedBox(height: 15),
                         Text(
                           "Belum ada menu ditambahkan",
-                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                          style:
+                              TextStyle(fontSize: 16, color: Colors.grey),
                         ),
                       ],
                     ),
@@ -152,12 +159,15 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
                     .where(
                       (doc) =>
                           selectedCategory == 'All' ||
-                          (doc.data() as Map<String, dynamic>)['kategori'] == selectedCategory,
+                          (doc.data() as Map<String, dynamic>)['kategori'] ==
+                              selectedCategory,
                     )
                     .where((doc) {
                       final data = doc.data() as Map<String, dynamic>;
-                      final nama = (data['name'] ?? '').toString().toLowerCase();
-                      final deskripsi = (data['description'] ?? '').toString().toLowerCase();
+                      final nama =
+                          (data['name'] ?? '').toLowerCase();
+                      final deskripsi =
+                          (data['description'] ?? '').toLowerCase();
                       return searchQuery.isEmpty ||
                           nama.contains(searchQuery) ||
                           deskripsi.contains(searchQuery);
@@ -169,9 +179,11 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
                     padding: EdgeInsets.only(top: 60),
                     child: Column(
                       children: [
-                        Icon(Icons.sentiment_dissatisfied, size: 50, color: Colors.grey),
+                        Icon(Icons.sentiment_dissatisfied,
+                            size: 50, color: Colors.grey),
                         SizedBox(height: 10),
-                        Text("Tidak ada data ditemukan.", style: TextStyle(color: Colors.grey)),
+                        Text("Tidak ada data ditemukan.",
+                            style: TextStyle(color: Colors.grey)),
                       ],
                     ),
                   );
@@ -188,118 +200,171 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
                     final deskripsi = data['description'] ?? '';
                     final imageBase64 = data['imageBase64'];
 
+                    final cardColor = Colors.white;
+
                     return Padding(
                       padding: const EdgeInsets.all(5),
                       child: Container(
                         height: 120,
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
+                          color: cardColor,
+                          borderRadius: BorderRadius.circular(14),
                           boxShadow: [
                             BoxShadow(
-                              // ignore: deprecated_member_use
                               color: Colors.black.withOpacity(0.12),
-                              blurRadius: 8,
+                              blurRadius: 10,
                               spreadRadius: 1,
-                              offset: const Offset(0, 3),
+                              offset: const Offset(0, 4),
                             ),
                           ],
                         ),
-                        child: Row(
+                        child: Stack(
                           children: [
-                            const SizedBox(width: 10),
-
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: imageBase64 != null
-                                  ? Image.memory(
-                                      base64Decode(imageBase64),
-                                      fit: BoxFit.cover,
-                                      width: 90,
-                                      height: 90,
-                                    )
-                                  : const Icon(
-                                      Icons.fastfood,
-                                      size: 60,
-                                      color: Colors.black54,
-                                    ),
-                            ),
-
-                            const SizedBox(width: 12),
-
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 10, right: 8, bottom: 8),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          nama,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                          ),
+                            Row(
+                              children: [
+                                const SizedBox(width: 10),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: imageBase64 != null
+                                      ? Image.memory(
+                                          base64Decode(imageBase64),
+                                          fit: BoxFit.cover,
+                                          width: 90,
+                                          height: 90,
+                                        )
+                                      : const Icon(
+                                          Icons.fastfood,
+                                          size: 60,
+                                          color: Colors.grey,
                                         ),
-                                        const SizedBox(height: 4),
-                                        Text(
-                                          deskripsi,
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                            fontSize: 13,
-                                            color: Colors.black,
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 10, right: 8, bottom: 8),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              nama,
+                                              maxLines: 1,
+                                              overflow:
+                                                  TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 4),
+                                            Text(
+                                              deskripsi,
+                                              maxLines: 2,
+                                              overflow:
+                                                  TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.black87,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+
+                                        Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: SizedBox(
+                                            height: 28,
+                                            child: ElevatedButton(
+                                              style:
+                                                  ElevatedButton.styleFrom(
+                                                padding: const EdgeInsets
+                                                    .symmetric(
+                                                    horizontal: 10),
+                                                backgroundColor:
+                                                    const Color(
+                                                        0xFFFF714B),
+                                                shape:
+                                                    RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8),
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                final enrichedData = {
+                                                  ...data,
+                                                  'menuId': doc.id,
+                                                  'docId': doc.id,
+                                                  'mood': 'Senang',
+                                                };
+
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ResepSenangAdminPage(
+                                                            menuData:
+                                                                enrichedData),
+                                                  ),
+                                                );
+                                              },
+                                              child: const Text(
+                                                "Lihat Detail",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12),
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ],
                                     ),
+                                  ),
+                                ),
+                              ],
+                            ),
 
-                                    Align(
-                                      alignment: Alignment.bottomRight,
-                                      child: SizedBox(
-                                        height: 28,
-                                        child: ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                                            backgroundColor: const Color(0xFFFF714B),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(8),
-                                            ),
-                                          ),
-                                          onPressed: () {
-                                            final enrichedData = {
-                                              ...data,
-                                              'menuId': doc.id,
-                                              'docId': doc.id,
-                                              'mood': 'LelaH',
-                                            };
-
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ResepSenangPage(menuData: enrichedData),
-                                              ),
-                                            );
-                                          },
-                                          child: const Text(
-                                            "Lihat Detail",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12,
-                                            ),
+                            Positioned(
+                              right: 0,
+                              top: 0,
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              EditMenuMoodPage(
+                                            docId: doc.id,
+                                            data: data,
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                      );
+                                    },
+                                    icon: const Icon(Icons.edit,
+                                        color: Color(0xFF007BFF)),
+                                  ),
+
+                                  IconButton(
+                                    onPressed: () async {
+                                      await FirebaseFirestore.instance
+                                          .collection('menuMood')
+                                          .doc(doc.id)
+                                          .delete();
+                                    },
+                                    icon: const Icon(Icons.delete,
+                                        color: Color(0xFFDC3545)),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
@@ -312,6 +377,20 @@ class _SenangPageAdminState extends State<SenangPageAdmin> {
             ),
           ],
         ),
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xFFFF714B),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  TambahMenuMoodPage(mood: 'Senang'),
+            ),
+          );
+        },
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }

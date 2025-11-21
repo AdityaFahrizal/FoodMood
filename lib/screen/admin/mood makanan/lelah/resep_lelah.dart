@@ -46,7 +46,7 @@ class _ResepLelahAdminPageState extends State<ResepLelahAdminPage> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => lelahPageAdmin()),
+              MaterialPageRoute(builder: (context) => LelahPageAdmin()),
             );
           },
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),

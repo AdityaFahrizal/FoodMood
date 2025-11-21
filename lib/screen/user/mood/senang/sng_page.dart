@@ -276,7 +276,7 @@ class _SenangPageState extends State<SenangPage> {
                                               ...data,
                                               'menuId': doc.id,
                                               'docId': doc.id,
-                                              'mood': 'LelaH',
+                                              'mood': 'Senang',
                                             };
 
                                             Navigator.push(

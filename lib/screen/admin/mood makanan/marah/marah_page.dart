@@ -43,17 +43,19 @@ class _MarahPageAdminState extends State<MarahPageAdmin> {
           },
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.device_hub, color: Colors.transparent),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 20),
+            child: Icon(Icons.device_hub, color: Colors.transparent),
           ),
         ],
       ),
+
       body: SingleChildScrollView(
         child: Column(
           children: [
             const SizedBox(height: 20),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -77,6 +79,7 @@ class _MarahPageAdminState extends State<MarahPageAdmin> {
                     ),
                   ),
                 ),
+
                 Stack(
                   children: [
                     Padding(
@@ -86,22 +89,15 @@ class _MarahPageAdminState extends State<MarahPageAdmin> {
                         onPressed: () async {
                           final result = await showMenu<String>(
                             context: context,
-                            position: const RelativeRect.fromLTRB(
-                              100,
-                              80,
-                              0,
-                              0,
-                            ),
+                            position:
+                                const RelativeRect.fromLTRB(100, 80, 0, 0),
                             items: const [
-                              PopupMenuItem(value: 'All', child: Text('Semua')),
                               PopupMenuItem(
-                                value: 'Makanan',
-                                child: Text('Makanan'),
-                              ),
+                                  value: 'All', child: Text('Semua')),
                               PopupMenuItem(
-                                value: 'Minuman',
-                                child: Text('Minuman'),
-                              ),
+                                  value: 'Makanan', child: Text('Makanan')),
+                              PopupMenuItem(
+                                  value: 'Minuman', child: Text('Minuman')),
                             ],
                           );
                           if (result != null) {
@@ -126,7 +122,9 @@ class _MarahPageAdminState extends State<MarahPageAdmin> {
                 ),
               ],
             ),
+
             const SizedBox(height: 20),
+
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('menuMood')
@@ -142,11 +140,13 @@ class _MarahPageAdminState extends State<MarahPageAdmin> {
                     padding: EdgeInsets.only(top: 100),
                     child: Column(
                       children: [
-                        Icon(Icons.fastfood, size: 60, color: Colors.grey),
+                        Icon(Icons.fastfood,
+                            size: 60, color: Colors.grey),
                         SizedBox(height: 15),
                         Text(
                           "Belum ada menu ditambahkan",
-                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                          style:
+                              TextStyle(fontSize: 16, color: Colors.grey),
                         ),
                       ],
                     ),
@@ -164,12 +164,10 @@ class _MarahPageAdminState extends State<MarahPageAdmin> {
                     )
                     .where((doc) {
                       final data = doc.data() as Map<String, dynamic>;
-                      final nama = (data['name'] ?? '')
-                          .toString()
-                          .toLowerCase();
-                      final deskripsi = (data['description'] ?? '')
-                          .toString()
-                          .toLowerCase();
+                      final nama =
+                          (data['name'] ?? '').toLowerCase();
+                      final deskripsi =
+                          (data['description'] ?? '').toLowerCase();
                       return searchQuery.isEmpty ||
                           nama.contains(searchQuery) ||
                           deskripsi.contains(searchQuery);
@@ -181,16 +179,11 @@ class _MarahPageAdminState extends State<MarahPageAdmin> {
                     padding: EdgeInsets.only(top: 60),
                     child: Column(
                       children: [
-                        Icon(
-                          Icons.sentiment_dissatisfied,
-                          size: 50,
-                          color: Colors.grey,
-                        ),
+                        Icon(Icons.sentiment_dissatisfied,
+                            size: 50, color: Colors.grey),
                         SizedBox(height: 10),
-                        Text(
-                          "Tidak ada data ditemukan.",
-                          style: TextStyle(color: Colors.grey),
-                        ),
+                        Text("Tidak ada data ditemukan.",
+                            style: TextStyle(color: Colors.grey)),
                       ],
                     ),
                   );
@@ -205,12 +198,9 @@ class _MarahPageAdminState extends State<MarahPageAdmin> {
                     final data = doc.data() as Map<String, dynamic>;
                     final nama = data['name'] ?? 'Tanpa Nama';
                     final deskripsi = data['description'] ?? '';
-                    final kategori = data['kategori'] ?? '';
                     final imageBase64 = data['imageBase64'];
 
-                    final cardColor = kategori == "Minuman"
-                        ? const Color(0xFF8BA3B2)
-                        : const Color(0xFFA6B28B);
+                    final cardColor = Colors.white;
 
                     return Padding(
                       padding: const EdgeInsets.all(5),
@@ -218,13 +208,13 @@ class _MarahPageAdminState extends State<MarahPageAdmin> {
                         height: 120,
                         decoration: BoxDecoration(
                           color: cardColor,
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(14),
                           boxShadow: [
                             BoxShadow(
-                              // ignore: deprecated_member_use
-                              color: Colors.black.withOpacity(0.2),
-                              blurRadius: 5,
-                              offset: const Offset(0, 3),
+                              color: Colors.black.withOpacity(0.12),
+                              blurRadius: 10,
+                              spreadRadius: 1,
+                              offset: const Offset(0, 4),
                             ),
                           ],
                         ),
@@ -245,17 +235,14 @@ class _MarahPageAdminState extends State<MarahPageAdmin> {
                                       : const Icon(
                                           Icons.fastfood,
                                           size: 60,
-                                          color: Colors.white,
+                                          color: Colors.grey,
                                         ),
                                 ),
                                 const SizedBox(width: 12),
                                 Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.only(
-                                      top: 10,
-                                      right: 8,
-                                      bottom: 8,
-                                    ),
+                                        top: 10, right: 8, bottom: 8),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -269,41 +256,46 @@ class _MarahPageAdminState extends State<MarahPageAdmin> {
                                             Text(
                                               nama,
                                               maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
+                                              overflow:
+                                                  TextOverflow.ellipsis,
                                               style: const TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold,
-                                                color: Colors.white,
+                                                color: Colors.black,
                                               ),
                                             ),
                                             const SizedBox(height: 4),
                                             Text(
                                               deskripsi,
                                               maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
+                                              overflow:
+                                                  TextOverflow.ellipsis,
                                               style: const TextStyle(
                                                 fontSize: 13,
-                                                color: Colors.black,
+                                                color: Colors.black87,
                                               ),
                                             ),
                                           ],
                                         ),
+
                                         Align(
                                           alignment: Alignment.bottomRight,
                                           child: SizedBox(
                                             height: 28,
                                             child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                    ),
-                                                backgroundColor: const Color(
-                                                  0xFFFF714B,
-                                                ),
-                                                shape: RoundedRectangleBorder(
+                                              style:
+                                                  ElevatedButton.styleFrom(
+                                                padding: const EdgeInsets
+                                                    .symmetric(
+                                                    horizontal: 10),
+                                                backgroundColor:
+                                                    const Color(
+                                                        0xFFFF714B),
+                                                shape:
+                                                    RoundedRectangleBorder(
                                                   borderRadius:
-                                                      BorderRadius.circular(8),
+                                                      BorderRadius.circular(
+                                                          8),
                                                 ),
                                               ),
                                               onPressed: () {
@@ -319,19 +311,16 @@ class _MarahPageAdminState extends State<MarahPageAdmin> {
                                                   MaterialPageRoute(
                                                     builder: (context) =>
                                                         ResepMarahAdminPage(
-                                                          menuData:
-                                                              enrichedData,
-                                                        ),
+                                                            menuData:
+                                                                enrichedData),
                                                   ),
                                                 );
                                               },
-
                                               child: const Text(
                                                 "Lihat Detail",
                                                 style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12,
-                                                ),
+                                                    color: Colors.white,
+                                                    fontSize: 12),
                                               ),
                                             ),
                                           ),
@@ -342,6 +331,7 @@ class _MarahPageAdminState extends State<MarahPageAdmin> {
                                 ),
                               ],
                             ),
+
                             Positioned(
                               right: 0,
                               top: 0,
@@ -354,17 +344,16 @@ class _MarahPageAdminState extends State<MarahPageAdmin> {
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               EditMenuMoodPage(
-                                                docId: doc.id,
-                                                data: data,
-                                              ),
+                                            docId: doc.id,
+                                            data: data,
+                                          ),
                                         ),
                                       );
                                     },
-                                    icon: const Icon(
-                                      Icons.edit,
-                                      color: Colors.white,
-                                    ),
+                                    icon: const Icon(Icons.edit,
+                                        color: Color(0xFF007BFF)),
                                   ),
+
                                   IconButton(
                                     onPressed: () async {
                                       await FirebaseFirestore.instance
@@ -372,10 +361,8 @@ class _MarahPageAdminState extends State<MarahPageAdmin> {
                                           .doc(doc.id)
                                           .delete();
                                     },
-                                    icon: const Icon(
-                                      Icons.delete,
-                                      color: Colors.redAccent,
-                                    ),
+                                    icon: const Icon(Icons.delete,
+                                        color: Color(0xFFDC3545)),
                                   ),
                                 ],
                               ),
@@ -391,13 +378,15 @@ class _MarahPageAdminState extends State<MarahPageAdmin> {
           ],
         ),
       ),
+
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFFFF714B),
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => TambahMenuMoodPage(mood: 'Marah'),
+              builder: (context) =>
+                  TambahMenuMoodPage(mood: 'Marah'),
             ),
           );
         },

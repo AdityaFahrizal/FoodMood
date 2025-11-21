@@ -3,15 +3,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:food_mood_2/screen/user/mood/lelah/llh_page.dart';
 
-class ReseplelahPage extends StatefulWidget {
+class ResepLelahPage extends StatefulWidget {
   final Map<String, dynamic> menuData;
-  const ReseplelahPage({super.key, required this.menuData});
+  const ResepLelahPage({super.key, required this.menuData});
 
   @override
-  State<ReseplelahPage> createState() => _ResepLelahPageState();
+  State<ResepLelahPage> createState() => _ResepLelahPageState();
 }
 
-class _ResepLelahPageState extends State<ReseplelahPage> {
+class _ResepLelahPageState extends State<ResepLelahPage> {
   @override
   Widget build(BuildContext context) {
     final menuData = widget.menuData;
