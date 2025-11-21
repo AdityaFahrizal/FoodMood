@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_mood_2/screen/admin/edit_menu.dart';
 import 'package:food_mood_2/screen/admin/tambah_menu.dart';
 import 'package:food_mood_2/screen/dashboard.dart';
@@ -20,6 +21,8 @@ class _MyMenuPageState extends State<MyMenuPage> {
 
   @override
   Widget build(BuildContext context) {
+    final currentEmail = FirebaseAuth.instance.currentUser?.email;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFFF714B),
@@ -44,14 +47,17 @@ class _MyMenuPageState extends State<MyMenuPage> {
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
         ),
         actions: [
-          IconButton(onPressed: () {
-          }, icon: Icon(Icons.device_hub, color: Colors.transparent,))
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.device_hub, color: Colors.transparent),
+          )
         ],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             const SizedBox(height: 20),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -84,22 +90,13 @@ class _MyMenuPageState extends State<MyMenuPage> {
                         onPressed: () async {
                           final result = await showMenu<String>(
                             context: context,
-                            position: const RelativeRect.fromLTRB(
-                              100,
-                              80,
-                              0,
-                              0,
-                            ),
+                            position: const RelativeRect.fromLTRB(100, 80, 0, 0),
                             items: const [
                               PopupMenuItem(value: 'All', child: Text('Semua')),
                               PopupMenuItem(
-                                value: 'Makanan',
-                                child: Text('Makanan'),
-                              ),
+                                  value: 'Makanan', child: Text('Makanan')),
                               PopupMenuItem(
-                                value: 'Minuman',
-                                child: Text('Minuman'),
-                              ),
+                                  value: 'Minuman', child: Text('Minuman')),
                             ],
                           );
                           if (result != null) {
@@ -124,11 +121,13 @@ class _MyMenuPageState extends State<MyMenuPage> {
                 ),
               ],
             ),
+
             const SizedBox(height: 20),
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('menuMood')
                   .where('mood', isEqualTo: 'MyMenu')
+                  .where('userEmail', isEqualTo: currentEmail)
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -162,12 +161,10 @@ class _MyMenuPageState extends State<MyMenuPage> {
                     )
                     .where((doc) {
                       final data = doc.data() as Map<String, dynamic>;
-                      final nama = (data['name'] ?? '')
-                          .toString()
-                          .toLowerCase();
-                      final deskripsi = (data['description'] ?? '')
-                          .toString()
-                          .toLowerCase();
+                      final nama = (data['name'] ?? '').toString().toLowerCase();
+                      final deskripsi =
+                          (data['description'] ?? '').toString().toLowerCase();
+
                       return searchQuery.isEmpty ||
                           nama.contains(searchQuery) ||
                           deskripsi.contains(searchQuery);
@@ -179,11 +176,8 @@ class _MyMenuPageState extends State<MyMenuPage> {
                     padding: EdgeInsets.only(top: 60),
                     child: Column(
                       children: [
-                        Icon(
-                          Icons.sentiment_dissatisfied,
-                          size: 50,
-                          color: Colors.grey,
-                        ),
+                        Icon(Icons.sentiment_dissatisfied,
+                            size: 50, color: Colors.grey),
                         SizedBox(height: 10),
                         Text(
                           "Tidak ada data ditemukan.",
@@ -240,11 +234,8 @@ class _MyMenuPageState extends State<MyMenuPage> {
                                           width: 90,
                                           height: 90,
                                         )
-                                      : const Icon(
-                                          Icons.fastfood,
-                                          size: 60,
-                                          color: Colors.white,
-                                        ),
+                                      : const Icon(Icons.fastfood,
+                                          size: 60, color: Colors.white),
                                 ),
                                 const SizedBox(width: 12),
                                 Expanded(
@@ -294,11 +285,10 @@ class _MyMenuPageState extends State<MyMenuPage> {
                                               style: ElevatedButton.styleFrom(
                                                 padding:
                                                     const EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                    ),
-                                                backgroundColor: const Color(
-                                                  0xFFFF714B,
+                                                  horizontal: 10,
                                                 ),
+                                                backgroundColor:
+                                                    const Color(0xFFFF714B),
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(8),
@@ -317,13 +307,11 @@ class _MyMenuPageState extends State<MyMenuPage> {
                                                   MaterialPageRoute(
                                                     builder: (context) =>
                                                         ResepMyMenuPage(
-                                                          menuData:
-                                                              enrichedData,
-                                                        ),
+                                                      menuData: enrichedData,
+                                                    ),
                                                   ),
                                                 );
                                               },
-
                                               child: const Text(
                                                 "Lihat Detail",
                                                 style: TextStyle(
@@ -352,16 +340,14 @@ class _MyMenuPageState extends State<MyMenuPage> {
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               EditMenuMoodPage(
-                                                docId: doc.id,
-                                                data: data,
-                                              ),
+                                            docId: doc.id,
+                                            data: data,
+                                          ),
                                         ),
                                       );
                                     },
-                                    icon: const Icon(
-                                      Icons.edit,
-                                      color: Colors.white,
-                                    ),
+                                    icon: const Icon(Icons.edit,
+                                        color: Colors.white),
                                   ),
                                   IconButton(
                                     onPressed: () async {
@@ -370,10 +356,8 @@ class _MyMenuPageState extends State<MyMenuPage> {
                                           .doc(doc.id)
                                           .delete();
                                     },
-                                    icon: const Icon(
-                                      Icons.delete,
-                                      color: Colors.redAccent,
-                                    ),
+                                    icon: const Icon(Icons.delete,
+                                        color: Colors.redAccent),
                                   ),
                                 ],
                               ),
@@ -389,6 +373,7 @@ class _MyMenuPageState extends State<MyMenuPage> {
           ],
         ),
       ),
+
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFFFF714B),
         onPressed: () {

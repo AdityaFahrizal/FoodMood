@@ -72,6 +72,7 @@ class _TambahResepPageState extends State<TambahResepPage> {
         );
       }
     } catch (e) {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Gagal memuat data: $e')));
     } finally {
       setState(() => isLoadingData = false);
@@ -165,11 +166,14 @@ class _TambahResepPageState extends State<TambahResepPage> {
         await resepColl.doc(widget.docId).update(data);
       }
 
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Resep berhasil disimpan!'), backgroundColor: Color(0xFF4CAF50)),
       );
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
     } catch (e) {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Terjadi kesalahan: $e'), backgroundColor: Colors.red),
       );

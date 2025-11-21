@@ -26,25 +26,25 @@ class Home_Admin extends StatefulWidget {
 // ignore: camel_case_types
 class _Home_AdminState extends State<Home_Admin> {
   final Map<String, Widget Function()> jenisMood = {
-  'Senang': () => SenangPageAdmin(),
-  'Sedih': () => SedihPageAdmin(),
-  'Marah': () => MarahPageAdmin(),
-  'Lelah': () => lelahPageAdmin(),
-  'Bosan': () => BosanPageAdmin(),
-};
+    'Senang': () => SenangPageAdmin(),
+    'Sedih': () => SedihPageAdmin(),
+    'Marah': () => MarahPageAdmin(),
+    'Lelah': () => lelahPageAdmin(),
+    'Bosan': () => BosanPageAdmin(),
+  };
 
-final Map<String, Widget Function()> jenisMakanan = {
-  'Junk Food': () => SenangPageAdmin(),
-  'Healty Food': () => SedihPageAdmin(),
-  'Whole Food': () => MarahPageAdmin(),
-  'Processed Food': () => lelahPageAdmin(),
-  'Diet Food': () => BosanPageAdmin(),
-  'Comfort Food': () => BosanPageAdmin(),
-  'Organic Food': () => BosanPageAdmin(),
-  'Pasrty Food': () => BosanPageAdmin(),
-  'Sweets Food': () => BosanPageAdmin(),
-};
- 
+  final Map<String, Widget Function()> jenisMakanan = {
+    'Junk Food': () => SenangPageAdmin(),
+    'Healty Food': () => SedihPageAdmin(),
+    'Whole Food': () => MarahPageAdmin(),
+    'Processed Food': () => lelahPageAdmin(),
+    'Diet Food': () => BosanPageAdmin(),
+    'Comfort Food': () => BosanPageAdmin(),
+    'Organic Food': () => BosanPageAdmin(),
+    'Pasrty Food': () => BosanPageAdmin(),
+    'Sweets Food': () => BosanPageAdmin(),
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +75,7 @@ final Map<String, Widget Function()> jenisMakanan = {
         ],
       ),
 
-            drawer: Drawer(
+      drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -116,68 +116,14 @@ final Map<String, Widget Function()> jenisMakanan = {
                 );
               },
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: DropdownButtonFormField<String>(
-                decoration: const InputDecoration(
-                  labelText: "Kategori Mood",
-                  border: OutlineInputBorder(),
-                ),
-                initialValue: null,
-                items: jenisMood.keys.map((String mood) {
-                  return DropdownMenuItem<String>(
-                    value: mood,
-                    child: Text(mood),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => jenisMood[value]!()),
-                  );
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: DropdownButtonFormField<String>(
-                decoration: const InputDecoration(
-                  labelText: "Kategori Makanan",
-                  border: OutlineInputBorder(),
-                ),
-                initialValue: null,
-                items: jenisMakanan.keys.map((String makanan) {
-                  return DropdownMenuItem<String>(
-                    value: makanan,
-                    child: Text(makanan),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => jenisMakanan[value]!()),
-                  );
-                },
-              ),
-            ),
           ],
         ),
       ),
-
 
       body: SingleChildScrollView(
         child: Column(
           children: [
             const SizedBox(height: 15),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                "Mood",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-            ),
-            const SizedBox(height: 15),
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: Row(
@@ -343,14 +289,6 @@ final Map<String, Widget Function()> jenisMakanan = {
             ),
 
             const SizedBox(height: 20),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                "Kategori Makanan",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-            ),
-            SizedBox(height: 20),
 
             Column(
               children: [
@@ -370,7 +308,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                
+
                     Container(
                       width: 380,
                       height: 150,
@@ -379,7 +317,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                
+
                     Padding(
                       padding: const EdgeInsets.only(top: 5, left: 260),
                       child: TextButton(
@@ -401,7 +339,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                         ),
                       ),
                     ),
-                
+
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -439,7 +377,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                
+
                     Container(
                       width: 380,
                       height: 150,
@@ -448,7 +386,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                
+
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -507,7 +445,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                
+
                     Container(
                       width: 380,
                       height: 150,
@@ -516,7 +454,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                
+
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -575,7 +513,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                
+
                     Container(
                       width: 380,
                       height: 150,
@@ -584,7 +522,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                
+
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -595,7 +533,8 @@ final Map<String, Widget Function()> jenisMakanan = {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ProcessedFoodPageAdmin(),
+                                  builder: (context) =>
+                                      ProcessedFoodPageAdmin(),
                                 ),
                               );
                             },
@@ -643,7 +582,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                
+
                     Container(
                       width: 380,
                       height: 150,
@@ -652,7 +591,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                
+
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -711,7 +650,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                
+
                     Container(
                       width: 380,
                       height: 150,
@@ -720,7 +659,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                
+
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -779,7 +718,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                
+
                     Container(
                       width: 380,
                       height: 150,
@@ -788,7 +727,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                
+
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -847,7 +786,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                
+
                     Container(
                       width: 380,
                       height: 150,
@@ -856,7 +795,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                
+
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -915,7 +854,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                
+
                     Container(
                       width: 380,
                       height: 150,
@@ -924,7 +863,7 @@ final Map<String, Widget Function()> jenisMakanan = {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                
+
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

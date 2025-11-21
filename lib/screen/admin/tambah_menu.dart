@@ -104,13 +104,16 @@ class _TambahMenuMoodPageState extends State<TambahMenuMoodPage> {
         ),
       );
 
+      // ignore: use_build_context_synchronously
       Navigator.pop(context, true);
     } catch (e) {
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
       setState(() {
         isLoading = false;
       });
 
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Gagal menyimpan data menu: $e'),

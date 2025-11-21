@@ -13,37 +13,46 @@ class AuthCheck extends StatefulWidget {
 }
 
 class _AuthCheckState extends State<AuthCheck> {
-  authcheck() async {
-    final user = FirebaseAuth.instance.currentUser;
-    
-    print("Tanda di atas");
-    if (user == null ) {
-      print(user);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
-    }
-
-    else {
-      final data = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
-      if (data.data()!['Role'] == 'admin') {
-        // ignore: use_build_context_synchronously
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Home_Admin()));
-      }
-
-      else {
-        // ignore: use_build_context_synchronously
-        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
-      }
-    }
-  }
-
   @override
   void initState() {
-    authcheck();
     super.initState();
+
+    Future.microtask(() async {
+      final user = FirebaseAuth.instance.currentUser;
+
+      if (user == null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => Login()),
+        );
+        return;
+      }
+
+      final data = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+
+      final role = data.data()?['Role'];
+
+      if (role == 'admin') {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => Home_Admin()),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => HomePage()),
+        );
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: CircularProgressIndicator());
+    return const Scaffold(
+      body: Center(child: CircularProgressIndicator()),
+    );
   }
 }

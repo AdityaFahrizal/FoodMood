@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:food_mood_2/screen/auth/login.dart';
@@ -43,6 +44,7 @@ class _ProfileState extends State<Profile> {
           photoBase64 = data['photoBase64'];
         });
       }
+    // ignore: empty_catches
     } catch (e) {}
   }
 
@@ -76,7 +78,9 @@ class _ProfileState extends State<Profile> {
         isLoading = false;
       });
     } catch (e) {
-      print("Error simpan foto: $e");
+      if (kDebugMode) {
+        print("Error simpan foto: $e");
+      }
       setState(() {
         isLoading = false;
       });

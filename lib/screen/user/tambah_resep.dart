@@ -44,12 +44,14 @@ Future<void> pickImage() async {
           _imageBase64 = base64Encode(compressedBytes);
         });
       } else {
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Gagal mengompres gambar')),
         );
       }
     }
   } catch (e) {
+    // ignore: use_build_context_synchronously
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Gagal memuat gambar: $e')),
     );
@@ -90,12 +92,15 @@ Future<void> pickImage() async {
         'timestamp': FieldValue.serverTimestamp(),
       });
 
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Resep berhasil disimpan!')),
       );
 
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
     } catch (e) {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Terjadi kesalahan: $e')),
       );
