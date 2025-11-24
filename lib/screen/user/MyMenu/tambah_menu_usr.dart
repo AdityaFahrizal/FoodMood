@@ -1,0 +1,165 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
+
+class TambahMenuUserPage extends StatefulWidget {
+  const TambahMenuUserPage({super.key});
+
+  @override
+  State<TambahMenuUserPage> createState() => _TambahMenuUserPageState();
+}
+
+class _TambahMenuUserPageState extends State<TambahMenuUserPage> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController descController = TextEditingController();
+
+  String? kategori;
+  String? imageBase64;
+  bool loading = false;
+
+  Future<void> pickImage() async {
+    final picker = ImagePicker();
+    final picked = await picker.pickImage(source: ImageSource.gallery);
+
+    if (picked != null) {
+      final bytes = await File(picked.path).readAsBytes();
+      setState(() {
+        imageBase64 = base64Encode(bytes);
+      });
+    }
+  }
+
+  Future<void> saveMenu() async {
+    if (nameController.text.isEmpty ||
+        descController.text.isEmpty ||
+        kategori == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Lengkapi semua data dulu")),
+      );
+      return;
+    }
+
+    setState(() => loading = true);
+
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+
+    await FirebaseFirestore.instance
+        .collection('mymenuUser')
+        .doc(userId)
+        .collection('menus')
+        .add({
+      'name': nameController.text,
+      'description': descController.text,
+      'kategori': kategori,
+      'imageBase64': imageBase64,
+      'createdAt': FieldValue.serverTimestamp(),
+    });
+
+    setState(() => loading = false);
+
+    Navigator.pop(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xFFFF714B),
+        title: const Text(
+          "Tambah Menu",
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      ),
+
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            TextField(
+              controller: nameController,
+              decoration: const InputDecoration(
+                labelText: "Nama Menu",
+                border: OutlineInputBorder(),
+              ),
+            ),
+
+            const SizedBox(height: 15),
+
+            TextField(
+              controller: descController,
+              maxLines: 3,
+              decoration: const InputDecoration(
+                labelText: "Deskripsi",
+                border: OutlineInputBorder(),
+              ),
+            ),
+
+            const SizedBox(height: 15),
+
+            DropdownButtonFormField(
+              decoration: const InputDecoration(
+                labelText: "Kategori",
+                border: OutlineInputBorder(),
+              ),
+              items: const [
+                DropdownMenuItem(value: "Makanan", child: Text("Makanan")),
+                DropdownMenuItem(value: "Minuman", child: Text("Minuman")),
+              ],
+              onChanged: (value) {
+                setState(() => kategori = value);
+              },
+            ),
+
+            const SizedBox(height: 15),
+
+            GestureDetector(
+              onTap: pickImage,
+              child: Container(
+                height: 140,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: imageBase64 == null
+                    ? const Center(
+                        child: Text("Tap untuk pilih gambar"),
+                      )
+                    : Image.memory(
+                        base64Decode(imageBase64!),
+                        fit: BoxFit.cover,
+                      ),
+              ),
+            ),
+
+            const SizedBox(height: 25),
+
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: loading ? null : saveMenu,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFFF714B),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                ),
+                child: loading
+                    ? const CircularProgressIndicator(color: Colors.white)
+                    : const Text(
+                        "Simpan Menu",
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}

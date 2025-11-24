@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_mood_2/screen/auth/login.dart';
 import 'package:food_mood_2/screen/auth/profile.dart';
-import 'package:food_mood_2/screen/mymenu.dart';
+import 'package:food_mood_2/screen/user/MyMenu/mymenu.dart';
 import 'package:food_mood_2/screen/user/kategori%20makanan/Comfort%20Food/comfortfood.dart';
 import 'package:food_mood_2/screen/user/kategori%20makanan/Diet%20Food/dietfood.dart';
 import 'package:food_mood_2/screen/user/kategori%20makanan/Healty%20Food/healtyfood.dart';
