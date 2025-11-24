@@ -205,8 +205,8 @@ class _HealtyFoodPageState extends State<HealtyFoodPage> {
                     final imageBase64 = data['imageBase64'];
 
                     final cardColor = kategori == "Minuman"
-                        ? const Color(0xFF8BA3B2)
-                        : const Color(0xFFA6B28B);
+                        ? Colors.white
+                        : Colors.white;
 
                     return Padding(
                       padding: const EdgeInsets.all(5),
@@ -269,7 +269,7 @@ class _HealtyFoodPageState extends State<HealtyFoodPage> {
                                               style: const TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold,
-                                                color: Colors.white,
+                                                color: Colors.black,
                                               ),
                                             ),
                                             const SizedBox(height: 4),

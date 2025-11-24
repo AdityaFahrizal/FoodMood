@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:food_mood_2/screen/admin/dashboard_admin.dart';
 import 'package:food_mood_2/screen/auth/login.dart';
 import 'package:food_mood_2/screen/auth/profile.dart';
 import 'package:food_mood_2/screen/user/MyMenu/mymenu.dart';
@@ -86,7 +87,9 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => const HomePage()),
+                        MaterialPageRoute(
+                          builder: (context) => const HomePage(),
+                        ),
                       );
                     },
                   ),
@@ -96,7 +99,9 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const Profile()),
+                        MaterialPageRoute(
+                          builder: (context) => const Profile(),
+                        ),
                       );
                     },
                   ),
@@ -106,7 +111,19 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const MyMenuPage()),
+                        MaterialPageRoute(builder: (context) => MyMenu()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.home),
+                    title: const Text("Home Admin"),
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Home_Admin(),
+                        ),
                       );
                     },
                   ),
@@ -312,13 +329,11 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 20),
 
             Column(
               children: [
-
                 //===== Junk Food =====/
-
                 Container(
                   child: Stack(
                     children: [
@@ -328,7 +343,7 @@ class _HomePageState extends State<HomePage> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage(
-                              'assets/images/kategori_makanan/JunkFood.jpg',
+                              'assets/images/kategori_makanan/JunkFood.jpeg',
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -346,18 +361,26 @@ class _HomePageState extends State<HomePage> {
                       ),
 
                       Padding(
-                            padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => JunkFoodPage()));
-                            }, child: Text(
-                              "See Details",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                        padding: const EdgeInsets.only(top: 5, left: 260),
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => JunkFoodPage(),
                               ),
-                            ),),
+                            );
+                          },
+                          child: Text(
+                            "See Details",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
                           ),
+                        ),
+                      ),
 
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -379,11 +402,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
 
-
-                SizedBox(height: 15,),
+                SizedBox(height: 15),
 
                 //===== Healty Food =====//
-
                 Container(
                   child: Stack(
                     children: [
@@ -393,7 +414,7 @@ class _HomePageState extends State<HomePage> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage(
-                              'assets/images/kategori_makanan/healtyfood.jpg',
+                              'assets/images/kategori_makanan/HealtyFood.jpeg',
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -415,16 +436,24 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => HealtyFoodPage()));
-                            }, child: Text(
-                              "See Details",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HealtyFoodPage(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "See Details",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 45, left: 15),
@@ -443,10 +472,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
 
-                SizedBox(height: 15,),
+                SizedBox(height: 15),
 
                 //===== Whole Food =====//
-
                 Container(
                   child: Stack(
                     children: [
@@ -456,7 +484,7 @@ class _HomePageState extends State<HomePage> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage(
-                              'assets/images/kategori_makanan/wholefood.jpg',
+                              'assets/images/kategori_makanan/WholeFood.jpeg',
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -478,16 +506,24 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => WholeFoodPage()));
-                            }, child: Text(
-                              "See Details",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => WholeFoodPage(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "See Details",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 45, left: 15),
@@ -506,10 +542,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
 
-                SizedBox(height: 15,),
+                SizedBox(height: 15),
 
                 //===== Processes Food =====//
-
                 Container(
                   child: Stack(
                     children: [
@@ -519,7 +554,7 @@ class _HomePageState extends State<HomePage> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage(
-                              'assets/images/kategori_makanan/prosesfood.jpg',
+                              'assets/images/kategori_makanan/ProcessedFood.jpeg',
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -541,16 +576,24 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => ProcessedFoodPage()));
-                            }, child: Text(
-                              "See Details",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProcessedFoodPage(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "See Details",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 45, left: 15),
@@ -569,11 +612,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
 
-                SizedBox(height: 15,),
+                SizedBox(height: 15),
 
                 //===== Diet Food =====//
-
-
                 Container(
                   child: Stack(
                     children: [
@@ -583,7 +624,7 @@ class _HomePageState extends State<HomePage> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage(
-                              'assets/images/kategori_makanan/dietfood.jpg',
+                              'assets/images/kategori_makanan/DietFood.jpeg',
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -605,16 +646,24 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => DietFoodPage()));
-                            }, child: Text(
-                              "See Details",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DietFoodPage(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "See Details",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 45, left: 15),
@@ -633,10 +682,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
 
-                SizedBox(height: 15,),
+                SizedBox(height: 15),
 
                 //===== Comfort Food =====//
-
                 Container(
                   child: Stack(
                     children: [
@@ -646,7 +694,7 @@ class _HomePageState extends State<HomePage> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage(
-                              'assets/images/kategori_makanan/Confortfood.jpg',
+                              'assets/images/kategori_makanan/ComfortFood.jpeg',
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -668,16 +716,24 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => ComfortFoodPage()));
-                            }, child: Text(
-                              "See Details",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ComfortFoodPage(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "See Details",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 45, left: 15),
@@ -696,10 +752,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
 
-                SizedBox(height: 15,),
+                SizedBox(height: 15),
 
                 //===== Organic Food =====//
-
                 Container(
                   child: Stack(
                     children: [
@@ -709,7 +764,7 @@ class _HomePageState extends State<HomePage> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage(
-                              'assets/images/kategori_makanan/organicfood.jpg',
+                              'assets/images/kategori_makanan/OrganicFood.jpeg',
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -731,16 +786,24 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => OrganicFoodPage()));
-                            }, child: Text(
-                              "See Details",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => OrganicFoodPage(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "See Details",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 45, left: 15),
@@ -759,10 +822,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
 
-                SizedBox(height: 15,),
+                SizedBox(height: 15),
 
                 //===== Pastry Food =====//
-
                 Container(
                   child: Stack(
                     children: [
@@ -772,7 +834,7 @@ class _HomePageState extends State<HomePage> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage(
-                              'assets/images/kategori_makanan/dietfood.jpg',
+                              'assets/images/kategori_makanan/PastryFood.jpeg',
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -794,21 +856,29 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => PastryFoodPage()));
-                            }, child: Text(
-                              "See Details",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => PastryFoodPage(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "See Details",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 45, left: 15),
                             child: Text(
-                              "Passtry Food",
+                              "Pastry Food",
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 30,
@@ -822,10 +892,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
 
-                SizedBox(height: 15,),
+                SizedBox(height: 15),
 
                 //===== Diet Food =====//
-
                 Container(
                   child: Stack(
                     children: [
@@ -835,7 +904,7 @@ class _HomePageState extends State<HomePage> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage(
-                              'assets/images/kategori_makanan/sweetsfood.jpg',
+                              'assets/images/kategori_makanan/SweetsFood.jpeg',
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -857,16 +926,24 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 5, left: 260),
-                            child: TextButton(onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => SweetsFoodPage()));
-                            }, child: Text(
-                              "See Details",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SweetsFoodPage(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "See Details",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 45, left: 15),
@@ -885,13 +962,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
 
-                SizedBox(height: 15,),
+                SizedBox(height: 15),
               ],
             ),
 
             const SizedBox(height: 15),
-
-            
           ],
         ),
       ),

@@ -205,8 +205,8 @@ class _SweetsFoodPageState extends State<SweetsFoodPage> {
                     final imageBase64 = data['imageBase64'];
 
                     final cardColor = kategori == "Minuman"
-                        ? const Color(0xFF8BA3B2)
-                        : const Color(0xFFA6B28B);
+                        ? Colors.white
+                        : Colors.white;
 
                     return Padding(
                       padding: const EdgeInsets.all(5),
@@ -241,7 +241,7 @@ class _SweetsFoodPageState extends State<SweetsFoodPage> {
                                       : const Icon(
                                           Icons.fastfood,
                                           size: 60,
-                                          color: Colors.white,
+                                          color: Colors.black,
                                         ),
                                 ),
                                 const SizedBox(width: 12),

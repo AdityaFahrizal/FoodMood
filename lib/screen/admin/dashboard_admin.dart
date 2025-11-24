@@ -14,6 +14,7 @@ import 'package:food_mood_2/screen/admin/mood%20makanan/marah/marah_page.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/sedih/sedih_page.dart';
 import 'package:food_mood_2/screen/admin/mood%20makanan/senang/senang_page.dart';
 import 'package:food_mood_2/screen/auth/profile.dart';
+import 'package:food_mood_2/screen/dashboard.dart';
 
 // ignore: camel_case_types
 class Home_Admin extends StatefulWidget {
@@ -113,6 +114,16 @@ class _Home_AdminState extends State<Home_Admin> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const Profile()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text("Home User"),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomePage()),
                 );
               },
             ),
@@ -301,7 +312,7 @@ class _Home_AdminState extends State<Home_Admin> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage(
-                            'assets/images/kategori_makanan/JunkFood.jpg',
+                            'assets/images/kategori_makanan/JunkFood.jpeg',
                           ),
                           fit: BoxFit.cover,
                         ),
@@ -370,7 +381,7 @@ class _Home_AdminState extends State<Home_Admin> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage(
-                            'assets/images/kategori_makanan/healtyfood.jpg',
+                            'assets/images/kategori_makanan/HealtyFood.jpeg',
                           ),
                           fit: BoxFit.cover,
                         ),
@@ -438,7 +449,7 @@ class _Home_AdminState extends State<Home_Admin> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage(
-                            'assets/images/kategori_makanan/wholefood.jpg',
+                            'assets/images/kategori_makanan/WholeFood.jpeg',
                           ),
                           fit: BoxFit.cover,
                         ),
@@ -506,7 +517,7 @@ class _Home_AdminState extends State<Home_Admin> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage(
-                            'assets/images/kategori_makanan/prosesfood.jpg',
+                            'assets/images/kategori_makanan/ProcessedFood.jpeg',
                           ),
                           fit: BoxFit.cover,
                         ),
@@ -575,7 +586,7 @@ class _Home_AdminState extends State<Home_Admin> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage(
-                            'assets/images/kategori_makanan/dietfood.jpg',
+                            'assets/images/kategori_makanan/DietFood.jpeg',
                           ),
                           fit: BoxFit.cover,
                         ),
@@ -643,7 +654,7 @@ class _Home_AdminState extends State<Home_Admin> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage(
-                            'assets/images/kategori_makanan/Confortfood.jpg',
+                            'assets/images/kategori_makanan/ComfortFood.jpeg',
                           ),
                           fit: BoxFit.cover,
                         ),
@@ -711,7 +722,7 @@ class _Home_AdminState extends State<Home_Admin> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage(
-                            'assets/images/kategori_makanan/organicfood.jpg',
+                            'assets/images/kategori_makanan/OrganicFood.jpeg',
                           ),
                           fit: BoxFit.cover,
                         ),
@@ -779,7 +790,7 @@ class _Home_AdminState extends State<Home_Admin> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage(
-                            'assets/images/kategori_makanan/dietfood.jpg',
+                            'assets/images/kategori_makanan/PastryFood.jpeg',
                           ),
                           fit: BoxFit.cover,
                         ),
@@ -847,7 +858,7 @@ class _Home_AdminState extends State<Home_Admin> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage(
-                            'assets/images/kategori_makanan/sweetsfood.jpg',
+                            'assets/images/kategori_makanan/SweetsFood.jpeg',
                           ),
                           fit: BoxFit.cover,
                         ),

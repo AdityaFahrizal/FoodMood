@@ -1,58 +1,54 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_mood_2/screen/dashboard.dart';
+import 'package:food_mood_2/screen/user/MyMenu/edit_mymenu.dart';
 import 'package:food_mood_2/screen/user/MyMenu/resep_mymenu.dart';
 import 'package:food_mood_2/screen/user/MyMenu/tambah_menu_usr.dart';
 
-class MyMenuPage extends StatefulWidget {
-  const MyMenuPage({super.key});
+class MyMenu extends StatefulWidget {
+  const MyMenu({super.key});
 
   @override
-  State<MyMenuPage> createState() => _MyMenuPageState();
+  State<MyMenu> createState() => _MyMenuState();
 }
 
-class _MyMenuPageState extends State<MyMenuPage> {
+class _MyMenuState extends State<MyMenu> {
   final TextEditingController _searchController = TextEditingController();
   String searchQuery = "";
   String selectedCategory = 'All';
 
   @override
   Widget build(BuildContext context) {
-    final currentUserId = FirebaseAuth.instance.currentUser!.uid;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFFF714B),
-        title: const Text(
-          "My Menu",
-          style: TextStyle(
-            fontSize: 26,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+        title: const Center(
+          child: Text(
+            "Food Mood",
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontStyle: FontStyle.italic,
+            ),
           ),
         ),
         leading: IconButton(
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const HomePage()),
+              MaterialPageRoute(builder: (context) => HomePage()),
             );
           },
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
         ),
-      ),
-
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xFFFF714B),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) =>TambahMenuUserPage()),
-          );
-        },
-        child: const Icon(Icons.add, color: Colors.white),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 20),
+            child: Icon(Icons.device_hub, color: Colors.transparent),
+          ),
+        ],
       ),
 
       body: SingleChildScrollView(
@@ -64,7 +60,7 @@ class _MyMenuPageState extends State<MyMenuPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  width: 300,
+                  width: 310,
                   height: 40,
                   child: SearchBar(
                     controller: _searchController,
@@ -73,28 +69,57 @@ class _MyMenuPageState extends State<MyMenuPage> {
                         searchQuery = value.toLowerCase();
                       });
                     },
-                    hintText: "Cari menu...",
+                    textInputAction: TextInputAction.search,
                     leading: const Icon(Icons.search),
+                    hintText: "Cari di sini...",
+                    shape: WidgetStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.filter_alt_outlined),
-                  onPressed: () async {
-                    final result = await showMenu<String>(
-                      context: context,
-                      position: const RelativeRect.fromLTRB(200, 150, 0, 0),
-                      items: const [
-                        PopupMenuItem(value: 'All', child: Text('Semua')),
-                        PopupMenuItem(value: 'Makanan', child: Text('Makanan')),
-                        PopupMenuItem(value: 'Minuman', child: Text('Minuman')),
-                      ],
-                    );
 
-                    if (result != null) {
-                      setState(() => selectedCategory = result);
-                    }
-                  },
-                )
+                Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 5),
+                      child: IconButton(
+                        icon: const Icon(Icons.filter_alt_outlined, size: 22),
+                        onPressed: () async {
+                          final result = await showMenu<String>(
+                            context: context,
+                            position:
+                                const RelativeRect.fromLTRB(100, 80, 0, 0),
+                            items: const [
+                              PopupMenuItem(
+                                  value: 'All', child: Text('Semua')),
+                              PopupMenuItem(
+                                  value: 'Makanan', child: Text('Makanan')),
+                              PopupMenuItem(
+                                  value: 'Minuman', child: Text('Minuman')),
+                            ],
+                          );
+                          if (result != null) {
+                            setState(() {
+                              selectedCategory = result;
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 33, left: 10),
+                      child: Text(
+                        "FILTER",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
 
@@ -102,10 +127,8 @@ class _MyMenuPageState extends State<MyMenuPage> {
 
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
-                  .collection('mymenuUser')
-                  .doc(currentUserId)
-                  .collection('menus')
-                  .orderBy('createdAt', descending: true)
+                  .collection('MyMenu')
+                  .where('mood', isEqualTo: 'MyMenu')
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -117,106 +140,233 @@ class _MyMenuPageState extends State<MyMenuPage> {
                     padding: EdgeInsets.only(top: 100),
                     child: Column(
                       children: [
-                        Icon(Icons.fastfood, size: 60, color: Colors.grey),
+                        Icon(Icons.fastfood,
+                            size: 60, color: Colors.grey),
                         SizedBox(height: 15),
                         Text(
                           "Belum ada menu ditambahkan",
-                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                          style:
+                              TextStyle(fontSize: 16, color: Colors.grey),
                         ),
                       ],
                     ),
                   );
                 }
 
-                final docs = snapshot.data!.docs;
+                final allDocs = snapshot.data!.docs;
+
+                final filteredDocs = allDocs
+                    .where(
+                      (doc) =>
+                          selectedCategory == 'All' ||
+                          (doc.data() as Map<String, dynamic>)['kategori'] ==
+                              selectedCategory,
+                    )
+                    .where((doc) {
+                      final data = doc.data() as Map<String, dynamic>;
+                      final nama =
+                          (data['name'] ?? '').toLowerCase();
+                      final deskripsi =
+                          (data['description'] ?? '').toLowerCase();
+                      return searchQuery.isEmpty ||
+                          nama.contains(searchQuery) ||
+                          deskripsi.contains(searchQuery);
+                    })
+                    .toList();
+
+                if (filteredDocs.isEmpty) {
+                  return const Padding(
+                    padding: EdgeInsets.only(top: 60),
+                    child: Column(
+                      children: [
+                        Icon(Icons.sentiment_dissatisfied,
+                            size: 50, color: Colors.grey),
+                        SizedBox(height: 10),
+                        Text("Tidak ada data ditemukan.",
+                            style: TextStyle(color: Colors.grey)),
+                      ],
+                    ),
+                  );
+                }
 
                 return ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: docs.length,
+                  itemCount: filteredDocs.length,
                   itemBuilder: (context, index) {
-                    final data = docs[index].data() as Map<String, dynamic>;
-
+                    final doc = filteredDocs[index];
+                    final data = doc.data() as Map<String, dynamic>;
                     final nama = data['name'] ?? 'Tanpa Nama';
                     final deskripsi = data['description'] ?? '';
-                    final kategori = data['kategori'] ?? '';
                     final imageBase64 = data['imageBase64'];
 
-                    final cardColor = kategori == "Minuman"
-                        ? const Color(0xFF8BA3B2)
-                        : const Color(0xFFA6B28B);
+                    final cardColor = Colors.white;
 
                     return Padding(
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(5),
                       child: Container(
                         height: 120,
                         decoration: BoxDecoration(
                           color: cardColor,
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(14),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              blurRadius: 5,
-                              offset: const Offset(0, 3),
+                              color: Colors.black.withOpacity(0.12),
+                              blurRadius: 10,
+                              spreadRadius: 1,
+                              offset: const Offset(0, 4),
                             ),
                           ],
                         ),
-                        child: Row(
+                        child: Stack(
                           children: [
-                            const SizedBox(width: 10),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: imageBase64 != null
-                                  ? Image.memory(
-                                      base64Decode(imageBase64),
-                                      width: 90,
-                                      height: 90,
-                                      fit: BoxFit.cover,
-                                    )
-                                  : const Icon(Icons.fastfood,
-                                      size: 60, color: Colors.white),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    nama,
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
+                            Row(
+                              children: [
+                                const SizedBox(width: 10),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: imageBase64 != null
+                                      ? Image.memory(
+                                          base64Decode(imageBase64),
+                                          fit: BoxFit.cover,
+                                          width: 90,
+                                          height: 90,
+                                        )
+                                      : const Icon(
+                                          Icons.fastfood,
+                                          size: 60,
+                                          color: Colors.grey,
+                                        ),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 10, right: 8, bottom: 8),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              nama,
+                                              maxLines: 1,
+                                              overflow:
+                                                  TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 4),
+                                            Text(
+                                              deskripsi,
+                                              maxLines: 2,
+                                              overflow:
+                                                  TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.black87,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+
+                                        Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: SizedBox(
+                                            height: 28,
+                                            child: ElevatedButton(
+                                              style:
+                                                  ElevatedButton.styleFrom(
+                                                padding: const EdgeInsets
+                                                    .symmetric(
+                                                    horizontal: 10),
+                                                backgroundColor:
+                                                    const Color(
+                                                        0xFFFF714B),
+                                                shape:
+                                                    RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8),
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                final enrichedData = {
+                                                  ...data,
+                                                  'menuId': doc.id,
+                                                  'docId': doc.id,
+                                                  'mood': 'MyMenu',
+                                                };
+
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ResepMymenu(
+                                                            menuData:
+                                                                enrichedData),
+                                                  ),
+                                                );
+                                              },
+                                              child: const Text(
+                                                "Lihat Detail",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  const SizedBox(height: 5),
-                                  Text(
-                                    deskripsi,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black,
-                                    ),
+                                ),
+                              ],
+                            ),
+
+                            Positioned(
+                              right: 0,
+                              top: 0,
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              EditMymenu(
+                                            docId: doc.id,
+                                            data: data,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    icon: const Icon(Icons.edit,
+                                        color: Color(0xFF007BFF)),
+                                  ),
+
+                                  IconButton(
+                                    onPressed: () async {
+                                      await FirebaseFirestore.instance
+                                          .collection('MyMenu')
+                                          .doc(doc.id)
+                                          .delete();
+                                    },
+                                    icon: const Icon(Icons.delete,
+                                        color: Color(0xFFDC3545)),
                                   ),
                                 ],
                               ),
                             ),
-                            IconButton(
-                              icon: const Icon(Icons.arrow_forward_ios,
-                                  color: Colors.white),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ResepMyMenuPage(menuId: 'MyMenu',
-                                      menuData: data,
-                                    ),
-                                  ),
-                                );
-                              },
-                            )
                           ],
                         ),
                       ),
@@ -227,6 +377,20 @@ class _MyMenuPageState extends State<MyMenuPage> {
             ),
           ],
         ),
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xFFFF714B),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  TambahMyMenuPage(mood: 'MyMenu'),
+            ),
+          );
+        },
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }

@@ -127,7 +127,10 @@ class _ResepWholeFoodPageState extends State<ResepWholeFoodPage> {
 
                   Container(
                     width: double.infinity,
-                    color: const Color(0xFFFF714B),
+                   decoration: BoxDecoration(
+                      color: const Color(0xFFFF714B),
+                      borderRadius: BorderRadius.circular(14),
+                    ),
                     padding: const EdgeInsets.all(8),
                     child: Column(
                       children: [
