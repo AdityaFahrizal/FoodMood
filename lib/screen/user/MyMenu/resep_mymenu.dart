@@ -2,25 +2,21 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:food_mood_2/screen/admin/tambah_resep.dart';
-import 'package:food_mood_2/screen/user/MyMenu/mymenu.dart';
+import 'package:food_mood_2/screen/user/MyMenu/tambah_rsep_mymenu.dart';
 
-class ResepMymenu extends StatefulWidget {
+class ResepMyMenuPage extends StatefulWidget {
   final Map<String, dynamic> menuData;
-  const ResepMymenu({super.key, required this.menuData});
+  const ResepMyMenuPage({super.key, required this.menuData});
 
   @override
-  State<ResepMymenu> createState() => _ResepMymenuState();
+  State<ResepMyMenuPage> createState() => _ResepMyMenuPageState();
 }
 
-class _ResepMymenuState extends State<ResepMymenu> {
+class _ResepMyMenuPageState extends State<ResepMyMenuPage> {
   @override
   Widget build(BuildContext context) {
     final menuData = widget.menuData;
-    final String moodName =
-        (menuData['mood'] ?? menuData['kategori'] ?? 'MyMenu').toString();
-    final String menuId =
-        (menuData['id'] ?? menuData['docId'] ?? menuData['menuId'] ?? '')
-            .toString();
+    final String menuId = (menuData['id'] ?? '').toString();
 
     if (menuId.isEmpty) {
       return const Scaffold(
@@ -43,12 +39,7 @@ class _ResepMymenuState extends State<ResepMymenu> {
           ),
         ),
         leading: IconButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MyMenu()),
-            );
-          },
+          onPressed: () => Navigator.pop(context),
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
         ),
         actions: [
@@ -103,6 +94,7 @@ class _ResepMymenuState extends State<ResepMymenu> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // tombol edit & delete
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -113,7 +105,7 @@ class _ResepMymenuState extends State<ResepMymenu> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => TambahResepPage(
-                                moodName: moodName,
+                                moodName: 'MyMenu',
                                 docId: docId,
                                 menuData: {...menuData, 'id': menuId},
                               ),
@@ -135,9 +127,13 @@ class _ResepMymenuState extends State<ResepMymenu> {
                     ],
                   ),
 
+                  // header resep
                   Container(
                     width: double.infinity,
-                    color: const Color(0xFFFF714B),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFF714B),
+                      borderRadius: BorderRadius.circular(14),
+                    ),
                     padding: const EdgeInsets.all(8),
                     child: Column(
                       children: [
@@ -181,11 +177,8 @@ class _ResepMymenuState extends State<ResepMymenu> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Icon(
-                                Icons.access_time,
-                                size: 18,
-                                color: Colors.white,
-                              ),
+                              const Icon(Icons.access_time,
+                                  size: 18, color: Colors.white),
                               const SizedBox(width: 4),
                               Text(
                                 data['waktu'],
@@ -202,7 +195,7 @@ class _ResepMymenuState extends State<ResepMymenu> {
                     ),
                   ),
 
-                  // Bahan-bahan
+                  // bahan
                   const Text(
                     "Bahan-bahan:",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -214,7 +207,7 @@ class _ResepMymenuState extends State<ResepMymenu> {
                   ),
                   const SizedBox(height: 12),
 
-                  // Langkah-langkah
+                  // langkah-langkah
                   const Text(
                     "Langkah-langkah:",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -228,6 +221,7 @@ class _ResepMymenuState extends State<ResepMymenu> {
                         (data['langkah'] as List).length,
                         (stepIndex) {
                           final step = data['langkah'][stepIndex];
+
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 12),
                             child: Column(
@@ -258,6 +252,7 @@ class _ResepMymenuState extends State<ResepMymenu> {
                         },
                       ),
                     ),
+
                   const Divider(thickness: 1.2, height: 30),
                 ],
               );
@@ -272,8 +267,8 @@ class _ResepMymenuState extends State<ResepMymenu> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => TambahResepPage(
-                moodName: moodName,
+              builder: (context) => TambahRsepMymenu(
+                moodName: 'MyMenu',
                 menuData: {...menuData, 'id': menuId},
               ),
             ),

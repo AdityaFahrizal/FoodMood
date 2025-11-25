@@ -149,7 +149,7 @@ class _TambahMenuMoodPageState extends State<TambahMenuMoodPage> {
             child: Column(
               children: [
                 TextField(
-                  maxLength: 45,
+                  maxLength: 40,
                   controller: menuNameController,
                   decoration: InputDecoration(
                     labelText: "Nama Menu",

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_mood_2/screen/dashboard.dart';
 import 'package:food_mood_2/screen/user/MyMenu/edit_mymenu.dart';
 import 'package:food_mood_2/screen/user/MyMenu/resep_mymenu.dart';
@@ -20,6 +21,8 @@ class _MyMenuState extends State<MyMenu> {
 
   @override
   Widget build(BuildContext context) {
+    final userEmail = FirebaseAuth.instance.currentUser?.email;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFFF714B),
@@ -50,12 +53,12 @@ class _MyMenuState extends State<MyMenu> {
           ),
         ],
       ),
-
       body: SingleChildScrollView(
         child: Column(
           children: [
             const SizedBox(height: 20),
 
+            /// ✅ SEARCH & FILTER
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -79,7 +82,6 @@ class _MyMenuState extends State<MyMenu> {
                     ),
                   ),
                 ),
-
                 Stack(
                   children: [
                     Padding(
@@ -89,15 +91,22 @@ class _MyMenuState extends State<MyMenu> {
                         onPressed: () async {
                           final result = await showMenu<String>(
                             context: context,
-                            position:
-                                const RelativeRect.fromLTRB(100, 80, 0, 0),
+                            position: const RelativeRect.fromLTRB(
+                              100,
+                              80,
+                              0,
+                              0,
+                            ),
                             items: const [
+                              PopupMenuItem(value: 'All', child: Text('Semua')),
                               PopupMenuItem(
-                                  value: 'All', child: Text('Semua')),
+                                value: 'Makanan',
+                                child: Text('Makanan'),
+                              ),
                               PopupMenuItem(
-                                  value: 'Makanan', child: Text('Makanan')),
-                              PopupMenuItem(
-                                  value: 'Minuman', child: Text('Minuman')),
+                                value: 'Minuman',
+                                child: Text('Minuman'),
+                              ),
                             ],
                           );
                           if (result != null) {
@@ -125,10 +134,11 @@ class _MyMenuState extends State<MyMenu> {
 
             const SizedBox(height: 20),
 
+            /// ✅ STREAM DATA HANYA UNTUK USER INI
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('MyMenu')
-                  .where('mood', isEqualTo: 'MyMenu')
+                  .where('userEmail', isEqualTo: userEmail)
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -140,13 +150,11 @@ class _MyMenuState extends State<MyMenu> {
                     padding: EdgeInsets.only(top: 100),
                     child: Column(
                       children: [
-                        Icon(Icons.fastfood,
-                            size: 60, color: Colors.grey),
+                        Icon(Icons.fastfood, size: 60, color: Colors.grey),
                         SizedBox(height: 15),
                         Text(
                           "Belum ada menu ditambahkan",
-                          style:
-                              TextStyle(fontSize: 16, color: Colors.grey),
+                          style: TextStyle(fontSize: 16, color: Colors.grey),
                         ),
                       ],
                     ),
@@ -164,10 +172,9 @@ class _MyMenuState extends State<MyMenu> {
                     )
                     .where((doc) {
                       final data = doc.data() as Map<String, dynamic>;
-                      final nama =
-                          (data['name'] ?? '').toLowerCase();
-                      final deskripsi =
-                          (data['description'] ?? '').toLowerCase();
+                      final nama = (data['name'] ?? '').toLowerCase();
+                      final deskripsi = (data['description'] ?? '')
+                          .toLowerCase();
                       return searchQuery.isEmpty ||
                           nama.contains(searchQuery) ||
                           deskripsi.contains(searchQuery);
@@ -179,11 +186,16 @@ class _MyMenuState extends State<MyMenu> {
                     padding: EdgeInsets.only(top: 60),
                     child: Column(
                       children: [
-                        Icon(Icons.sentiment_dissatisfied,
-                            size: 50, color: Colors.grey),
+                        Icon(
+                          Icons.sentiment_dissatisfied,
+                          size: 50,
+                          color: Colors.grey,
+                        ),
                         SizedBox(height: 10),
-                        Text("Tidak ada data ditemukan.",
-                            style: TextStyle(color: Colors.grey)),
+                        Text(
+                          "Tidak ada data ditemukan.",
+                          style: TextStyle(color: Colors.grey),
+                        ),
                       ],
                     ),
                   );
@@ -200,14 +212,12 @@ class _MyMenuState extends State<MyMenu> {
                     final deskripsi = data['description'] ?? '';
                     final imageBase64 = data['imageBase64'];
 
-                    final cardColor = Colors.white;
-
                     return Padding(
                       padding: const EdgeInsets.all(5),
                       child: Container(
                         height: 120,
                         decoration: BoxDecoration(
-                          color: cardColor,
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(14),
                           boxShadow: [
                             BoxShadow(
@@ -242,85 +252,75 @@ class _MyMenuState extends State<MyMenu> {
                                 Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.only(
-                                        top: 10, right: 8, bottom: 8),
+                                      top: 10,
+                                      right: 8,
+                                      bottom: 8,
+                                    ),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              nama,
-                                              maxLines: 1,
-                                              overflow:
-                                                  TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 4),
-                                            Text(
-                                              deskripsi,
-                                              maxLines: 2,
-                                              overflow:
-                                                  TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                fontSize: 13,
-                                                color: Colors.black87,
-                                              ),
-                                            ),
-                                          ],
+                                        Text(
+                                          nama,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                          ),
                                         ),
-
+                                        Text(
+                                          deskripsi,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
                                         Align(
                                           alignment: Alignment.bottomRight,
                                           child: SizedBox(
                                             height: 28,
                                             child: ElevatedButton(
-                                              style:
-                                                  ElevatedButton.styleFrom(
-                                                padding: const EdgeInsets
-                                                    .symmetric(
-                                                    horizontal: 10),
-                                                backgroundColor:
-                                                    const Color(
-                                                        0xFFFF714B),
-                                                shape:
-                                                    RoundedRectangleBorder(
+                                              style: ElevatedButton.styleFrom(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                    ),
+                                                backgroundColor: const Color(
+                                                  0xFFFF714B,
+                                                ),
+                                                shape: RoundedRectangleBorder(
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          8),
+                                                      BorderRadius.circular(8),
                                                 ),
                                               ),
                                               onPressed: () {
-                                                final enrichedData = {
-                                                  ...data,
-                                                  'menuId': doc.id,
-                                                  'docId': doc.id,
-                                                  'mood': 'MyMenu',
-                                                };
-
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        ResepMymenu(
-                                                            menuData:
-                                                                enrichedData),
+                                                        ResepMyMenuPage(
+                                                          menuData: {
+                                                            ...data,
+                                                            'id': doc
+                                                                .id,
+                                                          },
+                                                        ),
                                                   ),
                                                 );
                                               },
+
                                               child: const Text(
                                                 "Lihat Detail",
                                                 style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 12),
+                                                  color: Colors.white,
+                                                  fontSize: 12,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -331,7 +331,6 @@ class _MyMenuState extends State<MyMenu> {
                                 ),
                               ],
                             ),
-
                             Positioned(
                               right: 0,
                               top: 0,
@@ -342,18 +341,18 @@ class _MyMenuState extends State<MyMenu> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) =>
-                                              EditMymenu(
+                                          builder: (context) => EditMymenu(
                                             docId: doc.id,
                                             data: data,
                                           ),
                                         ),
                                       );
                                     },
-                                    icon: const Icon(Icons.edit,
-                                        color: Color(0xFF007BFF)),
+                                    icon: const Icon(
+                                      Icons.edit,
+                                      color: Color(0xFF007BFF),
+                                    ),
                                   ),
-
                                   IconButton(
                                     onPressed: () async {
                                       await FirebaseFirestore.instance
@@ -361,8 +360,10 @@ class _MyMenuState extends State<MyMenu> {
                                           .doc(doc.id)
                                           .delete();
                                     },
-                                    icon: const Icon(Icons.delete,
-                                        color: Color(0xFFDC3545)),
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: Color(0xFFDC3545),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -379,14 +380,14 @@ class _MyMenuState extends State<MyMenu> {
         ),
       ),
 
+      /// ✅ BUTTON TAMBAH MENU
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFFFF714B),
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  TambahMyMenuPage(mood: 'MyMenu'),
+              builder: (context) => const TambahMyMenuPage(mood: 'MyMenu'),
             ),
           );
         },

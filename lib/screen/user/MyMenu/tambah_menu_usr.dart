@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // ✅ tambahkan ini
 
 class TambahMyMenuPage extends StatefulWidget {
   final String mood;
@@ -36,7 +37,6 @@ class _TambahMyMenuPageState extends State<TambahMyMenuPage> {
         });
       }
     } catch (e) {
-      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Gagal memuat gambar: $e')),
       );
@@ -70,23 +70,23 @@ class _TambahMyMenuPageState extends State<TambahMyMenuPage> {
       return;
     }
 
-    setState(() {
-      isLoading = true;
-    });
-
+    setState(() => isLoading = true);
     showLoadingDialog();
 
     try {
+      final user = FirebaseAuth.instance.currentUser; // ✅ ambil user login
+
       await FirebaseFirestore.instance.collection('MyMenu').add({
         'name': menuName,
         'description': menuDescription,
         'kategori': _kategori,
         'imageBase64': _imageBase64,
         'mood': widget.mood,
+        'userEmail': user!.email, // ✅ simpan email
+        'timestamp': FieldValue.serverTimestamp(), // ✅ simpan waktu
       });
 
-      // ignore: use_build_context_synchronously
-      Navigator.of(context).pop();
+      Navigator.of(context).pop(); // close loading dialog
 
       setState(() {
         menuNameController.clear();
@@ -96,7 +96,6 @@ class _TambahMyMenuPageState extends State<TambahMyMenuPage> {
         isLoading = false;
       });
 
-      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Data menu berhasil disimpan!'),
@@ -104,16 +103,11 @@ class _TambahMyMenuPageState extends State<TambahMyMenuPage> {
         ),
       );
 
-      // ignore: use_build_context_synchronously
       Navigator.pop(context, true);
     } catch (e) {
-      // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
-      setState(() {
-        isLoading = false;
-      });
+      setState(() => isLoading = false);
 
-      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Gagal menyimpan data menu: $e'),
