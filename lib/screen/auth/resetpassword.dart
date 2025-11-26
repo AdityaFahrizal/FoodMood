@@ -93,6 +93,24 @@ class _ForgoPasswordState extends State<ForgoPassword> {
                 ),
               ),
             ),
+            SizedBox(height: 200),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Note :",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.grey),
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    "Jika Email Yang Dikirim Tidak Masuk ke Inbox Utama Email, Bisa Dicek di Folder Spam Email Yang Tersedia Di Garis 3 Pada Pojok Kiri Atas Di App Gmail",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.grey),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

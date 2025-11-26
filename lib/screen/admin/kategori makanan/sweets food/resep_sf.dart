@@ -103,7 +103,6 @@ class _ResepSweetsFoodAdminPageState extends State<ResepSweetsFoodAdminPage> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Tombol edit & delete
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -136,7 +135,6 @@ class _ResepSweetsFoodAdminPageState extends State<ResepSweetsFoodAdminPage> {
                     ],
                   ),
 
-                  // Header Resep
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -207,7 +205,6 @@ class _ResepSweetsFoodAdminPageState extends State<ResepSweetsFoodAdminPage> {
                     ),
                   ),
 
-                  // Bahan-bahan
                   const Text(
                     "Bahan-bahan:",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -219,7 +216,6 @@ class _ResepSweetsFoodAdminPageState extends State<ResepSweetsFoodAdminPage> {
                   ),
                   const SizedBox(height: 12),
 
-                  // Langkah-langkah
                   const Text(
                     "Langkah-langkah:",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
