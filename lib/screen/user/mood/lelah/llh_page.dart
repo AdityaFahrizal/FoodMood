@@ -122,7 +122,7 @@ class _LelahPageState extends State<LelahPage> {
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('menuMood')
-                  .where('mood', isEqualTo: 'Senang')
+                  .where('mood', isEqualTo: 'Lelah')
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {

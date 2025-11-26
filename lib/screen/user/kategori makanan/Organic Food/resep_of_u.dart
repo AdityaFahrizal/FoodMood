@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:food_mood_2/screen/admin/tambah_resep.dart';
 import 'package:food_mood_2/screen/user/kategori%20makanan/Organic%20Food/organicfood.dart';
 
 class ResepOrganicFoodPage extends StatefulWidget {
@@ -16,8 +15,7 @@ class _ResepOrganicFoodPageState extends State<ResepOrganicFoodPage> {
   @override
   Widget build(BuildContext context) {
     final menuData = widget.menuData;
-    final String moodName =
-        (menuData['mood'] ?? menuData['kategori'] ?? 'OrganicFood').toString();
+    (menuData['mood'] ?? menuData['kategori'] ?? 'OrganicFood').toString();
     final String menuId =
         (menuData['id'] ?? menuData['docId'] ?? menuData['menuId'] ?? '')
             .toString();
@@ -88,40 +86,12 @@ class _ResepOrganicFoodPageState extends State<ResepOrganicFoodPage> {
             itemCount: resepList.length,
             itemBuilder: (context, index) {
               final data = resepList[index].data() as Map<String, dynamic>;
-              final docId = resepList[index].id;
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.edit, color: Colors.blueAccent),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TambahResepPage(
-                                moodName: moodName,
-                                docId: docId,
-                                menuData: {...menuData, 'id': menuId},
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.delete, color: Colors.redAccent),
-                        onPressed: () async {
-                          await FirebaseFirestore.instance
-                              .collection('menuMood')
-                              .doc(menuId)
-                              .collection('resep')
-                              .doc(docId)
-                              .delete();
-                        },
-                      ),
+                  Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                      
                     ],
                   ),
 
@@ -250,22 +220,6 @@ class _ResepOrganicFoodPageState extends State<ResepOrganicFoodPage> {
             },
           );
         },
-      ),
-
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xFFFF714B),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TambahResepPage(
-                moodName: moodName,
-                menuData: {...menuData, 'id': menuId},
-              ),
-            ),
-          );
-        },
-        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }

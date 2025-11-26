@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:food_mood_2/screen/admin/kategori%20makanan/pasty%20food/pastry_food_page.dart';
 import 'package:food_mood_2/screen/admin/tambah_resep.dart';
-import 'package:food_mood_2/screen/user/kategori%20makanan/Pastry%20Food/pastryfood.dart';
 
 class ResepPastryFoodAdminPage extends StatefulWidget {
   final Map<String, dynamic> menuData;
@@ -46,7 +46,7 @@ class _ResepPastryFoodAdminPageState extends State<ResepPastryFoodAdminPage> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => PastryFoodPage()),
+              MaterialPageRoute(builder: (context) => PastryFoodPageAdmin()),
             );
           },
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -139,7 +139,10 @@ class _ResepPastryFoodAdminPageState extends State<ResepPastryFoodAdminPage> {
                   // Header Resep
                   Container(
                     width: double.infinity,
-                    color: const Color(0xFFFF714B),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFF714B),
+                      borderRadius: BorderRadius.circular(14),
+                    ),
                     padding: const EdgeInsets.all(8),
                     child: Column(
                       children: [

@@ -3,15 +3,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:food_mood_2/screen/user/kategori%20makanan/Processed%20Food/processedfppd.dart';
 
-class ResepPastryFoodPage extends StatefulWidget {
+class ResepProcessedFoodPage extends StatefulWidget {
   final Map<String, dynamic> menuData;
-  const ResepPastryFoodPage({super.key, required this.menuData});
+  const ResepProcessedFoodPage({super.key, required this.menuData});
 
   @override
-  State<ResepPastryFoodPage> createState() => _ResepPastryFoodPageState();
+  State<ResepProcessedFoodPage> createState() => _ResepProcessedFoodPageState();
 }
 
-class _ResepPastryFoodPageState extends State<ResepPastryFoodPage> {
+class _ResepProcessedFoodPageState extends State<ResepProcessedFoodPage> {
   @override
   Widget build(BuildContext context) {
     final menuData = widget.menuData;

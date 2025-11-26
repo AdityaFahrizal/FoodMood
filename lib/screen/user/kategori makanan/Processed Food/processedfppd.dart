@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:food_mood_2/screen/admin/edit_menu.dart';
-import 'package:food_mood_2/screen/admin/kategori%20makanan/processed%20food/resep_pf.dart';
 import 'package:food_mood_2/screen/dashboard.dart';
+import 'package:food_mood_2/screen/user/kategori%20makanan/Processed%20Food/resep_pf_u.dart';
 
 class ProcessedFoodPage extends StatefulWidget {
   const ProcessedFoodPage({super.key});
@@ -270,7 +269,7 @@ class _ProcessedFoodPageState extends State<ProcessedFoodPage> {
                                               style: const TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold,
-                                                color: Colors.white,
+                                                color: Colors.black,
                                               ),
                                             ),
                                             const SizedBox(height: 4),
@@ -315,7 +314,7 @@ class _ProcessedFoodPageState extends State<ProcessedFoodPage> {
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        ResepProcessedFoodAdminPage(
+                                                        ResepProcessedFoodPage(
                                                           menuData:
                                                               enrichedData,
                                                         ),
@@ -344,36 +343,7 @@ class _ProcessedFoodPageState extends State<ProcessedFoodPage> {
                               top: 0,
                               child: Row(
                                 children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              EditMenuMoodPage(
-                                                docId: doc.id,
-                                                data: data,
-                                              ),
-                                        ),
-                                      );
-                                    },
-                                    icon: const Icon(
-                                      Icons.edit,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  IconButton(
-                                    onPressed: () async {
-                                      await FirebaseFirestore.instance
-                                          .collection('menuMood')
-                                          .doc(doc.id)
-                                          .delete();
-                                    },
-                                    icon: const Icon(
-                                      Icons.delete,
-                                      color: Colors.redAccent,
-                                    ),
-                                  ),
+                                  
                                 ],
                               ),
                             ),

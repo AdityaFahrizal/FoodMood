@@ -205,8 +205,8 @@ class _SedihPageState extends State<SedihPage> {
                     final imageBase64 = data['imageBase64'];
 
                     final cardColor = kategori == "Minuman"
-                        ? const Color(0xFF8BA3B2)
-                        : const Color(0xFFA6B28B);
+                        ? const Color.fromARGB(255, 255, 255, 255)
+                        : const Color.fromARGB(255, 255, 255, 255);
 
                     return Padding(
                       padding: const EdgeInsets.all(5),
@@ -269,7 +269,7 @@ class _SedihPageState extends State<SedihPage> {
                                               style: const TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold,
-                                                color: Colors.white,
+                                                color: Colors.black,
                                               ),
                                             ),
                                             const SizedBox(height: 4),

@@ -9,7 +9,8 @@ class ResepHealtyFoodAdminPage extends StatefulWidget {
   const ResepHealtyFoodAdminPage({super.key, required this.menuData});
 
   @override
-  State<ResepHealtyFoodAdminPage> createState() => _ResepHealtyFoodAdminPageState();
+  State<ResepHealtyFoodAdminPage> createState() =>
+      _ResepHealtyFoodAdminPageState();
 }
 
 class _ResepHealtyFoodAdminPageState extends State<ResepHealtyFoodAdminPage> {
@@ -139,7 +140,10 @@ class _ResepHealtyFoodAdminPageState extends State<ResepHealtyFoodAdminPage> {
                   // Header Resep
                   Container(
                     width: double.infinity,
-                    color: const Color(0xFFFF714B),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFF714B),
+                      borderRadius: BorderRadius.circular(14),
+                    ),
                     padding: const EdgeInsets.all(8),
                     child: Column(
                       children: [

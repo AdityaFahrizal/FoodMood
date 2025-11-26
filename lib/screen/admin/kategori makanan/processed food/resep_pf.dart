@@ -9,10 +9,12 @@ class ResepProcessedFoodAdminPage extends StatefulWidget {
   const ResepProcessedFoodAdminPage({super.key, required this.menuData});
 
   @override
-  State<ResepProcessedFoodAdminPage> createState() => _ResepProcessedFoodAdminPageState();
+  State<ResepProcessedFoodAdminPage> createState() =>
+      _ResepProcessedFoodAdminPageState();
 }
 
-class _ResepProcessedFoodAdminPageState extends State<ResepProcessedFoodAdminPage> {
+class _ResepProcessedFoodAdminPageState
+    extends State<ResepProcessedFoodAdminPage> {
   @override
   Widget build(BuildContext context) {
     final menuData = widget.menuData;
@@ -139,7 +141,10 @@ class _ResepProcessedFoodAdminPageState extends State<ResepProcessedFoodAdminPag
                   // Header Resep
                   Container(
                     width: double.infinity,
-                    color: const Color(0xFFFF714B),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFF714B),
+                      borderRadius: BorderRadius.circular(14),
+                    ),
                     padding: const EdgeInsets.all(8),
                     child: Column(
                       children: [
